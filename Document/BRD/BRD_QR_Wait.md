@@ -10,7 +10,7 @@
 | **Tên tài liệu** | Business Requirements Document (BRD) - Hệ thống Quản lý Hàng đợi Ảo QR Wait |
 | **Mã tài liệu** | BRD-QRWAIT-01 |
 | **Dự án** | Nền tảng Quản lý Hàng đợi & Lượt chờ thông minh qua QR Code (SaaS QR Wait) |
-| **Phiên bản** | 1.1 (Cập nhật loại bỏ phân hệ Gói cước & Nạp lượt) |
+| **Phiên bản** | 1.2 (Cập nhật quy tắc Vắng mặt 15 phút, Bắt buộc tên khách, Tạm bỏ TTS TV Display) |
 | **Ngày tạo** | 23/11/2026 |
 | **Tác giả** | Senior Business Analyst (BA) |
 | **Trạng thái** | Chờ phê duyệt (Pending Approval) |
@@ -23,6 +23,7 @@
 | :--- | :--- | :--- | :--- |
 | **1.0** | 23/11/2026 | Senior BA | Khởi tạo tài liệu BRD hoàn chỉnh dựa trên nghiên cứu sản phẩm QR Wait (`qrwait.app`), phân tích nghiệp vụ SaaS, cấu trúc phạm vi 3 giai đoạn và đặc tả yêu cầu kinh doanh. |
 | **1.1** | 23/11/2026 | Senior BA | Loại bỏ hoàn toàn phân hệ Quản lý Gói cước & Nạp lượt (Billing & Ticket Packs) theo yêu cầu của Product Owner; chuyển sang Out of Scope; tối ưu hóa phạm vi tập trung 100% vào nghiệp vụ vận hành hàng đợi. |
+| **1.2** | 23/11/2026 | Senior BA | Cập nhật theo quyết định của Product Owner: (1) Khách vắng mặt quá 15 phút tự động thông báo và hủy vé vĩnh viễn, khách phải quét QR lấy số lại từ đầu; (2) Màn hình Check-in bắt buộc nhập Tên khách hàng, trường Ghi chú là tùy chọn; (3) Tạm thời loại bỏ tính năng Text-to-Speech (TTS) trên màn hình TV Display, giữ lại chuông báo Audio Chime. |
 
 ---
 
@@ -30,9 +31,9 @@
 
 Hệ thống **QR Wait** là một giải pháp chuyển đổi số cho trải nghiệm xếp hàng và chờ đợi, được xây dựng theo mô hình SaaS (Software-as-a-Service) đa tổ chức (Multi-tenant). Nền tảng cho phép các doanh nghiệp thuộc nhiều ngành nghề (F&B, Y tế/Phòng khám, Bán lẻ, Dịch vụ hành chính, Vui chơi giải trí, v.v.) số hóa toàn diện quy trình lấy số thứ tự và điều phối lượt phục vụ mà không cần đầu tư phần cứng chuyên dụng tốn kém (như máy in số nhiệt, máy rung pager thẻ chip).
 
-Khách hàng tham gia hàng đợi bằng cách quét mã QR thông qua camera điện thoại thông minh, không cần tải ứng dụng, không cần tạo tài khoản hay cung cấp thông tin cá nhân (SĐT, Email). Khách hàng có thể theo dõi vị trí thực tế, số nhóm đang chờ phía trước, thời gian ước tính, nhận thông báo đẩy trực tiếp (Live Tracking, Live Activities trên iOS / thông báo Lock Screen) và tự do di chuyển trong khi chờ đợi.
+Khách hàng tham gia hàng đợi bằng cách quét mã QR thông qua camera điện thoại thông minh, không cần tải ứng dụng, không cần tạo tài khoản hay cung cấp thông tin nhạy cảm (SĐT, Email). Khách hàng chỉ cần nhập Tên gọi để nhận diện, theo dõi vị trí thực tế, số nhóm đang chờ phía trước, thời gian ước tính, nhận thông báo đẩy trực tiếp (Live Tracking, Live Activities trên iOS / thông báo Lock Screen) và tự do di chuyển trong khi chờ đợi.
 
-Về phía doanh nghiệp, nhân viên và quản lý có thể điều phối hàng chờ với thao tác 1 chạm (gọi số, bắt đầu phục vụ, đánh dấu vắng mặt, hoàn tất, thêm khách vãng lai không có smartphone), đồng thời hỗ trợ màn hình TV Display công cộng phát loa tự động (Text-to-Speech) và tính năng chống gian lận vị trí (Dynamic QR / Geolocation). Hệ thống tập trung tối đa vào tính khả dụng, đơn giản hóa trải nghiệm và tối ưu hóa hiệu suất vận hành tại điểm bán mà không áp đặt giới hạn lượt vé hay phân hệ thanh toán phức tạp, giúp doanh nghiệp dễ dàng triển khai và sử dụng ngay lập tức.
+Về phía doanh nghiệp, nhân viên và quản lý có thể điều phối hàng chờ với thao tác 1 chạm (gọi số, bắt đầu phục vụ, đánh dấu vắng mặt, hoàn tất, thêm khách vãng lai không có smartphone), đồng thời hỗ trợ màn hình TV Display công cộng hiển thị số phục vụ trực quan kèm chuông báo (Audio Chime) và tính năng chống gian lận vị trí (Dynamic QR / Geolocation). Hệ thống tập trung tối đa vào tính khả dụng, đơn giản hóa trải nghiệm và tối ưu hóa hiệu suất vận hành tại điểm bán mà không áp đặt giới hạn lượt vé hay phân hệ thanh toán phức tạp, giúp doanh nghiệp dễ dàng triển khai và sử dụng ngay lập tức.
 
 ---
 
@@ -151,7 +152,7 @@ flowchart TD
 ### 7.4. Khách hàng (Customer / Visitor)
 - **Định danh:** Người dùng vãng lai đến sử dụng dịch vụ.
 - **Quyền hạn & Trách nhiệm:**
-  - Quét mã QR tại điểm kinh doanh, chọn số lượng người trong nhóm (Group Size), nhập tên/ghi chú (nếu bật cấu hình).
+  - Quét mã QR tại điểm kinh doanh, chọn số lượng người trong nhóm (Group Size), nhập Tên khách hàng (Bắt buộc) và Ghi chú (Không bắt buộc).
   - Theo dõi màn hình chờ trực tiếp (Live Tracking) với số thứ tự, số người đang chờ, thời gian chờ dự tính.
   - Nhận chuông báo, rung hoặc thông báo trên màn hình khóa/Live Activity khi được gọi.
   - Tự hủy lượt chờ (Leave Queue / Cancel) nếu thay đổi kế hoạch.
@@ -162,7 +163,7 @@ flowchart TD
 - **Quyền hạn & Trách nhiệm:**
   - Hiển thị danh sách các số đang được phục vụ tại từng quầy tương ứng.
   - Hiển thị danh sách các số chuẩn bị tới lượt.
-  - Tự động phát âm thanh chuông "Ding Dong" và đọc số bằng giọng nói nhân tạo (Text-to-Speech) đa ngôn ngữ khi nhân viên nhấn gọi số.
+  - Tự động phát âm thanh chuông "Ding Dong" và hiệu ứng chớp sáng nổi bật khi nhân viên nhấn gọi số (tính năng đọc giọng nói TTS tạm thời chưa kích hoạt).
   - Hiển thị mã QR động (Dynamic QR Code) xoay vòng để khách tại sảnh quét lấy số trực tiếp từ màn hình TV.
 
 ---
@@ -189,9 +190,9 @@ flowchart TD
 | **SCR-03** | **Bảng điều khiển tổng quan (Dashboard)** | Owner, Branch Manager | Quan sát sức khỏe vận hành toàn tổ chức/chi nhánh theo thời gian thực. | Thống kê vé hôm nay (Tổng số vé, Đang chờ, Đã phục vụ, Vắng mặt), Thời gian chờ trung bình, Biểu đồ mật độ theo giờ. | Lọc theo chi nhánh, chọn khoảng ngày, xem cảnh báo quá tải, truy cập nhanh các hàng chờ. |
 | **SCR-04** | **Quản lý Hàng chờ (Queue Management)** | Branch Manager, Owner | Tạo, tùy biến và thiết lập các hàng đợi theo mục đích kinh doanh. | Danh sách hàng chờ, nút Tạo mới, Trạng thái Mở/Đóng hàng chờ, Cấu hình thời gian ước tính mỗi lượt, Prefix vé (A, B, C...). | Bật/tắt hàng chờ, chỉnh sửa tên, đặt giới hạn số lượng khách tối đa, tạo liên kết QR. |
 | **SCR-05** | **Bảng điều khiển Nhân viên (Staff Panel)** | Nhân viên (Staff / Attendant) | Xử lý điều phối từng lượt khách hàng tại quầy dịch vụ. | Danh sách khách đang chờ (Waitlist Card), Số đang gọi to bản (Current Calling), Nút bấm lớn "Gọi tiếp theo", "Gọi lại", "Bắt đầu", "Xong", "Vắng mặt", Form thêm khách thủ công (+ Walk-in). | 1 chạm gọi số tiếp theo; click gọi lại; click bắt đầu phục vụ; chuyển trạng thái hoàn tất; nhập nhanh số lượng người cho khách không dùng smartphone. |
-| **SCR-06** | **Màn hình Khách lấy số (Customer Check-in)** | Khách hàng (Customer) | Cho phép khách chọn thông tin và gia nhập hàng đợi sau khi quét mã QR. | Logo cửa hàng, Tên hàng chờ, Bộ chọn số lượng người (Party Size: 1, 2, 3-4, 5+), Ô nhập Tên/Ghi chú (tùy chọn), Nút "Lấy số ngay". | Chọn số người, nhấn nút tham gia hàng đợi; hiển thị thông báo lỗi nếu ngoài phạm vi vị trí (GPS) hoặc hàng chờ đóng. |
-| **SCR-07** | **Màn hình Vé chờ Khách hàng (Live Tracking)** | Khách hàng (Customer) | Khách theo dõi thứ tự trực tiếp trên điện thoại của mình. | Số thứ tự to bản (Ví dụ: #A-024), Số nhóm đang chờ trước bạn ("Còn 3 nhóm"), Thời gian ước tính ("~15 phút"), Trạng thái (Đang chờ / Đã gọi / Đang phục vụ), Nút "Tôi đang tới", Nút "Hủy lượt". | Tự động cập nhật không cần F5; phát chuông khi được gọi; bấm hủy lượt có hộp thoại xác nhận. |
-| **SCR-08** | **Màn hình TV Hiển thị công cộng (TV Display)** | Khách tại sảnh, Nhân viên | Hiển thị thông tin điều phối số to rõ trên màn hình TV sảnh chờ. | Khu vực "Đang phục vụ" (Số vé + Quầy tương ứng), Khu vực "Vừa gọi gần đây", Bảng mã QR động tự xoay vòng (Dynamic QR), Hiển thị thông điệp chào mừng. | Tự động phát âm thanh "Ding Dong" và đọc giọng nói TTS khi có số mới được gọi; mã QR tự refresh sau mỗi chu kỳ (ví dụ 30s). |
+| **SCR-06** | **Màn hình Khách lấy số (Customer Check-in)** | Khách hàng (Customer) | Cho phép khách chọn thông tin và gia nhập hàng đợi sau khi quét mã QR. | Logo cửa hàng, Tên hàng chờ, Ô nhập Tên khách hàng (Bắt buộc), Ô Ghi chú (Tùy chọn), Bộ chọn số lượng người (Party Size: 1, 2, 3-4, 5+), Nút "Lấy số ngay". | Nhập tên khách hàng (bắt buộc), chọn số người, nhập ghi chú (nếu có), nhấn nút lấy số; hiển thị cảnh báo lỗi nếu để trống tên, ngoài phạm vi vị trí (GPS) hoặc hàng chờ đóng. |
+| **SCR-07** | **Màn hình Vé chờ Khách hàng (Live Tracking)** | Khách hàng (Customer) | Khách theo dõi thứ tự trực tiếp trên điện thoại của mình. | Số thứ tự to bản (Ví dụ: #A-024), Tên khách hàng, Số nhóm đang chờ trước bạn ("Còn 3 nhóm"), Thời gian ước tính ("~15 phút"), Trạng thái (Đang chờ / Đã gọi / Đang phục vụ), Nút "Tôi đang tới", Nút "Hủy lượt". | Tự động cập nhật không cần F5; phát chuông khi được gọi; bấm hủy lượt có hộp thoại xác nhận. |
+| **SCR-08** | **Màn hình TV Hiển thị công cộng (TV Display)** | Khách tại sảnh, Nhân viên | Hiển thị thông tin điều phối số to rõ trên màn hình TV sảnh chờ. | Khu vực "Đang phục vụ" (Số vé + Quầy tương ứng), Khu vực "Vừa gọi gần đây", Bảng mã QR động tự xoay vòng (Dynamic QR), Hiển thị thông điệp chào mừng, Chuông báo âm thanh "Ding Dong". | Tự động phát âm thanh chuông "Ding Dong" và hiệu ứng chớp sáng khi có số mới được gọi; mã QR tự refresh sau mỗi chu kỳ (ví dụ 30s). (Tạm thời bỏ chức năng đọc giọng nói TTS). |
 | **SCR-09** | **Trung tâm Mã QR & Chống gian lận (QR Studio)** | Manager, Owner | Cung cấp công cụ xuất file in ấn mã QR và thiết lập bảo vệ chống lấy số ảo. | Bộ tạo Poster QR tĩnh (A4, A5, để bàn có logo thương hiệu), Tùy chọn bật Dynamic QR xoay vòng (15s - 75s), Tùy chọn Geolocation (bán kính GPS: 50m, 100m, 200m). | Tải file PDF/PNG in ấn chất lượng cao; cấu hình tọa độ vị trí cửa hàng; bật chế độ khóa lấy số từ xa. |
 | **SCR-10** | **Báo cáo & Phân tích (Analytics & Export)** | Owner, Branch Manager | Cung cấp dữ liệu phục vụ cải tiến quy trình và đánh giá hiệu suất. | Biểu đồ lưu lượng khách theo khung giờ trong ngày, Thời gian chờ trung bình, Tỷ lệ vắng mặt/hủy lượt, Năng suất phục vụ theo nhân viên, Nút "Xuất CSV". | Chọn bộ lọc thời gian (Hôm nay, 7 ngày, 30 ngày, tùy chọn), tải báo cáo CSV chi tiết từng lượt vé. |
 | **SCR-11** | **Cài đặt & Phân quyền tổ chức (Settings & Team)** | Owner | Thiết lập hồ sơ doanh nghiệp, ngôn ngữ mặc định, quản lý nhân viên và API Keys. | Danh sách thành viên (Mời qua Email, gán vai trò Manager/Staff), Cấu hình thông báo âm thanh, Tùy chọn trường thông tin khách hàng, Quản lý API Key & Webhook. | Mời nhân viên mới, thu hồi quyền, tạo API Key tích hợp POS/CRM, lưu cài đặt thương hiệu. |
@@ -216,7 +217,7 @@ flowchart LR
     subgraph P2["Phase 2: Advanced Operations"]
         direction TB
         F6["Dynamic QR & Anti-cheat GPS"]
-        F7["Public TV Display & TTS Audio"]
+        F7["Public TV Display & Audio Chime"]
         F8["Multi-counter & Walk-in (+Guest)"]
         F9["Analytics Dashboard & CSV Export"]
     end
@@ -235,11 +236,11 @@ flowchart LR
 
 ### 9.1. Full Scope (Toàn bộ phạm vi mục tiêu)
 - Quản trị tổ chức đa cấp: Tổ chức (Organization) -> Chi nhánh (Branch) -> Hàng chờ (Queue) -> Quầy phục vụ (Counter).
-- Lấy số thứ tự thông minh không chạm qua Mobile Browser (Zero-app, Zero-signup).
+- Lấy số thứ tự thông minh không chạm qua Mobile Browser (Zero-app, Zero-signup), bắt buộc nhập tên khách để nhận diện.
 - Hệ thống phòng chống gian lận lấy số ảo (TOTP Dynamic Rotating QR Code & GPS Geolocation Radius).
 - Bảng điều khiển nhân viên tốc độ cao, hỗ trợ thao tác cảm ứng 1 chạm.
 - Cơ chế quản lý khách vãng lai (Manual Walk-in) cho đối tượng không sử dụng smartphone.
-- Màn hình công cộng TV Display toàn màn hình, hỗ trợ phát giọng đọc tự động (Text-to-Speech) thông báo số vé và quầy gọi.
+- Màn hình công cộng TV Display toàn màn hình, hỗ trợ hiệu ứng hiển thị trực quan và phát chuông âm thanh (Audio Chime) thông báo số vé và quầy gọi.
 - Hệ thống thông báo đẩy thời gian thực: Web Push, Audio Chime, đồng bộ hóa Live Activity / Dynamic Island (trên thiết bị di động hỗ trợ).
 - Báo cáo phân tích chuyên sâu (Analytics) và khả năng xuất dữ liệu thô (Raw CSV Export).
 - Hệ sinh thái tích hợp mở: REST API và Webhooks kết nối POS/CRM.
@@ -248,7 +249,7 @@ flowchart LR
 *Mục tiêu: Đưa vào vận hành thực tế tại 1 hoặc nhiều cửa hàng, thay thế hoàn toàn máy rung pager hoặc giấy in.*
 - Quản lý tài khoản tổ chức, chi nhánh và các hàng chờ cơ bản.
 - Sinh mã QR tĩnh kèm poster chuẩn in ấn (A4, A5, để bàn).
-- Khách hàng quét mã QR trên trình duyệt di động: Chọn quy mô nhóm, lấy số, nhận số thứ tự điện tử.
+- Khách hàng quét mã QR trên trình duyệt di động: Nhập tên (bắt buộc), ghi chú (tùy chọn), chọn quy mô nhóm, lấy số, nhận số thứ tự điện tử.
 - Màn hình khách hàng theo dõi trực tiếp vị trí lượt chờ thời gian thực (Live Tracking qua WebSocket/SSE).
 - Bảng điều khiển nhân viên (Staff Panel) cơ bản: Danh sách chờ, nút Gọi khách, Bắt đầu phục vụ, Hoàn thành, Đánh dấu vắng mặt.
 - Phân quyền 3 vai trò: Organization Owner, Branch Manager, Staff.
@@ -257,7 +258,7 @@ flowchart LR
 *Mục tiêu: Hoàn thiện tính năng phòng chống gian lận, truyền thông sảnh chờ, tối ưu điều phối đa quầy và phân tích vận hành.*
 - Cơ chế Dynamic QR Code xoay vòng theo chu kỳ (15s - 75s) chống chụp ảnh lấy số từ xa.
 - Kiểm tra bán kính vị trí địa lý (Geolocation Verification) khi khách quét mã lấy số.
-- Màn hình TV Display công cộng cho sảnh chờ, tích hợp loa thông báo chuông và giọng đọc Text-to-Speech (Tiếng Việt & Tiếng Anh).
+- Màn hình TV Display công cộng cho sảnh chờ, tích hợp chuông báo âm thanh "Ding Dong" và hiển thị số vé theo quầy tương ứng.
 - Hỗ trợ mô hình nhiều quầy phục vụ (Multi-counter dispatching) trong cùng một chi nhánh.
 - Thao tác thêm khách vãng lai thủ công (Manual Walk-in Ticket).
 - Dashboard thống kê lưu lượng khách, thời gian chờ trung bình và chức năng xuất file báo cáo CSV.
@@ -272,6 +273,7 @@ flowchart LR
 
 ### 9.5. Out of Scope (Ngoài phạm vi nghiệp vụ)
 - Không xây dựng phân hệ Quản lý Gói cước, Mua bán Lượt vé và Cổng thanh toán trực tuyến (Billing, Ticket Packs & Payment Gateways) - hệ thống tập trung hoàn toàn vào phục vụ vận hành hàng đợi, không giới hạn lượt chờ và không tích hợp thu phí lượt vé.
+- Tạm thời chưa triển khai tính năng phát giọng nói nhân tạo Text-to-Speech (TTS) trên màn hình TV Display trong giai đoạn hiện tại (sẽ xem xét bổ sung ở giai đoạn nâng cao sau này).
 - Không xây dựng phân hệ quản lý kho, quản lý thực đơn (Menu) hoặc đặt món ăn tại bàn (Table Ordering) - những chức năng này thuộc về phần mềm POS chuyên dụng.
 - Không thu thập số điện thoại để thực hiện chiến dịch SMS Marketing / Zalo ZNS quảng cáo hàng loạt (nhằm giữ vững giá trị cốt lõi là bảo vệ quyền riêng tư tuyệt đối cho khách hàng).
 - Không cung cấp phần cứng vật lý đi kèm (hệ thống hoạt động thuần túy trên phần cứng sẵn có của khách hàng và doanh nghiệp: Smart TV, iPad, Smartphone, Laptop).
@@ -344,15 +346,15 @@ flowchart LR
 ### 10.3. Nhóm Lấy số & Phòng chống Gian lận (Check-in & Anti-Cheat)
 
 #### BR-006: Khách hàng Lấy số Thứ tự Tự phục vụ (Customer Self Check-in)
-- **Mô tả:** Khách hàng sử dụng trình duyệt di động quét mã QR để gia nhập hàng chờ mà không phải tải ứng dụng hay nhập số điện thoại.
-- **Lý do nghiệp vụ:** Xóa bỏ rào cản tham gia, tối ưu hóa tốc độ lấy số và bảo vệ quyền riêng tư người dùng.
+- **Mô tả:** Khách hàng sử dụng trình duyệt di động quét mã QR để gia nhập hàng chờ. Yêu cầu bắt buộc nhập Tên khách hàng (phục vụ xưng hô/nhận diện khi gọi số); ô nhập ghi chú là tùy chọn; không cần tải app hay nhập số điện thoại.
+- **Lý do nghiệp vụ:** Xóa bỏ rào cản tham gia, tối ưu hóa tốc độ lấy số và bảo vệ quyền riêng tư người dùng trong khi vẫn đảm bảo thông tin xưng hô nhận diện khách hàng tại điểm phục vụ.
 - **Bên liên quan:** Customer.
 - **Độ ưu tiên:** Must Have (Phase 1).
 - **Tiêu chí nghiệm thu (Acceptance Criteria):**
-  - Hiển thị giao diện thân thiện: Logo quán, Tên hàng chờ, Bộ chọn số lượng người (Party Size).
-  - Trường tên khách hàng hoặc ghi chú là tùy chọn (Optional) dựa theo cấu hình của cửa hàng.
+  - Hiển thị giao diện thân thiện: Logo quán, Tên hàng chờ, Ô nhập Tên khách hàng (*Bắt buộc*), Ô Ghi chú (*Không bắt buộc*), Bộ chọn số lượng người (Party Size).
+  - Nếu khách hàng để trống trường Tên, hệ thống hiển thị cảnh báo lỗi màu đỏ và không cho phép tạo vé.
   - Sau khi xác nhận, hệ thống cấp ngay số thứ tự kèm liên kết vé định danh duy nhất (Token-based URL).
-- **Nguồn tham chiếu:** `qrwait.app` Customer Flow.
+- **Nguồn tham chiếu:** `qrwait.app` Customer Flow & PO Requirements.
 
 #### BR-007: Mã QR Động xoay vòng chống gian lận (Dynamic Rotating QR Code)
 - **Mô tả:** Hỗ trợ chế độ tạo mã QR động tự động thay đổi sau mỗi chu kỳ định sẵn (15 đến 75 giây) trên màn hình máy tính bảng hoặc TV Display.
@@ -434,16 +436,16 @@ flowchart LR
   - Nút "VẮNG MẶT" (No-Show) để chuyển lượt khách vào danh sách tạm giữ hoặc loại khỏi hàng.
 - **Nguồn tham chiếu:** QR Wait Attendant Dashboard.
 
-#### BR-014: Màn hình TV Sảnh chờ & Đọc giọng nói tự động (Public TV Display & TTS Audio)
-- **Mô tả:** Giao diện hiển thị toàn màn hình (Fullscreen TV Display) chiếu danh sách số đang phục vụ tại từng quầy, đồng thời tự động phát loa đọc số bằng giọng nói nhân tạo (Text-to-Speech).
-- **Lý do nghiệp vụ:** Hướng dẫn khách hàng tại sảnh chờ công cộng di chuyển đúng quầy mà nhân viên không cần phải gào to hoặc dùng micro cầm tay.
+#### BR-014: Màn hình TV Sảnh chờ & Chuông báo Âm thanh (Public TV Display & Audio Chime)
+- **Mô tả:** Giao diện hiển thị toàn màn hình (Fullscreen TV Display) chiếu danh sách số đang phục vụ tại từng quầy, đồng thời tự động phát âm thanh chuông "Ding Dong" và hiệu ứng chớp sáng đồ họa khi nhân viên gọi số (Tạm thời không kích hoạt tính năng đọc giọng nói TTS).
+- **Lý do nghiệp vụ:** Hướng dẫn khách hàng tại sảnh chờ công cộng di chuyển đúng quầy thông qua hình ảnh trực quan và tín hiệu âm thanh báo hiệu.
 - **Bên liên quan:** Customer, Staff, Branch Manager.
 - **Độ ưu tiên:** Should Have (Phase 2).
 - **Tiêu chí nghiệm thu (Acceptance Criteria):**
   - Chạy mượt mà trên trình duyệt web của Smart TV hoặc Android TV Box.
-  - Khi nhân viên gọi vé A-15 đến Quầy 3, màn hình chớp hiệu ứng nổi bật vé A-15 và tự động phát âm thanh: "Ding Dong! Xin mời số A mười lăm đến Quầy số ba".
-  - Hỗ trợ cấu hình phát giọng đọc đa ngôn ngữ (Tiếng Việt, Tiếng Anh).
-- **Nguồn tham chiếu:** QR Wait TV Display Mode & Voice Announcer.
+  - Khi nhân viên gọi vé A-15 đến Quầy 3, màn hình chớp hiệu ứng nổi bật vé A-15 và tự động phát âm thanh chuông "Ding Dong" rõ ràng.
+  - Hiển thị số vé và tên quầy to rõ, độ tương phản cao để khách dễ dàng quan sát từ xa.
+- **Nguồn tham chiếu:** QR Wait TV Display Mode.
 
 ---
 
@@ -487,8 +489,8 @@ sequenceDiagram
 
     Customer->>QR: Dùng camera điện thoại quét mã QR
     QR-->>Customer: Mở trang Web Lấy số (Mobile Browser)
-    Customer->>Engine: Chọn số lượng người (Party Size) & bấm "Lấy số"
-    Engine->>Engine: Kiểm tra vị trí GPS & sinh số vé mới
+    Customer->>Engine: Nhập Tên khách (Bắt buộc), Ghi chú (Tùy chọn), chọn số lượng & bấm "Lấy số"
+    Engine->>Engine: Kiểm tra tên, vị trí GPS & sinh số vé mới
     Engine-->>Customer: Cấp số (Ví dụ: #A-025) & chuyển sang Live Tracking
     
     rect rgb(240, 248, 255)
@@ -500,7 +502,7 @@ sequenceDiagram
     Engine->>Engine: Chuyển trạng thái vé A-025 sang "CALLED"
     par Thông báo đa kênh đồng thời
         Engine-->>Customer: Rung, phát chuông & hiển thị thông báo "TỚI LƯỢT BẠN"
-        Engine-->>TV: Chớp sáng vé A-025 & Đọc loa: "Xin mời số A hai mươi lăm đến Quầy 1"
+        Engine-->>TV: Chớp sáng vé A-025 & Phát chuông "Ding Dong"
     end
 
     Customer->>Engine: Bấm "Tôi đang đến" & di chuyển lại quầy
@@ -523,8 +525,8 @@ stateDiagram-v2
     CALLED --> SERVING: Khách có mặt, nhân viên bắt đầu phục vụ
     CALLED --> NO_SHOW: Quá thời gian chờ (Timeout) / Không có mặt
 
-    NO_SHOW --> WAITING: Khách quay lại xin phục hồi lượt (Tùy chọn)
-    NO_SHOW --> CANCELLED: Chốt hủy sau thời gian ân hạn
+    NO_SHOW --> WAITING: Khách quay lại trong vòng 15 phút (Nhân viên phục hồi)
+    NO_SHOW --> CANCELLED: Quá 15 phút không quay lại (Hệ thống tự động hủy)
 
     SERVING --> COMPLETED: Nhân viên hoàn tất phục vụ
     
@@ -533,12 +535,15 @@ stateDiagram-v2
     EXPIRED --> [*]
 ```
 
-### 11.3. Quy trình Xử lý Khách vắng mặt (No-Show Handling Process)
+### 11.3. Quy trình Xử lý Khách vắng mặt & Tự động Hủy sau 15 phút (No-Show Handling Process)
 1. Khi nhân viên gọi vé lần 1, hệ thống đặt đồng hồ đếm ngược chờ khách (mặc định 60 - 120 giây tùy cấu hình).
-2. Nếu khách chưa xuất hiện, nhân viên bấm **"GỌI LẠI" (Recall)**. Hệ thống phát lại chuông trên điện thoại khách và phát lại âm thanh thông báo trên TV.
-3. Sau số lần gọi tối đa (mặc định 3 lần) hoặc sau khi hết thời gian chờ, nhân viên nhấn **"VẮNG MẶT" (Mark No-Show)**.
-4. Trạng thái vé chuyển sang `NO_SHOW`. Khách hàng nhận được thông báo trên màn hình: *"Bạn đã bị bỏ qua do không có mặt kịp thời"*.
-5. Nếu khách quay lại trong vòng thời gian ân hạn (Grace Period, ví dụ 15 phút) và giải thích lý do chính đáng, nhân viên có quyền bấm **"Phục hồi vé" (Restore)** để đưa khách lên đầu danh sách chờ kế tiếp mà không bắt khách lấy số lại từ đầu.
+2. Nếu khách chưa xuất hiện, nhân viên bấm **"GỌI LẠI" (Recall)** tối đa 3 lần.
+3. Sau khi hết số lần gọi tối đa hoặc sau khi hết thời gian chờ mà khách vẫn vắng mặt, nhân viên nhấn **"VẮNG MẶT" (Mark No-Show)**.
+4. Trạng thái vé chuyển sang `NO_SHOW`. Hệ thống tức thì gửi thông báo đẩy đến điện thoại khách hàng: *"Bạn đã bị đánh dấu vắng mặt. Vui lòng quay lại quầy trong vòng 15 phút để phục hồi lượt. Quá 15 phút lượt vé sẽ bị tự động hủy"*. Màn hình Live Tracking của khách bắt đầu đếm ngược chính xác 15 phút (15:00 -> 00:00).
+5. **Trong vòng 15 phút (Grace Period):** Nếu khách quay lại quầy xuất trình vé và giải thích lý do, nhân viên có quyền bấm **"Phục hồi vé" (Restore)** để đưa khách lên đầu danh sách chờ kế tiếp mà không bắt khách lấy số lại từ đầu.
+6. **Sau 15 phút không quay lại (Timeout):** Đúng khi bộ đếm ngược chạm mốc 00:00, tiến trình kiểm tra tự động của hệ thống kích hoạt:
+   - Gửi thông báo đến thiết bị của khách hàng: *"Lượt vé của bạn đã bị hủy tự động do quá 15 phút không có mặt. Vui lòng quét mã QR để lấy số mới"*.
+   - Chuyển trạng thái vé từ `NO_SHOW` sang `CANCELLED` vĩnh viễn. Khách hàng không thể phục hồi và bắt buộc phải quét mã QR lấy số mới từ đầu.
 
 ---
 
@@ -552,15 +557,15 @@ stateDiagram-v2
 | **BRULE-04** | **Ước tính Thời gian Chờ (Wait Time Calculation)** | Thời gian chờ ước tính hiển thị cho khách thứ $N$ trong hàng đợi được tính theo công thức: <br>$$\text{Thời gian chờ dự kiến} = (\text{Số nhóm đang chờ trước bạn}) \times \frac{\text{Thời gian phục vụ chuẩn một lượt}}{\text{Số lượng quầy đang mở hoạt động}}$$ |
 | **BRULE-05** | **Giới hạn Nhóm khách (Party Size Limit)** | Mỗi hàng chờ có thể thiết lập số lượng người tối thiểu và tối đa cho một lượt vé (Ví dụ hàng chờ Bàn nhỏ: 1 - 2 người; Hàng chờ Bàn lớn: 5 - 10 người). Khách hàng không thể chọn số lượng ngoài ngưỡng này. |
 | **BRULE-06** | **Gọi lại và Giới hạn Bỏ qua (Recall & Skip Threshold)** | Nhân viên chỉ được nhấn gọi lại tối đa 03 lần cho một lượt vé. Khoảng cách giữa 2 lần nhấn gọi lại liên tiếp tối thiểu là 15 giây để tránh tình trạng spam chuông thông báo tới khách hàng. |
-| **BRULE-07** | **Cơ chế Phục hồi Vé Vắng mặt (No-Show Restoration Window)** | Một lượt vé bị đánh dấu `NO_SHOW` chỉ có thể được nhân viên phục hồi lại trong vòng tối đa 30 phút kể từ lúc bị đánh dấu. Quá 30 phút, vé tự động chuyển thành `EXPIRED` vĩnh viễn và không thể khôi phục. |
+| **BRULE-07** | **Cơ chế Đếm ngược 15 Phút & Tự động Hủy Vé Vắng mặt (15-Minute No-Show Auto-Cancellation)** | Một lượt vé bị đánh dấu `NO_SHOW` sẽ có thời gian ân hạn chính xác 15 phút kèm đồng hồ đếm ngược trên màn hình khách. Trong 15 phút này, nếu khách có mặt, nhân viên có quyền bấm "Phục hồi vé". Hết đúng 15 phút mà khách không quay lại, hệ thống tự động gửi thông báo và hủy vé vĩnh viễn (chuyển sang `CANCELLED`). Vé đã hủy không thể phục hồi dưới bất kỳ hình thức nào; khách hàng bắt buộc phải quét mã QR lấy số mới từ đầu. |
 | **BRULE-08** | **Điều phối Đa quầy (Multi-counter Conflict Prevention)** | Một lượt vé chỉ có thể được phục vụ bởi duy nhất một nhân viên tại một quầy ở một thời điểm. Khi nhân viên Quầy 1 bấm "Gọi tiếp theo", hệ thống khóa tức thì (Mutex Lock) bản ghi vé đó để Quầy 2 không thể bấm gọi trùng cùng một khách. |
 
 ---
 
 ## 13. BUSINESS CONSTRAINTS (RÀNG BUỘC KINH DOANH)
 
-1. **Ràng buộc về Quyền riêng tư (Zero-PII Constraint):**
-   - Không được bắt buộc khách hàng nhập bất kỳ thông tin nhận dạng cá nhân nào (Họ tên đầy đủ, Số điện thoại, Email, Số CCCD) để lấy số thứ tự. Mọi định danh khách hàng phải dựa trên mã Token phiên làm việc ngẫu nhiên (Session-based UUID) lưu trên trình duyệt di động.
+1. **Ràng buộc về Quyền riêng tư (Zero-PII & Display Name Constraint):**
+   - Không được bắt buộc khách hàng nhập các thông tin nhận dạng cá nhân nhạy cảm (Số điện thoại, Email, Số CCCD). Hệ thống chỉ yêu cầu bắt buộc nhập Tên gọi/Biệt danh hiển thị (Display Name) để phục vụ xưng hô và gọi số tại quầy; trường ghi chú là tùy chọn. Mọi định danh thiết bị khách hàng phải dựa trên mã Token phiên làm việc ngẫu nhiên (Session-based UUID) lưu trên trình duyệt di động.
 2. **Ràng buộc về Phần cứng & Hạ tầng phía Khách hàng:**
    - Ứng dụng phía khách hàng bắt buộc phải chạy mượt mà trên 100% các trình duyệt di động phổ biến (Apple Safari trên iOS, Google Chrome trên Android/iOS, Samsung Internet) mà không yêu cầu quyền Root/Jailbreak hay cài đặt thêm tiện ích mở rộng.
 3. **Ràng buộc về Độ trễ Thời gian thực (Real-time Latency Constraint):**
@@ -579,7 +584,6 @@ stateDiagram-v2
 
 ### 14.2. Sự phụ thuộc (Dependencies)
 - **Hạ tầng Cloud & WebSocket/SSE:** Phụ thuộc vào dịch vụ máy chủ đám mây ổn định để duy trì kết nối thời gian thực liên tục cho hàng ngàn thiết bị khách hàng cùng lúc.
-- **Dịch vụ Giọng đọc Text-to-Speech (TTS):** Khả năng phát giọng đọc gọi số trên TV phụ thuộc vào Web Speech API của trình duyệt hoặc dịch vụ TTS đám mây (Google Cloud TTS / Azure Neural TTS) để có giọng đọc tự nhiên.
 
 ---
 
@@ -636,27 +640,26 @@ Theo quyết định định hướng sản phẩm của Product Owner, hệ th�
 | **Mã QR Động** | Dynamic Rotating QR Code | Mã QR hiển thị trên màn hình kỹ thuật số tự động làm mới mã bảo mật sau mỗi 15-75s để chống lấy số từ xa. |
 | **Live Tracking** | Live Tracking / Status Page | Màn hình web trên điện thoại khách hàng cập nhật trực tiếp số nhóm phía trước và thời gian chờ. |
 | **Live Activities** | iOS Live Activities | Tính năng của hệ điều hành iOS cho phép hiển thị tiến độ thời gian thực trên màn hình khóa & Dynamic Island. |
-| **TTS** | Text-to-Speech | Công nghệ chuyển đổi văn bản thông báo số thứ tự thành giọng nói tự động phát qua loa. |
+| **TTS** | Text-to-Speech | Công nghệ chuyển đổi văn bản thành giọng nói (tạm thời loại bỏ/chưa kích hoạt trong phạm vi hiện tại theo quyết định của PO). |
 | **Khách vãng lai** | Walk-in Guest | Khách hàng không quét mã QR tự động mà được nhân viên tạo vé thủ công trên hệ thống. |
 | **No-Show** | No-Show / Vắng mặt | Trạng thái của một lượt vé khi nhân viên đã gọi nhiều lần nhưng khách hàng không có mặt tại quầy. |
 | **FIFO** | First-In, First-Out | Quy tắc điều phối: Khách hàng nào lấy số trước sẽ được nhân viên gọi phục vụ trước. |
 
 ---
 
-## 19. OPEN ISSUES & QUESTIONS (CÂU HỎI & VẤN ĐỀ CẦN XÁC NHẬN VỚI PRODUCT OWNER)
+## 19. OPEN ISSUES & QUESTIONS (CÂU HỎI & VẤN ĐỀ ĐÃ ĐƯỢC PRODUCT OWNER PHÊ DUYỆT)
 
-Để hoàn thiện chi tiết đặc tả yêu cầu chức năng (SRS) ở giai đoạn tiếp theo, Senior BA xin gửi tới Product Owner danh sách các quyết định nghiệp vụ cần chốt:
+Các quyết định nghiệp vụ quan trọng đã được Product Owner thống nhất và phê chuẩn chính thức:
 
-1. **Về Cơ chế Gọi số Khách vắng mặt (No-Show Grace Period):**
-   - *Lựa chọn A (Khắt khe):* Khi nhân viên bấm "Vắng mặt", vé bị hủy ngay lập tức và tính là kết thúc. Khách muốn vào phải quét QR lấy số mới từ đầu.
-   - *Lựa chọn B (Linh hoạt - Đề xuất):* Cho phép đưa khách vào trạng thái "Tạm giữ" trong vòng 15-30 phút; nếu khách quay lại, nhân viên có nút "Phục hồi" để đưa khách lên đầu lượt gọi tiếp theo.
-2. **Về Thông tin Thu thập của Khách hàng tại màn hình Check-in:**
-   - *Lựa chọn A (Thuần túy QR Wait):* Chỉ hỏi số lượng người trong nhóm (Party Size), hoàn toàn không có trường Tên hoặc Số điện thoại.
-   - *Lựa chọn B (Tùy biến theo ngành):* Cung cấp tùy chọn cấu hình trong trang Admin cho phép cửa hàng tự bật/tắt ô nhập "Tên khách" hoặc "Số bàn mong muốn".
-3. **Về Cơ chế Âm thanh TV Display (TTS):**
-   - Sử dụng Web Speech API miễn phí tích hợp sẵn trên trình duyệt TV (tiết kiệm chi phí nhưng chất lượng giọng đọc phụ thuộc hệ điều hành TV) hay tích hợp API giọng đọc AI chất lượng cao (Google Cloud TTS / Zalo AI / FPT.AI - âm thanh rất mượt nhưng phát sinh chi phí API theo ký tự)?
-4. **Về Lộ trình phát triển Mobile App riêng cho Khách hàng:**
-   - QR Wait có ứng dụng mobile riêng trên App Store / Google Play bên cạnh phiên bản Web. Đối với sản phẩm của chúng ta, giai đoạn 1 và 2 có tập trung 100% vào Progressive Web App (PWA) trên trình duyệt trước khi phát triển app native hay không?
+1. **Về Cơ chế Xử lý Khách vắng mặt (No-Show Grace Period) — [ĐÃ CHỐT & PHÊ DUYỆT]:**
+   - **Quyết định:** Khi nhân viên đánh dấu "Vắng mặt", hệ thống cho phép thời gian ân hạn chính xác 15 phút.
+   - **Hành vi:** Màn hình khách hàng đếm ngược 15 phút. Nếu khách không quay lại trong 15 phút, hệ thống tự động phát thông báo và hủy vé vĩnh viễn (`CANCELLED`). Khách bắt buộc phải quét QR lấy số mới từ đầu.
+2. **Về Thu thập Thông tin Khách hàng tại Màn hình Check-in — [ĐÃ CHỐT & PHÊ DUYỆT]:**
+   - **Quyết định:** Bắt buộc nhập **Tên khách hàng** (Display Name) để phục vụ xưng hô và nhận diện tại quầy. Trường **Ghi chú** là không bắt buộc (Optional). Tuyệt đối không bắt buộc thu thập Số điện thoại hay Email nhằm bảo vệ quyền riêng tư.
+3. **Về Cơ chế Âm thanh trên Màn hình TV Display (TTS) — [ĐÃ CHỐT & PHÊ DUYỆT]:**
+   - **Quyết định:** Tạm thời **loại bỏ** tính năng Text-to-Speech (TTS phát giọng đọc nhân tạo). Màn hình TV Display sử dụng tín hiệu đồ họa chớp sáng trực quan và phát chuông âm thanh "Ding Dong" khi gọi số.
+4. **Về Lộ trình phát triển Mobile App riêng cho Khách hàng — [KHUYẾN NGHỊ BA]:**
+   - Tập trung 100% vào giải pháp **Progressive Web App (PWA) trên Mobile Browser** cho Giai đoạn 1 & 2 để tối ưu hóa thời gian đưa sản phẩm ra thị trường và xóa bỏ hoàn toàn rào cản cài đặt app cho người dùng cuối.
 
 ---
 *Tài liệu được biên soạn và bảo chứng chuyên môn bởi Senior Business Analyst.*
