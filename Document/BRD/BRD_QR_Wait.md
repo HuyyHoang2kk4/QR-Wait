@@ -10,7 +10,7 @@
 | **Tên tài liệu** | Business Requirements Document (BRD) - Hệ thống Quản lý Hàng đợi Ảo QR Wait |
 | **Mã tài liệu** | BRD-QRWAIT-01 |
 | **Dự án** | Nền tảng Quản lý Hàng đợi & Lượt chờ thông minh qua QR Code (SaaS QR Wait) |
-| **Phiên bản** | 1.0 (Bản đệ trình xem xét & phê duyệt) |
+| **Phiên bản** | 1.1 (Cập nhật loại bỏ phân hệ Gói cước & Nạp lượt) |
 | **Ngày tạo** | 23/11/2026 |
 | **Tác giả** | Senior Business Analyst (BA) |
 | **Trạng thái** | Chờ phê duyệt (Pending Approval) |
@@ -22,6 +22,7 @@
 | Phiên bản | Ngày | Tác giả | Tóm tắt thay đổi |
 | :--- | :--- | :--- | :--- |
 | **1.0** | 23/11/2026 | Senior BA | Khởi tạo tài liệu BRD hoàn chỉnh dựa trên nghiên cứu sản phẩm QR Wait (`qrwait.app`), phân tích nghiệp vụ SaaS, cấu trúc phạm vi 3 giai đoạn và đặc tả yêu cầu kinh doanh. |
+| **1.1** | 23/11/2026 | Senior BA | Loại bỏ hoàn toàn phân hệ Quản lý Gói cước & Nạp lượt (Billing & Ticket Packs) theo yêu cầu của Product Owner; chuyển sang Out of Scope; tối ưu hóa phạm vi tập trung 100% vào nghiệp vụ vận hành hàng đợi. |
 
 ---
 
@@ -31,7 +32,7 @@ Hệ thống **QR Wait** là một giải pháp chuyển đổi số cho trải 
 
 Khách hàng tham gia hàng đợi bằng cách quét mã QR thông qua camera điện thoại thông minh, không cần tải ứng dụng, không cần tạo tài khoản hay cung cấp thông tin cá nhân (SĐT, Email). Khách hàng có thể theo dõi vị trí thực tế, số nhóm đang chờ phía trước, thời gian ước tính, nhận thông báo đẩy trực tiếp (Live Tracking, Live Activities trên iOS / thông báo Lock Screen) và tự do di chuyển trong khi chờ đợi.
 
-Về phía doanh nghiệp, nhân viên và quản lý có thể điều phối hàng chờ với thao tác 1 chạm (gọi số, bắt đầu phục vụ, đánh dấu vắng mặt, hoàn tất, thêm khách vãng lai không có smartphone), đồng thời hỗ trợ màn hình TV Display công cộng phát loa tự động (Text-to-Speech) và tính năng chống gian lận vị trí (Dynamic QR / Geolocation). Mô hình kinh doanh áp dụng hình thức "Pay-per-use" (gói lượt chờ trả trước không hết hạn) kết hợp gói dùng thử miễn phí, giúp tối ưu hóa chi phí vận hành cho cả các doanh nghiệp theo mùa vụ.
+Về phía doanh nghiệp, nhân viên và quản lý có thể điều phối hàng chờ với thao tác 1 chạm (gọi số, bắt đầu phục vụ, đánh dấu vắng mặt, hoàn tất, thêm khách vãng lai không có smartphone), đồng thời hỗ trợ màn hình TV Display công cộng phát loa tự động (Text-to-Speech) và tính năng chống gian lận vị trí (Dynamic QR / Geolocation). Hệ thống tập trung tối đa vào tính khả dụng, đơn giản hóa trải nghiệm và tối ưu hóa hiệu suất vận hành tại điểm bán mà không áp đặt giới hạn lượt vé hay phân hệ thanh toán phức tạp, giúp doanh nghiệp dễ dàng triển khai và sử dụng ngay lập tức.
 
 ---
 
@@ -55,12 +56,12 @@ Xếp hàng là một trong những điểm chạm (touchpoint) gây ức chế 
 ### 4.1. Vấn đề kinh doanh (Business Problems)
 - **Tỷ lệ khách hàng rời bỏ do chờ lâu (Customer Walk-out):** Khách hàng nhìn thấy hàng dài chờ đợi sẽ có xu hướng bỏ đi sang đối thủ cạnh tranh nếu không ước lượng được thời gian chờ.
 - **Áp lực và sai sót của nhân viên:** Nhân viên phải liên tục ghi sổ tay, cầm loa gọi tên hoặc tìm kiếm khách hàng trong đám đông, dễ nhầm lẫn thứ tự và gây căng thẳng giờ cao điểm.
-- **Lãng phí chi phí cố định (Fixed Cost Inefficiency):** Nhiều phần mềm quản lý hàng đợi hiện nay thu phí cố định hàng tháng ($50 - $200/tháng), gây bất lợi lớn cho các doanh nghiệp hoạt động theo mùa vụ (khu du lịch, resort, sự kiện, quán ăn theo mùa hè/đông).
+- **Rào cản thiết bị và chi phí phần cứng cồng kềnh:** Các hệ thống quản lý hàng đợi truyền thống đòi hỏi thiết bị chuyên dụng đắt đỏ, phức tạp trong bảo trì và vận hành.
 - **Gian lận xếp hàng từ xa (Remote Line Jumping):** Khách hàng chụp ảnh mã QR tĩnh mang về nhà hoặc gửi cho người khác quét từ xa để lấy số trước, làm sai lệch thứ tự phục vụ và ảnh hưởng đến khách hàng có mặt tại quán.
 
 ### 4.2. Cơ hội kinh doanh (Business Opportunities)
 - **Dẫn đầu phân khúc hàng đợi không chạm - tôn trọng quyền riêng tư (Zero-Friction & Privacy-First):** Tiếp cận tệp khách hàng dị ứng với việc chia sẻ số điện thoại cá nhân.
-- **Mô hình định giá linh hoạt (Prepaid Ticket Packs):** Nắm bắt thị trường doanh nghiệp vừa, nhỏ và dịch vụ thời vụ bằng cách bán gói lượt chờ nạp trước, không tính phí duy trì hàng tháng khi không sử dụng.
+- **Mô hình triển khai tinh gọn (Zero Overhead Deployment):** Cung cấp giải pháp sẵn sàng sử dụng tức thì, không rào cản chi phí phần cứng hay phân hệ thanh toán phức tạp, giúp doanh nghiệp tập trung 100% vào nâng cao chất lượng phục vụ.
 - **Khả năng mở rộng đa ngành (Vertical Flexibility):** Ứng dụng từ F&B (xếp bàn theo quy mô nhóm), Y tế (phòng khám chuyên khoa), Bán lẻ/Dịch vụ hậu mãi, Bãi biển/Khu thể thao (thuê giường nằm/dụng cụ), đến Cơ quan công quyền.
 
 ---
@@ -74,9 +75,9 @@ Xếp hàng là một trong những điểm chạm (touchpoint) gây ức chế 
    - Cắt giảm **100%** chi phí đầu tư phần cứng chuyên dụng (máy in phiếu số, máy rung pager).
    - Tối ưu hóa thời gian xử lý lượt khách của nhân viên: Thao tác gọi số và chuyển trạng thái chỉ cần **1 chạm** (One-tap action), giảm thiểu 40% thời gian điều phối thủ công.
    - Ngăn chặn triệt để tình trạng lấy số ảo/từ xa thông qua cơ chế Dynamic QR Code xoay vòng và Geolocation Radius.
-3. **Về mục tiêu sản phẩm SaaS:**
-   - Đạt độ sẵn sàng phục vụ đa doanh nghiệp (Multi-tenant), hỗ trợ đa chi nhánh và đa hàng đợi trên cùng một tài khoản.
-   - Đạt tỷ lệ chuyển đổi từ gói dùng thử miễn phí (Free Tier: 250 lượt) sang gói nạp trả trước (Paid Packs) đạt tối thiểu **15%**.
+3. **Về mục tiêu sản phẩm hệ thống:**
+   - Đạt độ sẵn sàng phục vụ đa doanh nghiệp (Multi-tenant), hỗ trợ đa chi nhánh và đa hàng chờ độc lập trên cùng một tài khoản tổ chức.
+   - Hệ thống vận hành không giới hạn số lượt vé chờ, đảm bảo độ ổn định cao và sẵn sàng đáp ứng lưu lượng truy cập lớn trong các khung giờ cao điểm.
 
 ---
 
@@ -127,8 +128,8 @@ flowchart TD
 - **Quyền hạn & Trách nhiệm:**
   - Sở hữu cao nhất trong phạm vi doanh nghiệp/tổ chức.
   - Quản lý thông tin tổ chức, thêm/sửa/xóa các chi nhánh (Branches) và các hàng chờ (Queues).
-  - Quản lý gói dịch vụ, mua thêm lượt chờ (Ticket Packs), theo dõi số dư lượt chờ và lịch sử thanh toán.
   - Cấu hình nhân sự, phân quyền vai trò cho Quản lý chi nhánh và Nhân viên.
+  - Cấu hình thương hiệu (Brand settings) và tùy biến hiển thị.
   - Xem toàn bộ báo cáo phân tích tổng quan của toàn bộ tổ chức.
 
 ### 7.2. Quản lý chi nhánh (Branch Manager)
@@ -183,7 +184,7 @@ flowchart TD
 
 | STT | Tên màn hình | Đối tượng | Mục đích nghiệp vụ | Thành phần giao diện chính | Hành vi tương tác chính |
 | :---: | :--- | :--- | :--- | :--- | :--- |
-| **SCR-01** | **Landing Page / Website giới thiệu** | Khách ghé thăm, Khách hàng B2B | Giới thiệu tính năng, bảng giá, tạo sự tin tưởng, nút dùng thử miễn phí. | Hero Banner, Live Interactive Demo, Feature Grid, Bảng so sánh giá, FAQ, Footer đa ngôn ngữ. | Xem demo, chuyển đổi ngôn ngữ, click "Dùng thử miễn phí 250 lượt", click Đăng nhập. |
+| **SCR-01** | **Landing Page / Website giới thiệu** | Khách ghé thăm, Khách hàng B2B | Giới thiệu tính năng, giải pháp, tạo sự tin tưởng, nút bắt đầu sử dụng. | Hero Banner, Live Interactive Demo, Feature Grid, FAQ, Footer đa ngôn ngữ. | Xem demo, chuyển đổi ngôn ngữ, click "Bắt đầu sử dụng ngay", click Đăng nhập. |
 | **SCR-02** | **Xác thực & Đăng nhập (Auth)** | Chủ doanh nghiệp, Quản lý, Staff | Đăng nhập tài khoản quản trị và nhân viên an toàn. | Form Email/Mật khẩu, Đăng nhập xã hội (Google Single Sign-On), Quên mật khẩu, Đăng ký tổ chức mới. | Nhập thông tin xác thực, ghi nhớ phiên làm việc, chuyển hướng vào Dashboard theo quyền. |
 | **SCR-03** | **Bảng điều khiển tổng quan (Dashboard)** | Owner, Branch Manager | Quan sát sức khỏe vận hành toàn tổ chức/chi nhánh theo thời gian thực. | Thống kê vé hôm nay (Tổng số vé, Đang chờ, Đã phục vụ, Vắng mặt), Thời gian chờ trung bình, Biểu đồ mật độ theo giờ. | Lọc theo chi nhánh, chọn khoảng ngày, xem cảnh báo quá tải, truy cập nhanh các hàng chờ. |
 | **SCR-04** | **Quản lý Hàng chờ (Queue Management)** | Branch Manager, Owner | Tạo, tùy biến và thiết lập các hàng đợi theo mục đích kinh doanh. | Danh sách hàng chờ, nút Tạo mới, Trạng thái Mở/Đóng hàng chờ, Cấu hình thời gian ước tính mỗi lượt, Prefix vé (A, B, C...). | Bật/tắt hàng chờ, chỉnh sửa tên, đặt giới hạn số lượng khách tối đa, tạo liên kết QR. |
@@ -192,15 +193,14 @@ flowchart TD
 | **SCR-07** | **Màn hình Vé chờ Khách hàng (Live Tracking)** | Khách hàng (Customer) | Khách theo dõi thứ tự trực tiếp trên điện thoại của mình. | Số thứ tự to bản (Ví dụ: #A-024), Số nhóm đang chờ trước bạn ("Còn 3 nhóm"), Thời gian ước tính ("~15 phút"), Trạng thái (Đang chờ / Đã gọi / Đang phục vụ), Nút "Tôi đang tới", Nút "Hủy lượt". | Tự động cập nhật không cần F5; phát chuông khi được gọi; bấm hủy lượt có hộp thoại xác nhận. |
 | **SCR-08** | **Màn hình TV Hiển thị công cộng (TV Display)** | Khách tại sảnh, Nhân viên | Hiển thị thông tin điều phối số to rõ trên màn hình TV sảnh chờ. | Khu vực "Đang phục vụ" (Số vé + Quầy tương ứng), Khu vực "Vừa gọi gần đây", Bảng mã QR động tự xoay vòng (Dynamic QR), Hiển thị thông điệp chào mừng. | Tự động phát âm thanh "Ding Dong" và đọc giọng nói TTS khi có số mới được gọi; mã QR tự refresh sau mỗi chu kỳ (ví dụ 30s). |
 | **SCR-09** | **Trung tâm Mã QR & Chống gian lận (QR Studio)** | Manager, Owner | Cung cấp công cụ xuất file in ấn mã QR và thiết lập bảo vệ chống lấy số ảo. | Bộ tạo Poster QR tĩnh (A4, A5, để bàn có logo thương hiệu), Tùy chọn bật Dynamic QR xoay vòng (15s - 75s), Tùy chọn Geolocation (bán kính GPS: 50m, 100m, 200m). | Tải file PDF/PNG in ấn chất lượng cao; cấu hình tọa độ vị trí cửa hàng; bật chế độ khóa lấy số từ xa. |
-| **SCR-10** | **Quản lý Gói cước & Nạp lượt (Billing & Packs)** | Owner | Mua thêm lượt chờ trả trước và theo dõi hạn mức sử dụng. | Thẻ hiển thị số lượt vé còn lại (Credit Balance), Bảng giá các gói nạp (Ví dụ: 1.000 vé / $19, 5.000 vé / $79...), Lịch sử giao dịch, Hóa đơn VAT. | Chọn gói nạp, chuyển hướng cổng thanh toán, cập nhật tức thì số dư lượt sau thanh toán thành công. |
-| **SCR-11** | **Báo cáo & Phân tích (Analytics & Export)** | Owner, Branch Manager | Cung cấp dữ liệu phục vụ cải tiến quy trình và đánh giá hiệu suất. | Biểu đồ lưu lượng khách theo khung giờ trong ngày, Thời gian chờ trung bình, Tỷ lệ vắng mặt/hủy lượt, Năng suất phục vụ theo nhân viên, Nút "Xuất CSV". | Chọn bộ lọc thời gian (Hôm nay, 7 ngày, 30 ngày, tùy chọn), tải báo cáo CSV chi tiết từng lượt vé. |
-| **SCR-12** | **Cài đặt & Phân quyền tổ chức (Settings & Team)** | Owner | Thiết lập hồ sơ doanh nghiệp, ngôn ngữ mặc định, quản lý nhân viên và API Keys. | Danh sách thành viên (Mời qua Email, gán vai trò Manager/Staff), Cấu hình thông báo âm thanh, Tùy chọn trường thông tin khách hàng, Quản lý API Key & Webhook. | Mời nhân viên mới, thu hồi quyền, tạo API Key tích hợp POS/CRM, lưu cài đặt thương hiệu. |
+| **SCR-10** | **Báo cáo & Phân tích (Analytics & Export)** | Owner, Branch Manager | Cung cấp dữ liệu phục vụ cải tiến quy trình và đánh giá hiệu suất. | Biểu đồ lưu lượng khách theo khung giờ trong ngày, Thời gian chờ trung bình, Tỷ lệ vắng mặt/hủy lượt, Năng suất phục vụ theo nhân viên, Nút "Xuất CSV". | Chọn bộ lọc thời gian (Hôm nay, 7 ngày, 30 ngày, tùy chọn), tải báo cáo CSV chi tiết từng lượt vé. |
+| **SCR-11** | **Cài đặt & Phân quyền tổ chức (Settings & Team)** | Owner | Thiết lập hồ sơ doanh nghiệp, ngôn ngữ mặc định, quản lý nhân viên và API Keys. | Danh sách thành viên (Mời qua Email, gán vai trò Manager/Staff), Cấu hình thông báo âm thanh, Tùy chọn trường thông tin khách hàng, Quản lý API Key & Webhook. | Mời nhân viên mới, thu hồi quyền, tạo API Key tích hợp POS/CRM, lưu cài đặt thương hiệu. |
 
 ---
 
 ## 9. BUSINESS SCOPE (XÁC ĐỊNH PHẠM VI SẢN PHẨM)
 
-Sản phẩm được định hướng phát triển đầy đủ tương đương QR Wait thương mại, lộ trình phát triển được phân kỳ thành 3 giai đoạn nhằm đảm bảo khả năng bàn giao giá trị nghiệp vụ sớm nhất nhưng không cắt giảm tính năng mục tiêu.
+Sản phẩm được định hướng phát triển đầy đủ tương đương QR Wait về mặt nghiệp vụ vận hành, lộ trình phát triển được phân kỳ thành 3 giai đoạn nhằm đảm bảo khả năng bàn giao giá trị nghiệp vụ sớm nhất nhưng không cắt giảm tính năng mục tiêu.
 
 ```mermaid
 flowchart LR
@@ -218,17 +218,16 @@ flowchart LR
         F6["Dynamic QR & Anti-cheat GPS"]
         F7["Public TV Display & TTS Audio"]
         F8["Multi-counter & Walk-in (+Guest)"]
-        F9["Prepaid Ticket Packs & Billing"]
-        F10["Analytics Dashboard & CSV Export"]
+        F9["Analytics Dashboard & CSV Export"]
     end
 
     subgraph P3["Phase 3: Scale & Ecosystem"]
         direction TB
-        F11["iOS Live Activities & Dynamic Island"]
-        F12["Public REST API & Webhooks"]
-        F13["Kiosk Mode Hardware Integration"]
-        F14["Multi-language (20+ locales)"]
-        F15["Advanced AI Queue Prediction"]
+        F10["iOS Live Activities & Dynamic Island"]
+        F11["Public REST API & Webhooks"]
+        F12["Kiosk Mode Hardware Integration"]
+        F13["Multi-language (20+ locales)"]
+        F14["Advanced AI Queue Prediction"]
     end
 
     P1 --> P2 --> P3
@@ -243,7 +242,6 @@ flowchart LR
 - Màn hình công cộng TV Display toàn màn hình, hỗ trợ phát giọng đọc tự động (Text-to-Speech) thông báo số vé và quầy gọi.
 - Hệ thống thông báo đẩy thời gian thực: Web Push, Audio Chime, đồng bộ hóa Live Activity / Dynamic Island (trên thiết bị di động hỗ trợ).
 - Báo cáo phân tích chuyên sâu (Analytics) và khả năng xuất dữ liệu thô (Raw CSV Export).
-- Hệ thống thanh toán mua lượt trả trước (Prepaid Ticket Packs) không hết hạn.
 - Hệ sinh thái tích hợp mở: REST API và Webhooks kết nối POS/CRM.
 
 ### 9.2. Phase 1 — Nền tảng Vận hành Hoàn chỉnh (Core Operational Foundation)
@@ -254,16 +252,14 @@ flowchart LR
 - Màn hình khách hàng theo dõi trực tiếp vị trí lượt chờ thời gian thực (Live Tracking qua WebSocket/SSE).
 - Bảng điều khiển nhân viên (Staff Panel) cơ bản: Danh sách chờ, nút Gọi khách, Bắt đầu phục vụ, Hoàn thành, Đánh dấu vắng mặt.
 - Phân quyền 3 vai trò: Organization Owner, Branch Manager, Staff.
-- Tặng 250 lượt chờ miễn phí ban đầu cho mỗi tài khoản doanh nghiệp mới.
 
-### 9.3. Phase 2 — Nâng cao Vận hành & Thương mại hóa (Advanced Operations & Commercialization)
-*Mục tiêu: Hoàn thiện tính năng phòng chống gian lận, truyền thông sảnh chờ và tích hợp thanh toán tự động.*
+### 9.3. Phase 2 — Nâng cao Vận hành & Trải nghiệm (Advanced Operations)
+*Mục tiêu: Hoàn thiện tính năng phòng chống gian lận, truyền thông sảnh chờ, tối ưu điều phối đa quầy và phân tích vận hành.*
 - Cơ chế Dynamic QR Code xoay vòng theo chu kỳ (15s - 75s) chống chụp ảnh lấy số từ xa.
 - Kiểm tra bán kính vị trí địa lý (Geolocation Verification) khi khách quét mã lấy số.
 - Màn hình TV Display công cộng cho sảnh chờ, tích hợp loa thông báo chuông và giọng đọc Text-to-Speech (Tiếng Việt & Tiếng Anh).
 - Hỗ trợ mô hình nhiều quầy phục vụ (Multi-counter dispatching) trong cùng một chi nhánh.
 - Thao tác thêm khách vãng lai thủ công (Manual Walk-in Ticket).
-- Cổng thanh toán trực tuyến mua gói lượt chờ (Prepaid Packs: 1.000 vé, 5.000 vé...) kèm trừ dần số dư theo lượt thực tế phát sinh.
 - Dashboard thống kê lưu lượng khách, thời gian chờ trung bình và chức năng xuất file báo cáo CSV.
 
 ### 9.4. Phase 3 — Mở rộng Hệ sinh thái & Tối ưu hóa (Ecosystem & Scale)
@@ -275,6 +271,7 @@ flowchart LR
 - Thuật toán AI ước tính thời gian chờ thích ứng dựa trên tốc độ xử lý thực tế của từng nhân viên theo khung giờ.
 
 ### 9.5. Out of Scope (Ngoài phạm vi nghiệp vụ)
+- Không xây dựng phân hệ Quản lý Gói cước, Mua bán Lượt vé và Cổng thanh toán trực tuyến (Billing, Ticket Packs & Payment Gateways) - hệ thống tập trung hoàn toàn vào phục vụ vận hành hàng đợi, không giới hạn lượt chờ và không tích hợp thu phí lượt vé.
 - Không xây dựng phân hệ quản lý kho, quản lý thực đơn (Menu) hoặc đặt món ăn tại bàn (Table Ordering) - những chức năng này thuộc về phần mềm POS chuyên dụng.
 - Không thu thập số điện thoại để thực hiện chiến dịch SMS Marketing / Zalo ZNS quảng cáo hàng loạt (nhằm giữ vững giá trị cốt lõi là bảo vệ quyền riêng tư tuyệt đối cho khách hàng).
 - Không cung cấp phần cứng vật lý đi kèm (hệ thống hoạt động thuần túy trên phần cứng sẵn có của khách hàng và doanh nghiệp: Smart TV, iPad, Smartphone, Laptop).
@@ -292,7 +289,7 @@ flowchart LR
 - **Độ ưu tiên:** Must Have (Phase 1).
 - **Tiêu chí nghiệm thu (Acceptance Criteria):**
   - Đăng ký tài khoản thành công qua Email hoặc Google SSO.
-  - Mỗi tổ chức được phân bổ mã định danh duy nhất và ví số dư lượt chờ (mặc định tặng 250 vé miễn phí).
+  - Mỗi tổ chức được phân bổ mã định danh duy nhất, không giới hạn số lượng lượt vé chờ tạo ra.
   - Cho phép cập nhật logo hiển thị trên giao diện vé chờ của khách hàng.
 - **Nguồn tham chiếu:** Trải nghiệm Onboarding tại `qrwait.app`.
 
@@ -450,7 +447,7 @@ flowchart LR
 
 ---
 
-### 10.6. Nhóm Báo cáo, Gói cước & Tích hợp (Analytics, Billing & Integrations)
+### 10.6. Nhóm Báo cáo & Tích hợp Mở (Analytics & Developer Integrations)
 
 #### BR-015: Báo cáo Thống kê Vận hành & Xuất file CSV (Analytics & Export)
 - **Mô tả:** Cung cấp số liệu thống kê về lưu lượng khách theo ngày/tuần/tháng, thời gian chờ trung bình, thời gian phục vụ, tỷ lệ hủy/vắng mặt và xuất dữ liệu thô ra file CSV.
@@ -463,19 +460,7 @@ flowchart LR
   - Nút "Xuất CSV" tải về dữ liệu chi tiết của từng lượt vé (Thời gian lấy số, thời gian gọi, thời gian xong, trạng thái kết thúc).
 - **Nguồn tham chiếu:** QR Wait Analytics & Data Export.
 
-#### BR-016: Quản lý Gói cước Trả trước không hết hạn (Prepaid Ticket Packs & Billing)
-- **Mô tả:** Mô hình tính phí dựa trên số lượng lượt chờ sử dụng (Pay-per-use). Doanh nghiệp mua các gói lượt vé trả trước (ví dụ 1.000 vé, 5.000 vé) và số dư này không bị mất đi qua từng tháng.
-- **Lý do nghiệp vụ:** Tạo lợi thế cạnh tranh vượt trội so với các phần mềm thu phí thuê bao cố định hàng tháng; thân thiện với khách hàng kinh doanh theo mùa vụ.
-- **Bên liên quan:** Organization Owner, Super Admin.
-- **Độ ưu tiên:** Should Have (Phase 2).
-- **Tiêu chí nghiệm thu (Acceptance Criteria):**
-  - Mỗi khi khách hàng lấy số thành công, hệ thống trừ 01 vé khỏi ví lượt chờ của tổ chức.
-  - Khi số dư còn dưới 10% gói, hệ thống gửi email cảnh báo sắp hết lượt.
-  - Cho phép thanh toán nạp thêm gói cước trực tuyến qua cổng thanh toán tự động.
-  - Miễn phí 250 vé đầu tiên cho mọi tài khoản mới đăng ký.
-- **Nguồn tham chiếu:** QR Wait Pricing Model ($19/1.000 tickets, no expiration).
-
-#### BR-017: Cổng Tích hợp Mở REST API & Webhooks (Developer Integrations)
+#### BR-016: Cổng Tích hợp Mở REST API & Webhooks (Developer Integrations)
 - **Mô tả:** Cung cấp API Key và cấu hình Webhooks để hệ thống bên ngoài (POS, CRM, ERP) có thể đẩy dữ liệu tạo vé hoặc lắng nghe sự kiện khi vé được gọi/hoàn tất.
 - **Lý do nghiệp vụ:** Cho phép các chuỗi lớn tích hợp hàng đợi mượt mà vào hệ thống bán hàng hoặc ứng dụng riêng của họ.
 - **Bên liên quan:** Organization Owner, Third-party Developers.
@@ -503,7 +488,7 @@ sequenceDiagram
     Customer->>QR: Dùng camera điện thoại quét mã QR
     QR-->>Customer: Mở trang Web Lấy số (Mobile Browser)
     Customer->>Engine: Chọn số lượng người (Party Size) & bấm "Lấy số"
-    Engine->>Engine: Kiểm tra hạn mức, vị trí GPS & sinh số vé mới
+    Engine->>Engine: Kiểm tra vị trí GPS & sinh số vé mới
     Engine-->>Customer: Cấp số (Ví dụ: #A-025) & chuyển sang Live Tracking
     
     rect rgb(240, 248, 255)
@@ -522,7 +507,7 @@ sequenceDiagram
     Customer->>Staff: Có mặt tại quầy xuất trình màn hình vé
     Staff->>Engine: Nhấn "BẮT ĐẦU PHỤC VỤ" (Trạng thái: SERVING)
     Staff->>Engine: Phục vụ xong, nhấn "HOÀN TẤT" (Trạng thái: COMPLETED)
-    Engine->>Engine: Trừ 01 lượt vé vào số dư tổ chức & Lưu vết báo cáo
+    Engine->>Engine: Ghi nhận hoàn tất và lưu vết dữ liệu báo cáo
 ```
 
 ### 11.2. Vòng đời Trạng thái Vé Chờ (Ticket State Lifecycle)
@@ -566,11 +551,9 @@ stateDiagram-v2
 | **BRULE-03** | **Thời hạn Mã QR Động (TOTP Expiration)** | Khi bật Dynamic QR Code trên TV Display hoặc Kiosk, mã QR chỉ có hiệu lực trong khoảng thời gian từ 15 đến 75 giây (mặc định 30 giây). Mã QR chứa chữ ký điện tử mã hóa thời gian thực. Bất kỳ lượt quét nào gửi lên sau khi mã QR trên màn hình đã xoay vòng sang mã mới đều bị coi là không hợp lệ. |
 | **BRULE-04** | **Ước tính Thời gian Chờ (Wait Time Calculation)** | Thời gian chờ ước tính hiển thị cho khách thứ $N$ trong hàng đợi được tính theo công thức: <br>$$\text{Thời gian chờ dự kiến} = (\text{Số nhóm đang chờ trước bạn}) \times \frac{\text{Thời gian phục vụ chuẩn một lượt}}{\text{Số lượng quầy đang mở hoạt động}}$$ |
 | **BRULE-05** | **Giới hạn Nhóm khách (Party Size Limit)** | Mỗi hàng chờ có thể thiết lập số lượng người tối thiểu và tối đa cho một lượt vé (Ví dụ hàng chờ Bàn nhỏ: 1 - 2 người; Hàng chờ Bàn lớn: 5 - 10 người). Khách hàng không thể chọn số lượng ngoài ngưỡng này. |
-| **BRULE-06** | **Chính sách Trừ Lượt Vé (Credit Deduction Rule)** | 01 lượt vé chỉ bị khấu trừ vào số dư tài khoản của tổ chức khi vé chuyển sang một trong các trạng thái kết thúc nghiệp vụ: `COMPLETED` (Đã phục vụ xong) hoặc `NO_SHOW` (Đã gọi nhưng vắng mặt). Nếu khách hàng tự bấm `CANCEL` (Hủy vé) khi chưa được gọi, tổ chức **không bị trừ vé**. |
-| **BRULE-07** | **Xử lý Khi Hết Lượt Chờ (Zero Credit Behavior)** | Khi số dư lượt vé trong ví tổ chức về 0, hệ thống không tự động ngắt kết nối các lượt đang dở dang nhưng sẽ tạm dừng không cho khách mới quét mã lấy số và thông báo: *"Dịch vụ tạm thời bảo trì, vui lòng liên hệ nhân viên"*. Chủ tài khoản phải nạp thêm gói vé để mở lại hàng chờ. |
-| **BRULE-08** | **Gọi lại và Giới hạn Bỏ qua (Recall & Skip Threshold)** | Nhân viên chỉ được nhấn gọi lại tối đa 03 lần cho một lượt vé. Khoảng cách giữa 2 lần nhấn gọi lại liên tiếp tối thiểu là 15 giây để tránh tình trạng spam chuông thông báo tới khách hàng. |
-| **BRULE-09** | **Cơ chế Phục hồi Vé Vắng mặt (No-Show Restoration Window)** | Một lượt vé bị đánh dấu `NO_SHOW` chỉ có thể được nhân viên phục hồi lại trong vòng tối đa 30 phút kể từ lúc bị đánh dấu. Quá 30 phút, vé tự động chuyển thành `EXPIRED` vĩnh viễn và không thể khôi phục. |
-| **BRULE-10** | **Điều phối Đa quầy (Multi-counter Conflict Prevention)** | Một lượt vé chỉ có thể được phục vụ bởi duy nhất một nhân viên tại một quầy ở một thời điểm. Khi nhân viên Quầy 1 bấm "Gọi tiếp theo", hệ thống khóa tức thì (Mutex Lock) bản ghi vé đó để Quầy 2 không thể bấm gọi trùng cùng một khách. |
+| **BRULE-06** | **Gọi lại và Giới hạn Bỏ qua (Recall & Skip Threshold)** | Nhân viên chỉ được nhấn gọi lại tối đa 03 lần cho một lượt vé. Khoảng cách giữa 2 lần nhấn gọi lại liên tiếp tối thiểu là 15 giây để tránh tình trạng spam chuông thông báo tới khách hàng. |
+| **BRULE-07** | **Cơ chế Phục hồi Vé Vắng mặt (No-Show Restoration Window)** | Một lượt vé bị đánh dấu `NO_SHOW` chỉ có thể được nhân viên phục hồi lại trong vòng tối đa 30 phút kể từ lúc bị đánh dấu. Quá 30 phút, vé tự động chuyển thành `EXPIRED` vĩnh viễn và không thể khôi phục. |
+| **BRULE-08** | **Điều phối Đa quầy (Multi-counter Conflict Prevention)** | Một lượt vé chỉ có thể được phục vụ bởi duy nhất một nhân viên tại một quầy ở một thời điểm. Khi nhân viên Quầy 1 bấm "Gọi tiếp theo", hệ thống khóa tức thì (Mutex Lock) bản ghi vé đó để Quầy 2 không thể bấm gọi trùng cùng một khách. |
 
 ---
 
@@ -597,7 +580,6 @@ stateDiagram-v2
 ### 14.2. Sự phụ thuộc (Dependencies)
 - **Hạ tầng Cloud & WebSocket/SSE:** Phụ thuộc vào dịch vụ máy chủ đám mây ổn định để duy trì kết nối thời gian thực liên tục cho hàng ngàn thiết bị khách hàng cùng lúc.
 - **Dịch vụ Giọng đọc Text-to-Speech (TTS):** Khả năng phát giọng đọc gọi số trên TV phụ thuộc vào Web Speech API của trình duyệt hoặc dịch vụ TTS đám mây (Google Cloud TTS / Azure Neural TTS) để có giọng đọc tự nhiên.
-- **Cổng Thanh toán Trực tuyến (Payment Gateways):** Phụ thuộc vào các cổng thanh toán (Stripe, VNPay, MoMo, VietQR) để xử lý việc nạp tiền mua gói lượt vé tự động 24/7.
 
 ---
 
@@ -622,36 +604,25 @@ stateDiagram-v2
 2. **Hiệu suất Điều phối Nhân viên (Staff Operational KPIs):**
    - **Average Call Handling Time:** Thời gian thao tác của nhân viên để gọi và chuyển trạng thái 1 lượt khách $\le 2$ giây.
    - **Attendant Adoption Rate:** 100% nhân viên quầy sử dụng thành thạo Staff Panel sau 15 phút hướng dẫn.
-3. **Chỉ số Tăng trưởng Sản phẩm SaaS (Business & Commercial KPIs):**
-   - **Trial-to-Paid Conversion:** Tối thiểu $15\%$ người dùng sử dụng hết 250 vé miễn phí thực hiện mua thêm gói nạp trả trước.
-   - **Repurchase Rate:** Tỷ lệ khách hàng doanh nghiệp nạp thêm lượt từ lần thứ 2 trở lên đạt $\ge 60\%$.
-   - **System Availability (Uptime):** Thời gian hoạt động liên tục của hệ thống hàng đợi đạt $99,9\%$.
+3. **Chỉ số Tăng trưởng & Ổn định Hệ thống (System Stability & Growth KPIs):**
+   - **Active Organizations:** Tốc độ tăng trưởng số lượng tổ chức/chi nhánh áp dụng vận hành thường xuyên hàng tháng.
+   - **Peak Queue Capacity:** Khả năng phục vụ đồng thời trên 10.000 lượt vé trong ngày cao điểm mà không có sự cố quá tải hay trễ thời gian thực.
+   - **System Availability (Uptime):** Thời gian hoạt động liên tục của hệ thống hàng đợi đạt $\ge 99,9\%$.
 
 ---
 
-## 17. BUSINESS MODEL (MÔ HÌNH KINH DOANH & ĐỊNH GIÁ)
+## 17. BUSINESS MODEL (MÔ HÌNH TRIỂN KHAI & GIÁ TRỊ KINH TẾ)
 
-Sản phẩm áp dụng triệt để mô hình kinh doanh **Usage-Based (Pay-per-use)** kết hợp **Freemium** tương đồng với QR Wait, tạo sự khác biệt lớn với các đối thủ thu phí định kỳ cố định:
+Theo quyết định định hướng sản phẩm của Product Owner, hệ thống hiện tại **loại bỏ phân hệ quản lý gói cước & nạp lượt (No Ticket Billing / Ticket Packs)**. Sản phẩm được định vị phục vụ tối đa nhu cầu vận hành thực tế không rào cản:
 
-### 17.1. Gói Dùng thử Khởi động (Free Starter Tier)
-- **Chi phí:** 0 VNĐ (Hoàn toàn miễn phí, không yêu cầu thẻ tín dụng).
-- **Hạn mức:** **250 lượt vé chờ đầu tiên**.
-- **Tính năng:** Đầy đủ tính năng cốt lõi (1 chi nhánh, 2 hàng chờ, giao diện nhân viên, Live Tracking thời gian thực).
-- **Mục đích:** Cho phép doanh nghiệp kiểm chứng hiệu quả thực tế tại cửa hàng trước khi trả tiền.
+### 17.1. Triển khai Không Rào cản (Zero-Barrier Deployment)
+- **Không giới hạn lượt vé chờ:** Mọi tổ chức đăng ký đều có thể tạo và vận hành hàng đợi liên tục mà không bị gián đoạn hoạt động vì hạn mức vé hay lỗi cổng thanh toán.
+- **Tối ưu hóa giá trị vận hành cốt lõi:** Giải phóng doanh nghiệp khỏi chi phí đầu tư phần cứng cồng kềnh (máy in nhiệt, thẻ rung pager), tối ưu hóa luồng khách và tốc độ phục vụ tại điểm bán.
 
-### 17.2. Các Gói Lượt Trả trước Không hết hạn (Prepaid Ticket Packs)
-*Đặc điểm quan trọng nhất: Lượt vé đã mua **KHÔNG BAO GIỜ HẾT HẠN** (Never Expire). Doanh nghiệp có thể sử dụng trong 1 tháng, 6 tháng hoặc 2 năm tùy theo lưu lượng khách.*
-
-| Gói cước (Ticket Pack) | Số lượng lượt vé | Đơn giá tham chiếu (USD) | Đơn giá quy đổi ước tính (VNĐ) | Đơn giá / 1 lượt vé | Phù hợp với đối tượng |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **Gói Mini (1K)** | 1.000 vé | $19 | ~475.000 đ | 475 đ / vé | Quán cà phê nhỏ, phòng khám tư, sự kiện 1-2 ngày |
-| **Gói Standard (5K)** | 5.000 vé | $79 | ~1.975.000 đ | 395 đ / vé | Nhà hàng F&B đông khách, bãi biển, tiệm nail/spa |
-| **Gói Pro (10K)** | 10.000 vé | $139 | ~3.475.000 đ | 347 đ / vé | Chuỗi nhà hàng, khu du lịch, sự kiện triển lãm lớn |
-| **Gói Enterprise (50K+)** | 50.000+ vé | Liên hệ | Chiết khấu riêng | $< 250$ đ / vé | Chuỗi bán lẻ toàn quốc, bệnh viện, cơ quan dịch vụ công |
-
-### 17.3. Giá trị kinh tế đem lại cho khách hàng doanh nghiệp
-- Doanh nghiệp không phải chịu chi phí duy trì phần mềm vào những tháng vắng khách hoặc thời gian đóng cửa bảo trì.
-- Chi phí 350đ - 475đ cho mỗi lượt phục vụ khách hàng thành công là cực kỳ thấp so với chi phí in giấy số nhiệt kèm bảo dưỡng máy móc hoặc mua sắm thẻ rung pager.
+### 17.2. Định hướng Mở rộng trong Tương lai (Future Expansion - Out of Scope)
+- Nếu sau này có nhu cầu thương mại hóa, hệ thống có thể xem xét các mô hình:
+  - Phân phối theo dạng tài khoản doanh nghiệp tùy biến (Enterprise White-label / Custom Domain / Private Cloud Instance).
+  - Thu phí hỗ trợ kỹ thuật và tích hợp chuyên sâu (Custom Integration Services cho chuỗi POS/ERP lớn).
 
 ---
 
