@@ -9,8 +9,8 @@
 | :--- | :--- |
 | **Tên tài liệu** | Software Requirements Specification (SRS) – Hệ thống Quản lý Hàng đợi Ảo QR Wait |
 | **Mã tài liệu** | SRS-QRWAIT-01 |
-| **Dựa trên** | BRD-QRWAIT-01 v1.2 (Đã phê duyệt) |
-| **Phiên bản** | 1.1 (Cập nhật phản biện: Reset phiên hàng chờ, Xác nhận đang đến, Chuyển quầy/hàng chờ, Giới hạn nhóm) |
+| **Dựa trên** | BRD-QRWAIT-01 v1.3 (Đã phê duyệt) |
+| **Phiên bản** | 1.2 (Cập nhật QR theo Ca/Đổi thủ công, Đồng hồ 2 phút gọi số & Đồng bộ 2 chiều, Khôi phục TTS có Bật/Tắt, Tạm dừng Open API & Webhooks) |
 | **Ngày tạo** | 23/11/2026 |
 | **Tác giả** | Senior Business Analyst / System Analyst |
 | **Trạng thái** | Chuẩn hóa hoàn thiện (Approved for Implementation) |
@@ -23,6 +23,7 @@
 | :--- | :--- | :--- | :--- |
 | **1.0** | 23/11/2026 | Senior BA/SA | Khởi tạo tài liệu SRS theo tinh thần IEEE 29148 từ BRD v1.2 đã duyệt. |
 | **1.1** | 23/11/2026 | Senior BA/SA | Sửa đổi & bổ sung theo đánh giá chất lượng: Bổ sung cấu hình Party Size (FR-009), Reset phiên hàng chờ (FR-011b), Khách xác nhận đang đến (FR-022b), Đặc tả chi tiết FR-024, Chuyển quầy/hàng chờ (FR-029b), Cập nhật ma trận phân quyền hủy vé cho Staff và chuẩn hóa Mermaid diagrams. |
+| **1.2** | 26/11/2026 | Senior BA/SA | Đồng bộ với BRD v1.3: (1) Tạm dừng Module M11 (Open API & Webhooks); (2) Thay Dynamic QR xoay 30s bằng QR cố định theo Queue/Ca + nút Đổi mã QR thủ công; (3) Bổ sung đồng hồ đếm 2 phút (không khóa thao tác) ở bước CALLED, đồng bộ 2 chiều xác nhận đến nơi, khóa `@Version` chống bấm trùng; (4) Khôi phục Text-to-Speech (TTS) trên TV Display kèm công tắc Bật/Tắt và Audio Queue. |
 
 ---
 
@@ -53,7 +54,7 @@
 
 Tài liệu này là **Software Requirements Specification (SRS)** chính thức cho dự án **QR Wait** – Hệ thống Quản lý Hàng đợi Ảo Thông minh. SRS mô tả đầy đủ và chính xác các yêu cầu chức năng (Functional Requirements) và phi chức năng (Non-functional Requirements) của hệ thống, nhằm phục vụ làm cơ sở thiết kế kiến trúc kỹ thuật, phát triển phần mềm, thiết kế giao diện và xây dựng bộ kiểm thử chất lượng (QA/QC).
 
-Tài liệu này được xây dựng dựa trên BRD-QRWAIT-01 v1.2 đã được phê duyệt và tuân thủ chặt chẽ tinh thần của chuẩn **IEEE 29148:2018** về đặc tả yêu cầu phần mềm.
+Tài liệu này được xây dựng dựa trên BRD-QRWAIT-01 v1.3 đã được phê duyệt và tuân thủ chặt chẽ tinh thần của chuẩn **IEEE 29148:2018** về đặc tả yêu cầu phần mềm.
 
 ## 1.2 Scope (Phạm vi)
 
@@ -62,18 +63,17 @@ Hệ thống **QR Wait** là nền tảng SaaS (Software-as-a-Service) đa tổ 
 **Trong phạm vi (In Scope):**
 - Quản lý tài khoản tổ chức, chi nhánh, hàng chờ và quầy phục vụ (Multi-tenant SaaS).
 - Hệ thống lấy số thứ tự tự phục vụ qua Mobile Browser (Zero-app, Zero-signup, bắt buộc nhập tên khách hàng).
-- Bảng điều khiển nhân viên với thao tác 1 chạm (Staff Panel cảm ứng tối ưu tốc độ).
-- Màn hình theo dõi lượt chờ thời gian thực cho khách hàng (Live Tracking qua WebSocket/SSE).
-- Màn hình TV hiển thị công cộng (TV Display) với chuông báo âm thanh "Ding Dong" và hiệu ứng chớp sáng trực quan (không sử dụng giọng đọc TTS).
-- Cơ chế chống gian lận lấy số: QR Code động xoay vòng (Dynamic QR) và xác thực vị trí địa lý (GPS Geolocation Radius).
+- Bảng điều khiển nhân viên với thao tác 1 chạm (Staff Panel cảm ứng tối ưu tốc độ, kèm đồng hồ 2 phút không khóa thao tác khi gọi số).
+- Màn hình theo dõi lượt chờ thời gian thực cho khách hàng (Live Tracking qua WebSocket/SSE, đồng bộ 2 chiều xác nhận đã đến).
+- Màn hình TV hiển thị công cộng (TV Display) với hiệu ứng chớp sáng, chuông báo "Ding Dong" và giọng đọc Text-to-Speech (TTS) theo hàng đợi âm thanh (có công tắc Bật/Tắt).
+- Cơ chế chống gian lận lấy số: QR cố định theo Queue kèm nút Đổi mã QR mới theo Ca/thủ công và xác thực vị trí địa lý (GPS Geolocation Radius).
 - Quản lý khách vãng lai thủ công (Manual Walk-in Ticket).
 - Quy trình xử lý khách vắng mặt đếm ngược 15 phút và tự động hủy vé (15-Minute No-Show Auto-Cancel).
 - Báo cáo thống kê lưu lượng và xuất file dữ liệu chi tiết ra CSV.
-- REST API và Webhooks cho tích hợp hệ thống bên ngoài (Phase 3).
 
 **Ngoài phạm vi (Out of Scope):**
+- **Tạm dừng phân hệ Open REST API & Webhooks (Module M11):** Tạm gác để tập trung hoàn thiện luồng vận hành lõi.
 - Quản lý gói cước, nạp lượt và cổng thanh toán trực tuyến (Billing & Ticket Packs) - hệ thống không áp đặt giới hạn lượt vé.
-- Tính năng Text-to-Speech (TTS) trên TV Display (tạm thời loại bỏ theo phê duyệt).
 - Quản lý thực đơn, đặt món ăn tại bàn (Table Ordering) và hệ thống máy bán hàng POS.
 - Thu thập số điện thoại hoặc email khách hàng cho mục đích tiếp thị (SMS/Zalo Marketing).
 - Cung cấp hoặc bảo hành phần cứng vật lý chuyên dụng.
@@ -113,13 +113,13 @@ Hệ thống được phát triển trên nền tảng **Java Spring Boot** cho 
 | **Ticket (Vé chờ)** | Bản ghi số thứ tự cấp cho một nhóm khách, gắn liền với một Queue cụ thể |
 | **FIFO** | First-In, First-Out – Nguyên tắc điều phối: Khách vào trước được phục vụ trước |
 | **Party Size** | Quy mô số lượng người trong một nhóm khách trên một vé |
-| **Static QR** | Mã QR cố định in trên giấy hoặc biển mica, trỏ về URL check-in của hàng chờ |
-| **Dynamic QR** | Mã QR hiển thị trên màn hình số, tự động làm mới sau mỗi 15–75 giây |
-| **TOTP** | Time-based One-Time Password – Cơ chế chữ ký thời gian dùng trong Dynamic QR |
+| **Static QR** | Mã QR cố định mặc định của hàng chờ dùng để in giấy/biển mica, trỏ về URL check-in |
+| **Session / Regenerated QR** | Mã QR cập nhật theo Ca/Phiên hoặc khi bấm nút "Đổi mã QR mới", lập tức vô hiệu hóa mã cũ |
 | **Live Tracking** | Trang web theo dõi vé chờ của khách hàng, tự động cập nhật thời gian thực |
 | **No-Show** | Trạng thái vé khi khách hàng không có mặt tại quầy sau nhiều lần gọi |
 | **Walk-in** | Khách vãng lai không có smartphone được nhân viên tạo vé thủ công |
-| **TTS** | Text-to-Speech – Công nghệ phát giọng đọc tự động (ngoài phạm vi hiện tại) |
+| **TTS** | Text-to-Speech – Công nghệ phát giọng đọc mời số vé tới quầy trên TV Display (có công tắc Bật/Tắt) |
+| **Audio Queue** | Hàng đợi phát âm thanh tuần tự trên TV giúp các quầy không đọc chồng chéo lên nhau |
 | **WebSocket/SSE** | Giao thức truyền dữ liệu hai chiều/một chiều thời gian thực giữa máy chủ và client |
 | **PWA** | Progressive Web App – Ứng dụng web hoạt động mượt mà như app bản địa trên di động |
 | **Device Token** | Mã UUID ngẫu nhiên lưu trong LocalStorage của trình duyệt khách (không phải PII) |
@@ -133,7 +133,7 @@ Hệ thống được phát triển trên nền tảng **Java Spring Boot** cho 
 
 | STT | Tài liệu | Phiên bản | Ghi chú |
 | :--- | :--- | :--- | :--- |
-| 1 | BRD-QRWAIT-01 – Business Requirements Document | v1.2 (23/11/2026) | Tài liệu yêu cầu nghiệp vụ chính thức, đã phê duyệt |
+| 1 | BRD-QRWAIT-01 – Business Requirements Document | v1.3 (26/11/2026) | Tài liệu yêu cầu nghiệp vụ chính thức, đã phê duyệt |
 | 2 | QR Wait Reference Product | – | https://qrwait.app/vi/ – Sản phẩm chuẩn tham chiếu trải nghiệm |
 | 3 | IEEE 29148:2018 Standard | – | Chuẩn quốc tế về Systems and software engineering — Life cycle processes — Requirements engineering |
 | 4 | Prompt SRS (02_Prompt.md) | – | Hướng dẫn và quy tắc biên soạn SRS nội bộ dự án |
@@ -160,11 +160,11 @@ Platform Super Admin
 
 **Đặc tả kiến trúc công nghệ:**
 - **Backend:** Java 17+, Spring Boot 3.x (Spring Web, Spring Security, Spring Data JPA, Spring WebSocket với STOMP/SockJS broker).
-- **Database:** PostgreSQL (Lưu trữ quan hệ, Transaction isolation level READ COMMITTED với Pesimistic/Optimistic Locking cho Mutex).
-- **Caching & Scheduled Tasks:** Redis (Cache hàng chờ nóng, Dynamic QR TOTP validation) và Spring TaskScheduler (@Scheduled).
+- **Database:** PostgreSQL (Lưu trữ quan hệ, Transaction isolation level READ COMMITTED với Pessimistic `SKIP LOCKED` & Optimistic `@Version` Locking chống xung đột).
+- **Caching & Scheduled Tasks:** Redis (Cache hàng chờ nóng, cache audio TTS) và Spring TaskScheduler (@Scheduled).
 - **Real-time Engine:** WebSocket STOMP qua SockJS với fallback SSE cho các trình duyệt mạng yếu.
 - **Frontend Client:** Vue.js / React (Single Page Application đóng gói PWA), Responsive hoàn hảo cho Desktop (Chrome/Edge) và Mobile (iOS Safari / Android Chrome).
-- **TV Display Engine:** HTML5 Web Audio API (phát file âm thanh chuông "Ding Dong" nhẹ nhàng, không bị block autoplay).
+- **TV Display Engine:** HTML5 Web Audio API + Audio Queue (phát chuông "Ding Dong" tuần tự trước giọng đọc TTS tiếng Việt, có nút kích hoạt autoplay lần đầu).
 
 ## 2.2 Product Functions (Tóm tắt chức năng sản phẩm)
 
@@ -173,14 +173,14 @@ Platform Super Admin
 | **M1** | Auth & IAM | Đăng ký tổ chức, đăng nhập Email/Google SSO, quản lý nhân sự và phân quyền trực tiếp |
 | **M2** | Org & Branch Management | Quản lý thông tin tổ chức, logo thương hiệu, tạo chi nhánh và cấu hình tọa độ GPS |
 | **M3** | Queue & Counter Config | Tạo hàng chờ đa dạng (Prefix, Party Size, Service Time), thiết lập quầy, quản lý phiên reset |
-| **M4** | QR Code & Anti-fraud | Xuất Poster QR tĩnh (A4, A5), kích hoạt Dynamic QR xoay vòng TOTP, kiểm tra bán kính GPS |
-| **M5** | Customer Queue Experience | Form lấy số (bắt buộc tên), cấp số FIFO, màn hình Live Tracking realtime, khách tự hủy vé |
-| **M6** | Staff Calling Operations | Staff Panel 1 chạm: Chọn quầy, gọi tiếp theo (Mutex), gọi lại, bắt đầu, hoàn tất, chuyển quầy |
+| **M4** | QR Code & Anti-fraud | Xuất Poster QR tĩnh (A4, A5), nút Đổi mã QR mới (thủ công/theo Ca), kiểm tra bán kính GPS |
+| **M5** | Customer Queue Experience | Form lấy số (bắt buộc tên), cấp số FIFO, Live Tracking đồng bộ 2 chiều, khách tự hủy vé |
+| **M6** | Staff Calling Operations | Staff Panel 1 chạm: Chọn quầy, gọi tiếp (Mutex + `@Version`), đồng hồ 2 phút, gọi lại, phục vụ, chuyển quầy |
 | **M7** | No-Show Handling | Đánh dấu vắng mặt, đếm ngược 15 phút, nhân viên phục hồi vé, hệ thống tự hủy sau timeout |
-| **M8** | Public TV Display | Hiển thị toàn màn hình số đang phục vụ theo quầy, hiệu ứng chớp sáng, chuông Ding Dong, QR động |
+| **M8** | Public TV Display | Hiển thị toàn màn hình số đang phục vụ theo quầy, chớp sáng, Ding Dong, TTS (Bật/Tắt) + Audio Queue, QR sảnh |
 | **M9** | Manual Walk-in | Tạo vé thủ công cho khách không có smartphone tham gia vào hàng chờ FIFO bình thường |
 | **M10** | Analytics & Data Export | Thống kê biểu đồ cột lưu lượng theo giờ, thời gian chờ trung bình, xuất dữ liệu thô ra CSV |
-| **M11** | Open API & Webhooks | Cung cấp RESTful API và Webhook bắn sự kiện trạng thái vé cho hệ thống bên thứ ba (Phase 3) |
+| **M11** | Open API & Webhooks *(Tạm dừng)* | Tạm dừng phát triển (Deferred) theo quyết định PO để ưu tiên luồng vận hành lõi |
 
 ## 2.3 User Classes and Characteristics (Phân loại người dùng)
 
@@ -205,7 +205,7 @@ Platform Super Admin
 
 1. **Ràng buộc Quyền riêng tư (Zero-PII & Mandatory Display Name):** Không được phép lưu trữ số điện thoại, email hay giấy tờ tùy thân của khách hàng. Chỉ bắt buộc nhập Tên gọi hiển thị (Display Name) để xưng hô.
 2. **Ràng buộc Phân hệ Doanh thu (Zero-Billing Overhead):** Không xây dựng tính năng mua bán lượt vé, quản lý gói cước hay cổng thanh toán trực tuyến.
-3. **Ràng buộc Âm thanh TV Display (No-TTS Constraint):** Không sử dụng công nghệ Text-to-Speech đọc số trên TV. Chỉ sử dụng chuông âm thanh HTML5 Web Audio "Ding Dong" kèm hiệu ứng chớp sáng.
+3. **Ràng buộc Âm thanh TV Display (Chime + Toggleable TTS + Audio Queue):** TV Display phát chuông "Ding Dong" trước, sau đó phát giọng đọc TTS tiếng Việt mời số vé tới quầy qua hàng đợi tuần tự (Audio Queue) để không bị đọc đè khi nhiều quầy gọi cùng lúc. Hệ thống phải có công tắc Bật/Tắt tính năng đọc TTS.
 4. **Ràng buộc Công nghệ Backend:** Nền tảng Backend bắt buộc phát triển bằng **Java Spring Boot**.
 5. **Ràng buộc Giao diện Khách hàng (Zero-Install PWA):** 100% chức năng của khách hàng chạy trực tiếp trên Mobile Browser mà không yêu cầu cài ứng dụng từ App Store / Google Play.
 6. **Ràng buộc Truy cập TV Display:** TV kết nối qua Secret Screen URL dạng token tĩnh; không yêu cầu nhập username/password trên TV.
@@ -274,8 +274,8 @@ Platform Super Admin
 - **Mã định danh:** ACT-06
 - **Tên tác nhân:** TV Display Screen
 - **Mô tả:** Thiết bị hiển thị kỹ thuật số tại sảnh kết nối qua Secret Screen URL.
-- **Trách nhiệm:** Trình chiếu danh sách số đang phục vụ tại từng quầy, danh sách số vừa gọi, mã QR động và tự động phát âm thanh chuông "Ding Dong" khi có sự kiện gọi số mới.
-- **Quyền hạn:** Nhận luồng dữ liệu hiển thị thời gian thực theo Screen Token; tự động kích hoạt Audio Chime.
+- **Trách nhiệm:** Trình chiếu danh sách số đang phục vụ tại từng quầy, danh sách số vừa gọi, mã QR của hàng chờ (cập nhật tức thì khi có đổi mã mới) và phát chuông "Ding Dong" kèm giọng đọc TTS (nếu bật).
+- **Quyền hạn:** Nhận luồng dữ liệu hiển thị thời gian thực theo Screen Token; tự động kích hoạt Audio Chime & TTS Audio Queue (có công tắc Bật/Tắt).
 - **Hạn chế:** Hoàn toàn chỉ đọc (Read-only); không thể gửi bất kỳ lệnh điều khiển hay thay đổi trạng thái vé nào lên hệ thống.
 
 ## 3.2 Role Permission Matrix (Ma trận phân quyền chi tiết)
@@ -290,7 +290,8 @@ Platform Super Admin
 | **Cấu hình Quầy phục vụ (Counters)** | CRUD | CRUD | CRUD (own) | Read | – | – |
 | **Tạo tài khoản Nhân viên (Staff)** | CRUD | CRUD | Create/Revoke (own) | – | – | – |
 | **Tạo & Tải Poster QR tĩnh (A4, A5)** | – | Create | Create | – | – | – |
-| **Cấu hình Dynamic QR Code** | – | Configure | Configure | – | – | – |
+| **Đổi mã QR mới (Thủ công / Theo Ca)** | – | Execute | Execute | Execute | – | – |
+| **Bật / Tắt giọng đọc TTS trên TV** | – | Configure | Configure | Configure | – | – |
 | **Sinh Secret Token cho TV Display** | – | Create | Create | – | – | – |
 | **Truy cập Màn hình TV Display** | – | Read | Read | Read | – | Read (Token) |
 | **Chọn Quầy làm việc khi vào ca** | – | – | – | Select | – | – |
@@ -307,7 +308,7 @@ Platform Super Admin
 | **Xem Live Tracking thời gian thực** | – | – | – | – | Read (Vé mình) | – |
 | **Xem Báo cáo Analytics** | Read all | Read (own Org) | Read (own Branch) | – | – | – |
 | **Xuất dữ liệu chi tiết ra CSV** | – | Export | Export | – | – | – |
-| **Quản lý API Keys & Webhooks** | – | CRUD | – | – | – | – |
+| **Quản lý API Keys & Webhooks *(Tạm dừng)*** | – | *(Deferred)* | – | – | – | – |
 
 ---
 
@@ -620,23 +621,24 @@ Platform Super Admin
 ---
 
 **Requirement ID:** FR-013  
-**Requirement Name:** Mã QR Động xoay vòng chống gian lận (Dynamic Rotating QR Code Engine)  
-**Description:** Hệ thống cung cấp cơ chế sinh mã QR động tự động làm mới mã sau mỗi chu kỳ định sẵn (từ 15 đến 75 giây, mặc định 30 giây) hiển thị trên màn hình TV Display hoặc máy tính bảng sảnh chờ, ngăn chặn triệt để hành vi chụp ảnh mã QR mang về nhà quét từ xa.  
-**Actor:** Organization Owner, Branch Manager (Cấu hình); TV Display (Trình chiếu)  
+**Requirement Name:** Đổi Mã QR Thủ công / Theo Ca làm việc (Manual & Session QR Token Rotation)  
+**Description:** Mặc định mỗi hàng chờ giữ nguyên 01 mã QR cố định (phục vụ in poster giấy dán cửa hoặc chiếu trên TV/Tablet). Khi quản lý hoặc nhân viên bấm nút **"Đổi mã QR mới"** (hoặc bật tùy chọn tự đổi khi mở Ca/Phiên làm việc mới), hệ thống sinh `qr_token` mới, lập tức vô hiệu hóa mã QR cũ và cập nhật realtime mã mới lên màn hình TV Display.  
+**Actor:** Organization Owner, Branch Manager, Staff (Thực hiện); TV Display (Trình chiếu)  
 **Priority:** Should Have (Phase 2)  
-**Preconditions:** Hàng chờ đang mở; TV Display đang hoạt động.  
-**Trigger:** Bật tùy chọn "Dynamic QR Code" trong QR Studio (SCR-09).  
+**Preconditions:** Hàng chờ đã được tạo.  
+**Trigger:** Người dùng nhấn "Đổi mã QR mới" trong QR Studio (SCR-09) hoặc bấm mở ca mới (khi bật tùy chọn tự đổi theo ca).  
 **Main Flow:**  
-1. Quản lý cấu hình chu kỳ xoay vòng (ví dụ: 30 giây).  
-2. Backend sử dụng thuật toán HMAC-SHA256 kết hợp Secret Key của hàng chờ và Unix Timestamp để sinh chuỗi mã TOTP động.  
-3. Màn hình TV Display nhận mã mới qua WebSocket định kỳ và render mã QR mới kèm thanh đồng hồ đếm ngược trực quan.  
-4. Khi khách quét mã, client gửi chuỗi token mã hóa lên máy chủ để xác thực.  
+1. Người dùng nhấn nút "Đổi mã QR mới".  
+2. Hệ thống hiển thị hộp thoại cảnh báo: *"Mã QR cũ trên giấy in hoặc ảnh chụp màn hình trước đó sẽ mất hiệu lực ngay lập tức. Bạn có chắc muốn đổi mã QR mới không?"*.  
+3. Người dùng xác nhận.  
+4. Backend sinh chuỗi `qr_token` ngẫu nhiên mới và lưu vào bản ghi `Queue`.  
+5. Hệ thống phát sự kiện WebSocket tới TV Display (SCR-08) để render mã QR mới ngay lập tức mà không cần tải lại TV.  
 **Business Rules:** BRL-003; BRD BR-007  
-**Input:** Queue ID, Chu kỳ làm mới (15s – 75s)  
-**Output:** Luồng mã QR động tự làm mới trên TV Display  
+**Input:** Queue ID, Xác nhận đổi mã (hoặc cài đặt `rotate_qr_on_session`)  
+**Output:** `qr_token` mới được lưu; TV Display cập nhật mã QR mới tức thì  
 **Acceptance Criteria:**  
-- AC-013-1: Mã QR tự động làm mới chính xác theo chu kỳ cấu hình mà không làm chớp giật màn hình TV.  
-- AC-013-2: Bất kỳ yêu cầu check-in nào gửi mã đã hết hạn quá thời gian cho phép (ân hạn tối đa 5 giây do độ trễ mạng) đều bị hệ thống từ chối.
+- AC-013-1: Nếu không bấm đổi mã (và tắt tự đổi theo ca), mã QR mặc định giữ nguyên ổn định lâu dài.  
+- AC-013-2: Ngay khi bấm đổi mã mới, màn hình TV Display cập nhật mã QR trong vòng $\le 1.5$ giây và mọi lượt quét từ mã QR cũ bị từ chối.
 
 ---
 
@@ -666,22 +668,21 @@ Platform Super Admin
 ---
 
 **Requirement ID:** FR-015  
-**Requirement Name:** Từ chối Mã QR Động Hết hạn (Expired Dynamic QR Rejection)  
-**Description:** Hệ thống từ chối cấp vé đối với các yêu cầu sử dụng mã QR động đã hết hạn hiệu lực và hiển thị thông báo hướng dẫn khách quét lại mã mới trên màn hình.  
+**Requirement Name:** Từ chối Mã QR Cũ Đã Bị Thu hồi (Revoked QR Code Rejection)  
+**Description:** Khi quản lý đã đổi mã QR mới cho hàng chờ, mọi yêu cầu truy cập check-in bằng `qr_token` cũ (từ ảnh chụp màn hình hoặc giấy in cũ) đều bị hệ thống từ chối và hướng dẫn khách quét mã QR mới nhất.  
 **Actor:** Customer (ACT-05), System  
 **Priority:** Should Have (Phase 2)  
-**Preconditions:** Dynamic QR đang được bật cho hàng chờ.  
-**Trigger:** Khách hàng quét ảnh chụp màn hình mã QR cũ gửi lên hệ thống.  
+**Preconditions:** Hàng chờ đã thực hiện đổi `qr_token` mới.  
+**Trigger:** Khách hàng quét ảnh chụp màn hình hoặc mã QR cũ gửi lên hệ thống.  
 **Main Flow:**  
-1. Server giải mã token gửi từ URL quét mã.  
-2. Server so sánh timestamp trong token với thời gian hiện tại.  
-3. Nếu độ lệch vượt quá chu kỳ cấu hình (+5 giây ân hạn): Server từ chối xử lý và trả về mã lỗi `QR_CODE_EXPIRED`.  
-4. Giao diện khách hàng hiển thị thông báo rõ ràng: *"Mã QR này đã hết hạn do được chụp lại trước đó. Vui lòng hướng camera quét mã QR mới đang hiển thị trực tiếp trên màn hình."*  
+1. Server kiểm tra `qr_token` trong URL quét mã so với `queue.qr_token` hiện tại.  
+2. Nếu không khớp: Server từ chối xử lý và trả về mã lỗi `QR_CODE_REVOKED`.  
+3. Giao diện khách hàng hiển thị thông báo rõ ràng: *"Mã QR này đã được cửa hàng thay mới hoặc đã hết hiệu lực. Vui lòng hướng camera quét mã QR hiện tại trên màn hình/bảng mới."*  
 **Business Rules:** BRL-003  
-**Input:** Dynamic QR Token  
-**Output:** Mã lỗi `QR_CODE_EXPIRED` và màn hình hướng dẫn quét lại  
+**Input:** QR Token từ URL quét  
+**Output:** Mã lỗi `QR_CODE_REVOKED` và màn hình hướng dẫn quét mã mới  
 **Acceptance Criteria:**  
-- AC-015-1: Ảnh chụp màn hình mã QR đã qua chu kỳ không thể sử dụng để lấy vé thành công.
+- AC-015-1: Ảnh chụp màn hình mã QR từ ca trước hoặc trước lúc bấm đổi mã không thể sử dụng để lấy vé thành công.
 
 ---
 
@@ -830,23 +831,25 @@ Platform Super Admin
 ---
 
 **Requirement ID:** FR-022  
-**Requirement Name:** Khách hàng Xác nhận Đang Di chuyển Tới Quầy (Customer Arrival Acknowledgment)  
-**Description:** Khi được gọi số, khách hàng có thể nhấn nút "TÔI ĐANG ĐẾN" trên màn hình điện thoại. Hành động này lập tức gửi tín hiệu thời gian thực về Staff Panel để nhân viên biết khách đang di chuyển lại quầy và không vội vã đánh dấu vắng mặt.  
+**Requirement Name:** Đồng bộ 2 Chiều Xác nhận Khách Đang đến / Đã tới (Two-Way Arrival Sync)  
+**Description:** Khi được gọi số (`CALLED`), khách hàng có thể nhấn nút "TÔI ĐANG ĐẾN / ĐÃ TỚI" trên điện thoại để gửi tín hiệu báo cho nhân viên. Đồng thời, khi nhân viên bấm "BẮT ĐẦU PHỤC VỤ" tại quầy, màn hình khách hàng lập tức đồng bộ chuyển sang trạng thái đang phục vụ.  
 **Actor:** Customer (ACT-05), Staff (ACT-04)  
 **Priority:** Must Have (Phase 1)  
 **Preconditions:** Vé đang ở trạng thái `CALLED`.  
-**Trigger:** Khách hàng nhấn nút "TÔI ĐANG ĐẾN" trên SCR-07.  
+**Trigger:** Khách hàng nhấn nút "TÔI ĐANG ĐẾN / ĐÃ TỚI" trên SCR-07 (hoặc nhân viên nhấn "BẮT ĐẦU PHỤC VỤ" trên SCR-05).  
 **Main Flow:**  
-1. Khách hàng nhấn nút "TÔI ĐANG ĐẾN".  
-2. Client gửi message WebSocket lên server: `ACK_ARRIVAL`.  
-3. Server cập nhật cờ `is_acknowledged = true` cho vé và gửi event đến Staff Panel.  
-4. Trên Staff Panel của nhân viên, thẻ vé của khách lập tức hiển thị huy hiệu (Badge) màu xanh phát sáng: **"Khách đang tới"**.  
-5. Trên điện thoại khách, nút chuyển sang trạng thái: *"Đã thông báo cho nhân viên. Vui lòng tiến lại quầy phục vụ."*  
+1. Khách hàng nhấn nút "TÔI ĐANG ĐẾN / ĐÃ TỚI".  
+2. Client gửi message WebSocket/REST lên server: `ACK_ARRIVAL`.  
+3. Server cập nhật cờ `is_acknowledged = true` (vẫn giữ trạng thái `CALLED`, không tự chuyển `SERVING` để chống khách bấm khống từ xa) và gửi event tới Staff Panel.  
+4. Trên Staff Panel của nhân viên, thẻ vé của khách lập tức hiển thị huy hiệu (Badge) màu xanh phát sáng: **"Khách báo đã tới / đang tới"**.  
+5. Trên điện thoại khách, nút chuyển sang trạng thái: *"Đã báo cho nhân viên. Vui lòng tiến lại quầy phục vụ."*  
+6. Khi nhân viên thấy khách tại quầy và bấm "BẮT ĐẦU PHỤC VỤ" (FR-027), điện thoại khách tức thì đồng bộ chuyển sang màn hình `SERVING`.  
 **Business Rules:** BRD BR-011; Sơ đồ 11.1  
-**Input:** Ticket ID, Customer confirmation  
-**Output:** Badge "Khách đang tới" hiển thị trên Staff Panel  
+**Input:** Ticket ID, Customer acknowledgment  
+**Output:** Đồng bộ 2 chiều trạng thái giữa điện thoại khách và Staff Panel  
 **Acceptance Criteria:**  
-- AC-022-1: Huy hiệu "Khách đang tới" hiển thị trên màn hình nhân viên trong vòng $\le 1$ giây sau khi khách nhấn nút.
+- AC-022-1: Huy hiệu "Khách báo đã tới" hiển thị trên màn hình nhân viên trong vòng $\le 1$ giây sau khi khách nhấn nút.  
+- AC-022-2: Khách bấm xác nhận trên app không tự động nhảy sang trạng thái `SERVING` khi nhân viên chưa tiếp nhận tại quầy.
 
 ---
 
@@ -902,35 +905,32 @@ Platform Super Admin
 ---
 
 **Requirement ID:** FR-025  
-**Requirement Name:** Thao tác Gọi Khách Tiếp theo 1 Chạm & Khóa Đa Quầy (One-Tap FIFO Call Next with Mutex Lock)  
-**Description:** Nhân viên nhấn nút lớn "GỌI TIẾP THEO" trên Staff Panel. Hệ thống tự động tìm vé tiếp theo trong hàng chờ theo đúng nguyên tắc FIFO, áp dụng cơ chế khóa Mutex chống xung đột đa quầy, chuyển vé sang trạng thái `CALLED`, đồng thời kích hoạt chuông báo trên điện thoại khách và màn hình TV Display.  
+**Requirement Name:** Gọi Khách Tiếp theo 1 Chạm, Đồng hồ 2 Phút & Khóa Chống Xung đột Đa tầng (Call Next with 2-Min Timer & Concurrency Lock)  
+**Description:** Nhân viên nhấn nút lớn "GỌI TIẾP THEO" trên Staff Panel. Hệ thống tìm vé tiếp theo theo FIFO, áp dụng khóa Mutex `SKIP LOCKED` và Optimistic Lock `@Version` chống gọi trùng/bấm đúp, chuyển vé sang `CALLED`, bật đồng hồ theo dõi 2 phút trên Staff Panel (không khóa nút bấm Vắng mặt/gọi lượt mới), đồng thời báo chuông máy khách và phát chuông + TTS trên TV Display.  
 **Actor:** Staff / Attendant (ACT-04)  
 **Priority:** Must Have (Phase 1)  
 **Preconditions:** Có ít nhất một vé ở trạng thái `WAITING` trong hàng chờ; Nhân viên đã chọn quầy.  
 **Trigger:** Nhân viên nhấn nút "GỌI TIẾP THEO" (Call Next) trên SCR-05.  
 **Main Flow:**  
 1. Nhân viên nhấn nút "GỌI TIẾP THEO".  
-2. Backend mở Transaction cơ sở dữ liệu với khóa dòng (Pessimistic Write Lock: `SELECT ... FOR UPDATE SKIP LOCKED`):  
+2. Backend mở Transaction cơ sở dữ liệu với khóa dòng (`SELECT ... FOR UPDATE SKIP LOCKED`) kết hợp `@Version` Optimistic Lock trên bảng `tickets`:  
    - Lấy vé có `status = 'WAITING'` có thời gian tạo sớm nhất (`created_at ASC`).  
-3. Hệ thống cập nhật:  
-   - `status = 'CALLED'`  
-   - `called_at = now()`  
-   - `counter_id = staff_counter_id`  
-   - `staff_id = current_staff_id`  
-   - `recall_count = 0`  
-4. Backend commit transaction và phát tán đồng thời các sự kiện thời gian thực qua WebSocket:  
-   - Gửi event `TICKET_CALLED` tới thiết bị khách hàng sở hữu vé (kích hoạt rung, chuông và đổi màn hình).  
-   - Gửi event `TV_CALL_ANNOUNCE` tới màn hình TV Display (kích hoạt chớp sáng và phát chuông "Ding Dong").  
-   - Cập nhật số thứ tự đang gọi lên bảng hiển thị trung tâm của Staff Panel.  
+3. Hệ thống cập nhật: `status = 'CALLED'`, `called_at = now()`, `counter_id`, `staff_id`, `recall_count = 0`, tăng `version`.  
+4. Trên Staff Panel, hiển thị **đồng hồ đếm 2 phút** (`02:00` đếm lùi; quá 2 phút chuyển cảnh báo đỏ *"Đã quá 2 phút chưa thấy khách"*). **Lưu ý:** Đồng hồ chỉ mang tính chỉ báo trực quan; nhân viên có toàn quyền bấm "Vắng mặt" để giải phóng quầy và mời khách tiếp theo **bất cứ lúc nào** (không cần đợi đủ 2 phút).  
+5. Backend phát tán đồng thời các sự kiện thời gian thực qua WebSocket:  
+   - Gửi event `TICKET_CALLED` tới thiết bị khách hàng (rung, chuông và màn hình xanh).  
+   - Gửi event `TV_CALL_ANNOUNCE` tới TV Display (chớp sáng, phát "Ding Dong" và đọc TTS nếu đang bật).  
 **Exception Flow:**  
-- EF-025-1: Hai nhân viên tại hai quầy khác nhau cùng nhấn "GỌI TIẾP THEO" tại cùng một mili-giây $\rightarrow$ Cơ chế Mutex Lock phân xử: Nhân viên A nhận vé $N$, Nhân viên B nhận vé $N+1$; tuyệt đối không có trường hợp hai quầy gọi trùng một số vé.  
-- EF-025-2: Hàng chờ hết khách (`WAITING = 0`) $\rightarrow$ Nút "GỌI TIẾP THEO" chuyển sang trạng thái disabled; hiển thị thông báo: *"Hiện không có khách nào đang chờ."*  
-**Business Rules:** BRL-001; BRL-008; BRD BR-013  
+- EF-025-1: Hai nhân viên tại hai quầy khác nhau cùng nhấn "GỌI TIẾP THEO" tại cùng một mili-giây $\rightarrow$ `SKIP LOCKED` phân xử: Quầy 1 nhận vé $N$, Quầy 2 nhận vé $N+1$.  
+- EF-025-2: Nhân viên bấm đúp 2 lần liên tiếp hoặc khách vừa hủy vé đúng mili-giây nhân viên bấm gọi $\rightarrow$ `@Version` Optimistic Lock chặn lệnh trùng thứ 2 (`409 Conflict`) hoặc tự động lấy vé `WAITING` hợp lệ kế tiếp.  
+- EF-025-3: Hàng chờ hết khách (`WAITING = 0`) $\rightarrow$ Nút "GỌI TIẾP THEO" disabled; thông báo: *"Hiện không có khách nào đang chờ."*  
+**Business Rules:** BRL-001; BRL-008; BRL-011; BRD BR-013  
 **Input:** Queue ID, Staff ID, Counter ID  
-**Output:** Vé chuyển sang `CALLED`; Điện thoại khách và TV reo chuông đồng thời  
+**Output:** Vé chuyển `CALLED`; Bật đồng hồ 2 phút trên Staff Panel; Khách và TV nhận thông báo  
 **Acceptance Criteria:**  
-- AC-025-1: Thao tác gọi số hoàn tất trong vòng $\le 500$ms trên Staff Panel.  
-- AC-025-2: Tuyệt đối không bao giờ xảy ra tình trạng gọi trùng vé giữa các quầy trong điều kiện tải cao.
+- AC-025-1: Thao tác gọi số hoàn tất trong vòng $\le 500$ms; đồng hồ 2 phút bắt đầu chạy ngay trên Staff Panel.  
+- AC-025-2: Không bao giờ xảy ra gọi trùng vé khi 2 quầy bấm đồng thời hoặc bấm đúp 2 lần.  
+- AC-025-3: Nhân viên bấm "Vắng mặt" hoặc mời lượt mới được ngay ở giây thứ 10 mà không bị bắt đợi đủ 2 phút.
 
 ---
 
@@ -969,9 +969,9 @@ Platform Super Admin
 **Main Flow:**  
 1. Nhân viên nhấn "BẮT ĐẦU PHỤC VỤ".  
 2. Server cập nhật `status = 'SERVING'` và `serving_at = now()`.  
-3. Màn hình của khách hàng chuyển sang trạng thái: *"Đang được phục vụ tại [Tên Quầy]"*.  
+3. Màn hình của khách hàng tức thì đồng bộ chuyển sang trạng thái: *"Đang được phục vụ tại [Tên Quầy]"* và tự động tắt chuông gọi/đồng hồ chờ.  
 4. Bảng TV Display duy trì hiển thị số vé tại cột "Đang phục vụ".  
-5. Trên Staff Panel, giao diện chuyển sang chế độ hiển thị đồng hồ đếm thời gian phục vụ thực tế (Elapsed Time: 00:01, 00:02...).  
+5. Trên Staff Panel, giao diện dừng đồng hồ chờ 2 phút và bắt đầu đếm thời gian phục vụ thực tế (Elapsed Time: 00:01, 00:02...).  
 **Business Rules:** BRD BR-013  
 **Input:** Ticket ID  
 **Output:** Vé chuyển `SERVING`; Ghi nhận `serving_at`  
@@ -1168,8 +1168,8 @@ Platform Super Admin
 2. Bố cục màn hình chia thành các phân khu rõ ràng:  
    - Khu vực bên trái: Bảng "ĐANG PHỤC VỤ" hiển thị to bản số vé và tên quầy tương ứng (Độ tương phản cao, font số cực lớn nhìn rõ từ khoảng cách 10m).  
    - Khu vực bên phải: Danh sách "VỪA GỌI GẦN ĐÂY" (3 đến 5 lượt vé gần nhất).  
-   - Góc dưới: Bảng mã QR động tự làm mới (nếu chi nhánh bật Dynamic QR) kèm dòng hướng dẫn: *"Quét mã lấy số thứ tự tại sảnh"*.  
-   - Thanh tiêu đề: Logo thương hiệu, Tên chi nhánh và Đồng hồ thời gian thực.  
+   - Góc dưới: Bảng mã QR của hàng chờ cho khách quét tại sảnh (mặc định giữ nguyên theo hàng chờ và tự cập nhật tức thì qua WebSocket khi quản lý bấm đổi mã QR mới hoặc mở ca mới), kèm dòng hướng dẫn: *"Quét mã lấy số thứ tự tại sảnh"*.  
+   - Thanh tiêu đề: Logo thương hiệu, Tên chi nhánh, Đồng hồ thời gian thực và **công tắc Bật/Tắt giọng đọc TTS** (cùng nút kích hoạt âm thanh trình duyệt lần đầu).  
 3. Trang duy trì kết nối WebSocket thời gian thực liên tục để đón nhận các sự kiện gọi số.  
 **Business Rules:** BRD BR-014; NFR-009  
 **Input:** Screen Token  
@@ -1180,23 +1180,27 @@ Platform Super Admin
 ---
 
 **Requirement ID:** FR-036  
-**Requirement Name:** Hiệu ứng Chớp sáng & Chuông Báo Âm thanh "Ding Dong" (Visual Flash & Ding Dong Audio Chime)  
-**Description:** Khi có bất kỳ nhân viên nào bấm gọi số, màn hình TV Display lập tức chớp sáng nổi bật số vé vừa được gọi, đồng thời tự động phát âm thanh chuông "Ding Dong" nhẹ nhàng, rõ ràng bằng HTML5 Web Audio API để thu hút sự chú ý của khách hàng tại sảnh. Hệ thống tạm thời không sử dụng công nghệ đọc giọng nói TTS.  
-**Actor:** TV Display (ACT-06), System  
+**Requirement Name:** Hiệu ứng Chớp sáng, Chuông "Ding Dong" & Giọng đọc Text-to-Speech (Visual Flash, Chime & Toggleable TTS Audio Queue)  
+**Description:** Khi có bất kỳ nhân viên nào bấm gọi số, màn hình TV Display lập tức chớp sáng nổi bật số vé vừa gọi, phát âm thanh chuông "Ding Dong", và **nếu đang bật TTS** sẽ phát giọng đọc Tiếng Việt (qua hàng đợi tuần tự Audio Queue để các quầy không đọc đè lên nhau): *"Xin mời khách hàng số [Số vé], [Tên khách], đến [Tên quầy]"*. Hệ thống cung cấp công tắc **Bật/Tắt TTS** dễ dàng.  
+**Actor:** TV Display (ACT-06), Branch Manager / Staff (Bật/Tắt TTS), System  
 **Priority:** Should Have (Phase 2)  
-**Preconditions:** TV Display đang mở; Âm thanh trình duyệt đã được khởi tạo.  
+**Preconditions:** TV Display đang mở qua Secret URL; Đã bấm nút kích hoạt âm thanh trình duyệt lần đầu (vượt Autoplay Policy).  
 **Trigger:** Server gửi event `TV_CALL_ANNOUNCE` qua WebSocket.  
 **Main Flow:**  
-1. TV nhận được payload: `{ticket_number: "A-025", counter_name: "Quầy 02"}`.  
-2. Màn hình kích hoạt hiệu ứng hoạt họa đồ họa (Animation CSS): Thẻ vé A-025 phóng to và chớp sáng viền (Pulse Visual Flash) trong vòng 3 đến 5 giây.  
-3. Trình duyệt TV tự động kích hoạt HTML5 Audio Context phát file âm thanh chuông chuông ngân *"Ding... Dong..."* chất lượng cao.  
-4. Sau khi kết thúc hiệu ứng, vé A-025 nằm cố định tại dòng đầu tiên của bảng đang phục vụ.  
-**Business Rules:** BRD BR-014; BRD Q&A Q3 (Bỏ TTS)  
-**Input:** Event `TV_CALL_ANNOUNCE`  
-**Output:** Hiệu ứng đồ họa chớp sáng + Âm thanh chuông Ding Dong  
+1. TV nhận payload: `{ticket_number: "A-025", display_name: "Anh Nam", counter_name: "Quầy 01", tts_enabled: true}`.  
+2. Màn hình kích hoạt hiệu ứng chớp sáng (Pulse Visual Flash) thẻ vé `A-025` trong vòng 3–5 giây.  
+3. Sự kiện được đưa vào **Audio Queue (Hàng đợi âm thanh tuần tự)** trên TV Frontend:  
+   - Phát âm thanh chuông *"Ding... Dong..."* (~0.8 giây).  
+   - Nếu công tắc TTS đang **BẬT**: Sau khi chuông dứt, phát giọng đọc TTS Tiếng Việt (ưu tiên audio MP3 từ Backend hoặc fallback Web Speech API `vi-VN`): *"Xin mời khách hàng số A 0 2 5, Anh Nam, đến Quầy 01"*.  
+   - Nếu có lệnh gọi thứ 2 từ quầy khác đến cùng lúc, Audio Queue đợi câu trước đọc xong mới phát câu tiếp theo.  
+4. Nếu công tắc TTS đang **TẮT**: Chỉ chớp sáng và phát chuông *"Ding Dong"*.  
+**Business Rules:** BRD BR-014; BRD v1.3 PO Decision  
+**Input:** Event `TV_CALL_ANNOUNCE`, Trạng thái công tắc `tts_enabled`  
+**Output:** Hiệu ứng chớp sáng + Chuông Ding Dong + Giọng đọc TTS tuần tự (khi Bật)  
 **Acceptance Criteria:**  
-- AC-036-1: Âm thanh chuông phát ra trong vòng $\le 500$ms kể từ thời điểm nhận event WebSocket.  
-- AC-036-2: Tuyệt đối không có giọng đọc nhân tạo TTS phát ra trên TV Display.
+- AC-036-1: Chuông Ding Dong phát ra trong vòng $\le 500$ms kể từ khi nhận event WebSocket.  
+- AC-036-2: Khi bật TTS, TV đọc rõ ràng số vé, tên khách và tên quầy bằng tiếng Việt; khi tắt TTS, TV chỉ phát chuông Ding Dong.  
+- AC-036-3: Khi 2 quầy gọi sát nhau, Audio Queue phát lần lượt từng câu, tuyệt đối không bị 2 giọng đọc đè lên nhau.
 
 ---
 
@@ -1298,15 +1302,17 @@ Platform Super Admin
 
 ---
 
-## Module M11 – Open REST API & Webhooks Ecosystem
+## Module M11 – Open REST API & Webhooks Ecosystem *(TẠM DỪNG / DEFERRED)*
+
+> **Ghi chú trạng thái:** Theo quyết định ngày 26/11/2026 của Product Owner, các yêu cầu `FR-041` và `FR-042` thuộc Module M11 được **tạm dừng (Out of Scope tạm thời)** trong đợt triển khai hiện tại để tập trung hoàn thiện luồng vận hành lõi. Đặc tả bên dưới được lưu giữ làm tài liệu tham chiếu khi mở lại phân hệ này.
 
 ---
 
-**Requirement ID:** FR-041  
+**Requirement ID:** FR-041 *(Tạm dừng)*  
 **Requirement Name:** Cổng REST API Tích hợp Bên Ngoài (Public Integration REST API)  
 **Description:** Hệ thống cung cấp bộ RESTful API chuẩn hóa kèm cơ chế xác thực bằng API Key (X-API-KEY header), cho phép các hệ thống phần mềm của bên thứ ba (như POS bán hàng, CRM chăm sóc khách hàng, Kiosk tự phục vụ) có thể tự động tạo vé mới, truy vấn trạng thái hàng chờ hoặc cập nhật thông tin đơn hàng.  
 **Actor:** Third-party Developers, POS Systems  
-**Priority:** Could Have (Phase 3)  
+**Priority:** Deferred (Tạm dừng)  
 **Preconditions:** Doanh nghiệp đã sinh API Key hợp lệ trong màn hình cài đặt (SCR-11).  
 **Trigger:** Hệ thống ngoài gửi HTTP Request đến endpoint API của QR Wait.  
 **Main Flow:**  
@@ -1328,11 +1334,11 @@ Platform Super Admin
 
 ---
 
-**Requirement ID:** FR-042  
+**Requirement ID:** FR-042 *(Tạm dừng)*  
 **Requirement Name:** Cơ chế Bắn Sự kiện Webhook Tức thì (Real-time Webhook Event Dispatcher)  
 **Description:** Cho phép doanh nghiệp cấu hình Webhook URL trong giao diện quản trị. Khi có bất kỳ sự kiện thay đổi trạng thái vé quan trọng nào xảy ra trong hệ thống, QR Wait sẽ gửi ngay một HTTP POST request với payload JSON đến Webhook URL đó. Hệ thống hỗ trợ cơ chế retry tự động tối đa 3 lần theo thuật toán Exponential Backoff khi kết nối thất bại.  
 **Actor:** System (Tự động), External Webhook Endpoints  
-**Priority:** Could Have (Phase 3)  
+**Priority:** Deferred (Tạm dừng)  
 **Preconditions:** Doanh nghiệp đã nhập Webhook URL hợp lệ và bật trạng thái Active.  
 **Trigger:** Có sự kiện vòng đời vé phát sinh (`ticket.created`, `ticket.called`, `ticket.serving`, `ticket.completed`, `ticket.no_show`, `ticket.cancelled`).  
 **Main Flow:**  
@@ -1462,20 +1468,19 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A([Manager truy cập QR Studio SCR-09]) --> B{Lựa chọn Phương thức QR}
+    A([Manager truy cập QR Studio SCR-09]) --> B{Lựa chọn Cách triển khai QR}
     
-    B -->|Mã QR Tĩnh in ấn| C[Chọn Hàng chờ & Khổ in A4/A5/Để bàn]
+    B -->|In Poster QR cố định| C[Chọn Hàng chờ & Khổ in A4/A5/Để bàn]
     C --> D[Hệ thống render Poster có Logo & QR]
     D --> E[Tải file PDF 300 DPI chất lượng in ấn]
     E --> F[In ấn & Dán cố định tại điểm phục vụ]
     
-    B -->|Mã QR Động xoay vòng| G[Bật toggle Dynamic QR Code]
-    G --> H[Cài đặt Chu kỳ làm mới 15s - 75s]
-    H --> I[Mở TV Display hoặc Tablet tại sảnh]
-    I --> J[Hệ thống tự xoay vòng mã QR bằng TOTP]
+    B -->|Chiếu màn hình / Đổi QR| G[Mở TV Display hoặc Tablet tại sảnh]
+    G --> H[Giữ QR mặc định hoặc bấm 'Đổi mã QR mới' / Tự đổi theo Ca]
+    H --> I[TV Display cập nhật QR mới & Vô hiệu hóa mã cũ ngay lập tức]
     
     F --> K([Khách hàng quét mã QR])
-    J --> K
+    I --> K
 ```
 
 ---
@@ -1550,10 +1555,12 @@ sequenceDiagram
         Server-->>Mobile: Event TICKET_CALLED: Đổi màu xanh, Rung máy & Phát chuông
     end
     Mobile-->>Customer: Hiển thị thông báo: "TỚI LƯỢT BẠN! Vui lòng đến Quầy X"
-    Customer->>Mobile: Nhấn nút "TÔI ĐANG ĐẾN"
+    Customer->>Mobile: Nhấn nút "TÔI ĐANG ĐẾN / ĐÃ TỚI"
     Mobile->>Server: Gửi xác nhận có mặt (ACK_ARRIVAL)
-    Server-->>Staff: Hiển thị badge "Khách đang tới" trên Staff Panel
+    Server-->>Staff: Hiển thị badge xanh "Khách báo đã tới" trên Staff Panel
     Customer->>Staff: Di chuyển đến quầy xuất trình vé
+    Staff->>Server: Nhấn "BẮT ĐẦU PHỤC VỤ" (SERVING)
+    Server-->>Mobile: Đồng bộ chuyển màn hình khách sang "Đang phục vụ"
 ```
 
 ---
@@ -1569,26 +1576,26 @@ flowchart TD
     A([Nhân viên mở Staff Panel SCR-05]) --> B[Chọn Quầy phục vụ đang trực]
     B --> C[Quan sát danh sách khách đang chờ]
     C --> D[Nhấn nút lớn GỌI TIẾP THEO]
-    D --> E[Hệ thống áp Mutex Lock lấy vé FIFO sớm nhất]
-    E --> F[Vé chuyển trạng thái CALLED]
+    D --> E["Hệ thống áp Mutex SKIP LOCKED & Optimistic @Version lấy vé FIFO"]
+    E --> F[Vé chuyển trạng thái CALLED & Bật đồng hồ 2 phút]
     F --> G[Phát tín hiệu Realtime đồng thời]
     
     G --> H[Điện thoại khách: Rung, Chuông & Màn hình Tới lượt]
-    G --> I[TV Display: Chớp sáng vé & Chuông Ding Dong]
+    G --> I[TV Display: Chớp sáng vé, Ding Dong & Đọc TTS nếu bật]
     
-    H --> J{Khách có mặt tại quầy?}
+    H --> J{"Khách có mặt tại quầy? (Không bắt đợi đủ 2p)"}
     J -->|Có mặt| K[Nhân viên bấm BẮT ĐẦU PHỤC VỤ]
-    K --> L[Vé chuyển sang SERVING & Bắt đầu tính giờ]
+    K --> L[Vé chuyển SERVING, đồng bộ máy khách & Tắt đồng hồ 2p]
     L --> M[Nhân viên thực hiện phục vụ khách]
     M --> N[Nhân viên bấm nút HOÀN TẤT]
     N --> O[Vé chuyển sang COMPLETED]
     O --> P([Ghi nhận thời gian phục vụ & Sẵn sàng gọi vé tiếp])
     
-    J -->|Chưa thấy khách| Q{Đã gọi lại đủ 3 lần chưa?}
-    Q -->|Chưa (<3 lần)| R[Nhân viên bấm GỌI LẠI - Cách nhau >=15s]
+    J -->|Chưa thấy khách| Q{Gọi lại hay Vắng mặt ngay?}
+    Q -->|Gọi lại dưới 3 lần| R["Nhân viên bấm GỌI LẠI (Cách nhau >= 15s)"]
     R --> G
-    Q -->|Đã đủ 3 lần| S[Nhân viên bấm nút VẮNG MẶT]
-    S --> T([Chuyển sang Quy trình Xử lý No-Show WF-009])
+    Q -->|Đánh dấu Vắng mặt bất cứ lúc nào| S[Nhân viên bấm nút VẮNG MẶT]
+    S --> T([Chuyển sang Quy trình Xử lý No-Show 15p WF-009])
 ```
 
 ---
@@ -1761,9 +1768,9 @@ sequenceDiagram
 
     loop Hoạt động liên tục 24/7
         Note over Server,TV: Nhân viên gọi số mới (Ví dụ: Vé A-025 đến Quầy 2)
-        Server-->>TV: Đẩy WebSocket event: TV_CALL_ANNOUNCE {A-025, Quầy 2}
+        Server-->>TV: Đẩy WebSocket event: TV_CALL_ANNOUNCE {A-025, Anh Nam, Quầy 2}
         TV->>TV: Kích hoạt hiệu ứng CSS Visual Flash nhấp nháy vé A-025
-        TV->>TV: Tự động phát file âm thanh chuông "Ding Dong"
+        TV->>TV: Đưa vào Audio Queue -> Phát "Ding Dong" -> Đọc TTS (nếu bật)
         TV->>TV: Cập nhật vé A-025 lên đầu bảng ĐANG PHỤC VỤ
     end
 ```
@@ -1859,7 +1866,7 @@ flowchart LR
         UC01["UC-001: Đăng ký & Đăng nhập"]
         UC02["UC-002: Quản lý Chi nhánh & GPS"]
         UC03["UC-003: Cấu hình Hàng chờ & Quầy"]
-        UC04["UC-004: Tạo Poster QR & Dynamic QR"]
+        UC04["UC-004: Tạo Poster QR & Đổi QR theo Ca"]
         UC15["UC-015: Báo cáo Thống kê & Xuất CSV"]
     end
 
@@ -1969,16 +1976,16 @@ flowchart LR
 
 ---
 
-### UC-004: Tạo Poster QR Tĩnh & Cấu hình Dynamic QR
+### UC-004: Tạo Poster QR Tĩnh & Đổi Mã QR theo Ca/Thủ công
 - **Use Case ID:** UC-004
 - **Use Case Name:** Tạo và Quản lý Mã QR (QR Studio)
-- **Description:** Xuất file in ấn Poster QR tĩnh (A4, A5) hoặc bật chế độ mã QR động xoay vòng TOTP chống lấy số từ xa.
-- **Primary Actor:** Branch Manager, Organization Owner
+- **Description:** Xuất file in ấn Poster QR tĩnh (A4, A5) hoặc đổi mã QR mới (thủ công/theo ca) khi chiếu trên màn hình TV Display để vô hiệu hóa mã cũ.
+- **Primary Actor:** Branch Manager, Organization Owner, Staff
 - **Preconditions:** Hàng chờ đã được tạo.
 - **Trigger:** Quản lý truy cập QR Studio (SCR-09).
 - **Main Success Scenario:**
   1. Quản lý chọn xuất poster in ấn $\rightarrow$ Chọn khổ in $\rightarrow$ Tải file PDF 300 DPI có kèm logo doanh nghiệp.
-  2. Hoặc quản lý bật chế độ Dynamic QR $\rightarrow$ Đặt chu kỳ 15s–75s $\rightarrow$ Hệ thống hiển thị QR xoay vòng trên TV Display.
+  2. Hoặc khi chiếu QR trên màn hình sảnh cần đổi mã chống chụp ảnh cũ: Bấm nút "Đổi mã QR mới" (hoặc bật tự đổi khi mở ca mới) $\rightarrow$ Hệ thống xác nhận và cập nhật ngay mã QR mới lên TV Display, thu hồi hiệu lực mã cũ.
 - **Postconditions:** Mã QR sẵn sàng để khách quét.
 - **Related Requirements:** FR-012, FR-013, FR-015, BRL-003.
 
@@ -2200,7 +2207,7 @@ flowchart LR
   - Header: Logo QR Wait, Menu chuyển đổi ngôn ngữ (VI/EN), Nút "Đăng nhập", Nút "Bắt đầu miễn phí" (CTA nổi bật).
   - Hero Section: Tiêu đề lớn *"Hệ thống Xếp hàng Ảo qua Mã QR – Không cần máy in phiếu, không cần cài app"*, ảnh minh họa trải nghiệm khách quét mã và màn hình TV sảnh.
   - Interactive Demo Widget: Khung tương tác cho phép người dùng click quét QR ảo, tạo vé thử và xem mô phỏng màn hình Staff Panel gọi số ngay trên web.
-  - Feature Grid: 6 khối tính năng nổi bật (Chống gian lận GPS, Dynamic QR, TV Display âm thanh Ding Dong, Thao tác 1 chạm, Không giới hạn lượt vé, Báo cáo CSV).
+  - Feature Grid: 6 khối tính năng nổi bật (Chống gian lận GPS, Đổi QR theo Ca/Nút bấm, TV Display chuông Ding Dong & Giọng đọc TTS, Thao tác 1 chạm, Không giới hạn lượt vé, Báo cáo CSV).
   - Footer: Thông tin bản quyền, tài liệu hướng dẫn, liên hệ hỗ trợ.
 - **Hành vi tương tác:** Click CTA mở SCR-02; click Demo tương tác trực tiếp; chuyển đổi ngôn ngữ mượt mà không reload.
 - **Responsive:** Co giãn linh hoạt từ Mobile (320px) đến Desktop 4K.
@@ -2270,7 +2277,8 @@ flowchart LR
   - Header: Tên hàng chờ, Dropdown chọn Quầy đang trực (Ví dụ: "Quầy 01"), Nút "+ Thêm khách Walk-in".
   - Khu vực Trung tâm (Hero Action Area):
     - Khối hiển thị số vé đang gọi to bản (Ví dụ: `#A-025`), Tên khách hàng ("Nguyễn Văn A"), Quy mô nhóm ("Nhóm 4 người"), Ghi chú của khách.
-    - Huy hiệu trạng thái: Nhấp nháy xanh "Khách đang tới" nếu khách đã bấm xác nhận trên điện thoại.
+    - **Đồng hồ đếm thời gian chờ khách (2 phút):** Đếm lùi `02:00` $\rightarrow$ `00:00` (chuyển màu đỏ cảnh báo nếu quá 2 phút chưa thấy khách); **không khóa nút thao tác** — nhân viên vẫn bấm Vắng mặt / Gọi người khác bất cứ lúc nào.
+    - Huy hiệu trạng thái: Nhấp nháy xanh "Khách báo đã tới / đang tới" khi khách bấm xác nhận trên điện thoại.
     - Hàng nút thao tác lớn (Big Touch Buttons):
       - Nút **"BẮT ĐẦU PHỤC VỤ"** (Màu xanh dương, to nhất).
       - Nút **"GỌI LẠI"** (Màu vàng, hiển thị số lần 1/3, 2/3 kèm đếm lùi 15s).
@@ -2333,21 +2341,20 @@ flowchart LR
 - **Mã màn hình:** SCR-08
 - **Tên màn hình:** Fullscreen TV Display
 - **Đối tượng:** Khách tại sảnh chờ, Nhân viên điều phối
-- **Mục đích:** Hiển thị số đang phục vụ tại từng quầy, chớp sáng và phát chuông Ding Dong khi có lượt gọi mới.
+- **Mục đích:** Hiển thị số đang phục vụ tại từng quầy, chớp sáng, phát chuông Ding Dong và giọng đọc TTS mời khách khi có lượt gọi mới.
 - **Bố cục & Giao diện:**
   - Thiết kế tối ưu cho tỷ lệ màn hình 16:9 (Độ phân giải Full HD / 4K).
   - Nền tối tương phản cao (Dark Mode nền đen/xanh đậm, chữ trắng và vàng kim) chống mỏi mắt và nhìn rõ từ cự ly 10–15m.
-  - Header: Logo doanh nghiệp, Tên chi nhánh, Đồng hồ kỹ thuật số góc phải.
+  - Header: Logo doanh nghiệp, Tên chi nhánh, Đồng hồ kỹ thuật số góc phải, **công tắc Bật/Tắt giọng đọc TTS** (riêng với chuông Ding Dong) và banner nhỏ lần đầu chạm kích hoạt âm thanh trình duyệt.
   - Khu vực chính (Bên trái, chiếm 65% diện tích): Bảng **"ĐANG PHỤC VỤ"**:
     - Chia thành các ô thẻ lớn cho từng Quầy: Ví dụ `Quầy 01: #A-024`, `Quầy 02: #B-008`.
     - Số vé hiển thị cực lớn bằng font chữ Display Bold.
   - Khu vực phụ (Bên phải trên, chiếm 35% diện tích): Bảng **"VỪA GỌI GẦN ĐÂY"**:
     - Danh sách 4 lượt vé vừa gọi trước đó kèm tên quầy.
-  - Khu vực Dynamic QR (Bên phải dưới):
-    - Mã QR xoay vòng TOTP to bản, sắc nét.
-    - Thanh đếm ngược chu kỳ làm mới (ví dụ thanh lùi 30 giây).
+  - Khu vực Mã QR sảnh (Bên phải dưới):
+    - Mã QR của hàng chờ to bản, sắc nét (tự cập nhật tức thì qua WebSocket khi quản lý bấm đổi mã QR mới hoặc mở ca mới).
     - Hướng dẫn: *"Quét mã lấy số thứ tự tại sảnh"*.
-- **Hiệu ứng Âm thanh & Hình ảnh:** Khi có số mới gọi $\rightarrow$ Thẻ vé chớp sáng viền vàng/xanh trong 4 giây + Phát chuông "Ding Dong" nhẹ nhàng, rõ tiếng.
+- **Hiệu ứng Âm thanh & Hình ảnh:** Khi có số mới gọi $\rightarrow$ Thẻ vé chớp sáng viền vàng/xanh trong 4 giây + Đưa vào Audio Queue phát chuông "Ding Dong" trước, rồi đọc TTS tiếng Việt (*"Xin mời khách hàng số A-025 đến Quầy 01"*) nếu công tắc TTS đang Bật.
 
 ---
 
@@ -2355,7 +2362,7 @@ flowchart LR
 - **Mã màn hình:** SCR-09
 - **Tên màn hình:** QR Studio & Anti-Fraud Center
 - **Đối tượng:** Branch Manager, Organization Owner
-- **Mục đích:** Công cụ tạo poster QR in ấn chất lượng cao và cấu hình các lớp bảo vệ chống lấy số ảo từ xa.
+- **Mục đích:** Công cụ tạo poster QR in ấn chất lượng cao, đổi mã QR theo Ca/thủ công và cấu hình bán kính GPS.
 - **Bố cục & Giao diện:**
   - Tab 1: **"Mã QR In ấn (Static Posters)"**:
     - Bộ chọn Hàng chờ.
@@ -2363,10 +2370,11 @@ flowchart LR
     - Tùy chỉnh màu sắc thương hiệu (Brand Accent Color) và logo hiển thị giữa mã QR.
     - Khung xem trước (Live Preview).
     - Nút "Tải file PDF in ấn (300 DPI)" và "Tải ảnh PNG sắc nét".
-  - Tab 2: **"Mã QR Động (Dynamic Rotating QR)"**:
-    - Switch bật/tắt Dynamic QR Code.
-    - Thanh trượt chu kỳ làm mới: $15$ giây đến $75$ giây (Mặc định: $30$ giây).
-    - Nút "Mở màn hình TV Display trình chiếu mã QR".
+  - Tab 2: **"Đổi Mã QR & Chiếu Màn hình (Session / Manual QR)"**:
+    - Hiển thị mã QR hiện tại đang chiếu trên TV Display / Tablet.
+    - Nút **"Đổi mã QR mới"** (có modal cảnh báo mã cũ trên giấy in/ảnh chụp sẽ mất hiệu lực ngay).
+    - Switch tùy chọn: *"Tự động đổi mã QR mỗi khi mở Ca/Phiên làm việc mới"* (mặc định Tắt để bảo toàn poster giấy in sẵn).
+    - Nút "Mở màn hình TV Display".
   - Tab 3: **"Bảo vệ Vị trí (GPS Geolocation)"**:
     - Switch bật/tắt yêu cầu vị trí.
     - Nhập tọa độ chi nhánh hoặc bấm nút "Lấy vị trí hiện tại của tôi".
@@ -2397,17 +2405,17 @@ flowchart LR
 - **Mã màn hình:** SCR-11
 - **Tên màn hình:** System Settings & Team Management
 - **Đối tượng:** Organization Owner (Toàn quyền), Branch Manager (Giới hạn)
-- **Mục đích:** Quản lý thành viên nhân sự, cấu hình âm thanh, quản lý Screen Token của TV và API Keys.
+- **Mục đích:** Quản lý thành viên nhân sự, cấu hình âm thanh TV Display (Ding Dong & Bật/Tắt TTS) và quản lý Screen Token của TV.
 - **Bố cục & Giao diện:**
   - Tab 1: **"Thành viên & Phân quyền"**:
     - Danh sách tài khoản: Tên, Email, Vai trò (Owner, Manager, Staff), Chi nhánh phân công, Trạng thái hoạt động.
-    - Nút "+ Thêm thành viên" (Mở modal nhập trực tiếp Tên, Email, Mật khẩu ban đầu).
+    - Nút "+ Thêm thành viên" (Mở modal nhập trực tiếp Tên, Email, Mật khẩu ban đầu — đăng nhập ngay không qua email kích hoạt).
     - Nút "Khóa / Mở khóa tài khoản".
-  - Tab 2: **"Cấu hình Chi nhánh & TV Display"**:
+  - Tab 2: **"Chi nhánh, TV Display & Âm thanh (TTS)"**:
     - Danh sách chi nhánh kèm nút sinh Screen Token / Secret URL cho màn hình TV.
-  - Tab 3: **"API Keys & Webhooks" (Phase 3)**:
-    - Bảng tạo và quản lý API Secret Key.
-    - Cấu hình Webhook URL và danh sách các sự kiện muốn lắng nghe (`ticket.called`, `ticket.completed`...).
+    - Switch cấu hình mặc định: **Bật/Tắt giọng đọc Text-to-Speech (TTS)** trên TV Display (chuông Ding Dong luôn bật) và mẫu câu đọc thông báo.
+    - Khu vực tải lên Logo tổ chức và múi giờ mặc định.
+  *(Ghi chú: Tab API Keys & Webhooks đã tạm dừng theo quyết định của PO ngày 26/11/2026).*
 
 ---
 
@@ -2432,8 +2440,8 @@ flowchart LR
 - Quản lý phiên làm việc không trạng thái (Stateless) thông qua JSON Web Token (JWT).
 
 ### 2. Hệ Cơ sở Dữ liệu & Caching
-- **PostgreSQL 15+:** Hệ quản trị cơ sở dữ liệu quan hệ chính. Sử dụng transaction isolation level `READ COMMITTED` kết hợp `SELECT ... FOR UPDATE SKIP LOCKED` cho cơ chế Mutex Lock điều phối đa quầy.
-- **Redis 7+:** Lưu trữ bộ đệm (Cache) danh sách hàng chờ nóng, lưu vết TOTP của Dynamic QR Code và quản lý Blacklist JWT Token khi nhân viên bị thu hồi quyền.
+- **PostgreSQL 15+:** Hệ quản trị cơ sở dữ liệu quan hệ chính. Sử dụng transaction isolation level `READ COMMITTED` kết hợp `SELECT ... FOR UPDATE SKIP LOCKED` và Optimistic Locking (`@Version`) cho cơ chế chống xung đột đa quầy / double-click.
+- **Redis 7+:** Lưu trữ bộ đệm (Cache) danh sách hàng chờ nóng, cache file âm thanh TTS và quản lý Blacklist JWT Token khi nhân viên bị thu hồi quyền.
 
 ### 3. Google Identity Services (OAuth2 SSO)
 - Tích hợp Google OAuth2 API cho luồng đăng ký/đăng nhập nhanh của chủ doanh nghiệp.
@@ -2442,8 +2450,9 @@ flowchart LR
 ### 4. HTML5 Geolocation API
 - Giao tiếp với API định vị của trình duyệt thiết bị khách hàng (`navigator.geolocation.getCurrentPosition`) để lấy tọa độ vĩ độ, kinh độ và độ chính xác (accuracy) nhằm phục vụ kiểm tra bán kính địa lý.
 
-### 5. HTML5 Web Audio API
-- Sử dụng `AudioContext` của trình duyệt để phát chuông cảnh báo âm thanh trên điện thoại khách và phát âm thanh chuông "Ding Dong" chất lượng cao trên Smart TV Display mà không bị trình duyệt chặn autoplay.
+### 5. HTML5 Web Audio API & Text-to-Speech Engine (Audio Queue)
+- Sử dụng `AudioContext` và HTML5 `<audio>` để phát chuông "Ding Dong" trên điện thoại khách và Smart TV.
+- Sử dụng kết hợp âm thanh TTS từ Backend (hoặc fallback `window.speechSynthesis` với `lang = 'vi-VN'`) qua **Audio Queue** tuần tự trên TV Display (có công tắc Bật/Tắt và nút kích hoạt Autoplay lần đầu).
 
 ## 8.3 Communication Interface Requirements (Yêu cầu Giao tiếp Mạng)
 
@@ -2502,6 +2511,7 @@ erDiagram
         double longitude
         boolean is_geo_enabled
         int gps_radius_meters
+        boolean tts_enabled
         boolean is_active
         timestamp created_at
     }
@@ -2515,8 +2525,8 @@ erDiagram
         int min_party_size
         int max_party_size
         string status
-        boolean is_dynamic_qr
-        int dynamic_qr_interval_seconds
+        string qr_token
+        boolean rotate_qr_on_session
         int current_sequence
         timestamp created_at
     }
@@ -2565,6 +2575,7 @@ erDiagram
         string device_token
         int recall_count
         boolean is_acknowledged
+        long version
         timestamp created_at
         timestamp called_at
         timestamp serving_at
@@ -2619,6 +2630,7 @@ erDiagram
 | `longitude` | Double | Có | Giá trị từ -180.0 đến 180.0 | Kinh độ GPS phục vụ kiểm tra vị trí |
 | `is_geo_enabled` | Boolean | Có | Mặc định: `false` | Bật/tắt bảo vệ vị trí khi lấy số |
 | `gps_radius_meters` | Integer | Có | Mặc định: 100, phạm vi: 30 – 500m | Bán kính cho phép lấy số quanh tọa độ |
+| `tts_enabled` | Boolean | Có | Mặc định: `true` | Công tắc Bật/Tắt đọc giọng nói TTS trên TV Display |
 | `is_active` | Boolean | Có | Mặc định: `true` | Trạng thái chi nhánh |
 | `created_at` | Timestamp | Có | Timestamp UTC | Ngày tạo chi nhánh |
 
@@ -2633,8 +2645,8 @@ erDiagram
 | `min_party_size` | Integer | Có | Mặc định: 1, $\ge 1$ | Số người tối thiểu trong nhóm |
 | `max_party_size` | Integer | Có | Mặc định: 20, $\ge min\_party\_size$ | Số người tối đa trong nhóm |
 | `status` | String(20) | Có | Enum: `OPEN`, `PAUSED`, `CLOSED` | Trạng thái tiếp nhận khách |
-| `is_dynamic_qr` | Boolean | Có | Mặc định: `false` | Bật/tắt chế độ QR Code động xoay vòng |
-| `dynamic_qr_interval`| Integer | Có | Mặc định: 30, phạm vi: 15 – 75 giây | Chu kỳ xoay vòng mã QR động |
+| `qr_token` | String(64) | Có | Chuỗi ngẫu nhiên duy nhất cho Queue | Mã xác thực QR hiện hành (đổi khi bấm nút hoặc mở ca) |
+| `rotate_qr_on_session`| Boolean | Có | Mặc định: `false` | Tự động đổi `qr_token` mới khi mở Ca/Phiên mới |
 | `current_sequence` | Integer | Có | Mặc định: 0, tự tăng mỗi lượt vé | Bộ đếm số vé hiện tại trong phiên |
 | `created_at` | Timestamp | Có | Timestamp UTC | Ngày tạo hàng chờ |
 
@@ -2686,7 +2698,8 @@ erDiagram
 | `status` | String(20) | Có | Enum: `WAITING`, `CALLED`, `SERVING`, `COMPLETED`, `NO_SHOW`, `CANCELLED`, `EXPIRED` | Trạng thái vòng đời của vé |
 | `device_token` | String(64) | Không | UUID v4 (Null nếu vé Walk-in) | Mã định danh thiết bị lưu LocalStorage |
 | `recall_count` | Integer | Có | Mặc định: 0, tối đa 3 lần | Số lần nhân viên bấm gọi lại |
-| `is_acknowledged` | Boolean | Có | Mặc định: `false` | True khi khách bấm "Tôi đang đến" |
+| `is_acknowledged` | Boolean | Có | Mặc định: `false` | True khi khách bấm "Tôi đang đến / Đã tới" |
+| `version` | Long | Có | `@Version` JPA Optimistic Locking | Chống xung đột double-click & race condition |
 | `created_at` | Timestamp | Có | Mặc định: `now()` | Thời điểm khách lấy số |
 | `called_at` | Timestamp | Không | Lưu khi chuyển sang `CALLED` | Thời điểm nhân viên gọi số lần đầu |
 | `serving_at` | Timestamp | Không | Lưu khi chuyển sang `SERVING` | Thời điểm bắt đầu phục vụ thực tế |
@@ -2724,14 +2737,15 @@ erDiagram
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **BRL-001** | **Nguyên tắc Cấp số Thứ tự FIFO** | Các vé trong cùng một hàng chờ được cấp số tự tăng liên tục và phục vụ theo nguyên tắc vào trước ra trước (First-In, First-Out). Định dạng vé: `[Prefix]-[Số 3 chữ số]` (Ví dụ `A-001`, `B-024`). | FR-008, FR-017, FR-025, FR-037 | Khách lấy số hoặc nhân viên thêm Walk-in | Lấy giá trị `current_sequence + 1`, sinh chuỗi vé hiển thị và lưu vào DB với trạng thái `WAITING`. |
 | **BRL-002** | **Bảo vệ Vị trí Địa lý (GPS Radius)** | Khách hàng chỉ được phép lấy vé nếu khoảng cách tính theo đường chim bay từ vị trí GPS thiết bị đến tọa độ chi nhánh $\le$ bán kính cho phép (30m – 500m, mặc định 100m). | FR-007, FR-014 | Chi nhánh bật `is_geo_enabled = true` khi khách bấm lấy số | Tính khoảng cách Haversine. Nếu $> \text{gps\_radius\_meters}$ $\rightarrow$ Từ chối tạo vé, hiển thị thông báo khoảng cách thực tế và yêu cầu di chuyển lại gần cửa hàng. |
-| **BRL-003** | **Thời hạn Mã QR Động (TOTP Expiration)** | Khi bật Dynamic QR Code trên TV Display, mã QR chỉ có hiệu lực trong khoảng thời gian từ 15 đến 75 giây (mặc định 30 giây). Bất kỳ lượt quét nào gửi lên sau khi mã QR trên màn hình đã xoay vòng sang mã mới đều bị từ chối. | FR-013, FR-015 | Hàng chờ bật Dynamic QR Code | Kiểm tra chữ ký thời gian trong token. Nếu đã quá chu kỳ $\rightarrow$ Báo lỗi `QR_CODE_EXPIRED` và yêu cầu quét trực tiếp mã mới trên màn hình. |
+| **BRL-003** | **Đổi Mã QR Thủ công / Theo Ca (QR Token Revocation)** | Mặc định mỗi hàng chờ giữ nguyên 01 mã QR cố định. Khi quản lý/nhân viên bấm nút "Đổi mã QR mới" (hoặc bật tự đổi khi mở Ca mới), mã QR cũ lập tức mất hiệu lực và màn hình TV Display tự động cập nhật mã mới. | FR-013, FR-015 | Bấm "Đổi mã QR mới" hoặc mở ca mới khi bật `rotate_qr_on_session` | Sinh `qr_token` mới; gửi WebSocket cập nhật TV Display; mọi lượt quét token cũ bị báo lỗi `QR_CODE_REVOKED`. |
 | **BRL-004** | **Công thức Ước tính Thời gian Chờ** | Thời gian chờ ước tính hiển thị cho khách thứ $N$ trong hàng đợi được tính theo công thức: <br>$$\text{Thời gian chờ dự kiến} = (\text{Số nhóm đang chờ phía trước}) \times \frac{\text{Thời gian phục vụ TB}}{\text{Số lượng quầy đang hoạt động}}$$ | FR-010, FR-020 | Khách mở hoặc cập nhật màn hình Live Tracking | Tính toán động dựa trên số quầy đang có nhân viên trực. Nếu không có quầy nào hoạt động $\rightarrow$ Hiển thị *"Đang tạm ngưng gọi số"*. |
 | **BRL-005** | **Giới hạn Quy mô Nhóm khách (Party Size)** | Mỗi hàng chờ có thể thiết lập số lượng người tối thiểu và tối đa cho một lượt vé (Ví dụ: Bàn nhỏ: 1–2 người; Bàn lớn: 5–10 người). Khách hàng không thể chọn số lượng ngoài ngưỡng này. | FR-008, FR-016 | Khách hàng chọn số lượng người trên form check-in | Khóa các nút chọn ngoài phạm vi `min_party_size` đến `max_party_size`; nếu cố tình gửi request sai $\rightarrow$ Báo lỗi dữ liệu không hợp lệ. |
 | **BRL-006** | **Giới hạn Gọi lại (Recall Limit & Cooldown)** | Nhân viên chỉ được nhấn gọi lại tối đa 03 lần cho một lượt vé. Khoảng cách giữa 2 lần nhấn gọi lại liên tiếp tối thiểu là 15 giây để tránh spam chuông thông báo tới khách hàng. | FR-026 | Vé đang ở trạng thái `CALLED` | Kiểm tra `recall_count < 3` và $\text{now} - \text{last\_recall} \ge 15$ giây. Nếu quá 3 lần $\rightarrow$ Vô hiệu hóa nút Gọi lại và yêu cầu Đánh dấu Vắng mặt. |
 | **BRL-007** | **Cơ chế Đếm ngược 15 Phút & Tự động Hủy Vé Vắng mặt** | Vé bị đánh dấu `NO_SHOW` có thời gian ân hạn chính xác 15 phút kèm đồng hồ đếm ngược trên máy khách. Trong 15 phút, nhân viên có quyền bấm "Phục hồi vé". Hết đúng 15 phút không quay lại, hệ thống tự động hủy vé vĩnh viễn (`CANCELLED`). Khách bắt buộc phải quét mã QR lấy số mới từ đầu. | FR-029, FR-031, FR-032, FR-033 | Vé chuyển sang `NO_SHOW` | Đặt `cancel_scheduled_at = now + 15 phút`. Scheduled Job quét định kỳ: khi quá hạn $\rightarrow$ Cập nhật `CANCELLED`, gửi thông báo hủy và giải phóng Device Token. |
-| **BRL-008** | **Khóa Đồng bộ Điều phối Đa quầy (Mutex Lock)** | Một lượt vé chỉ có thể được phục vụ bởi duy nhất một nhân viên tại một quầy ở một thời điểm. Khi có nhiều nhân viên cùng bấm gọi đồng thời, hệ thống áp dụng khóa Mutex để không xảy ra tình trạng gọi trùng một vé. | FR-025 | Hai hoặc nhiều nhân viên cùng bấm "GỌI TIẾP THEO" đồng thời | Áp dụng `SELECT ... FOR UPDATE SKIP LOCKED` trên PostgreSQL. Quầy bấm trước nhận vé $N$, quầy bấm sau lập tức nhận vé $N+1$. |
+| **BRL-008** | **Chống Xung đột Đa tầng (Mutex & Optimistic Lock)** | Một lượt vé chỉ được phục vụ bởi duy nhất 1 nhân viên tại 1 thời điểm. Hệ thống chống xung đột cả khi nhiều quầy gọi đồng thời, bấm đúp 2 lần, hoặc khách hủy cùng lúc nhân viên gọi. | FR-025 | Bấm gọi đồng thời / bấm đúp / race condition | Áp dụng `SELECT ... FOR UPDATE SKIP LOCKED` trên PostgreSQL + `@Version` Optimistic Lock trên Entity Ticket. |
 | **BRL-009** | **Chống Gian lận 1 Vé Active trên Mỗi Thiết bị** | Một thiết bị (nhận diện qua `device_token` lưu trong LocalStorage) chỉ được phép có tối đa 01 vé ở trạng thái Active (`WAITING`, `CALLED`, `SERVING`, `NO_SHOW`) trên cùng một hàng chờ. Chỉ được lấy vé mới khi vé cũ đã ở trạng thái kết thúc (`COMPLETED`, `CANCELLED`, `EXPIRED`). | FR-018, FR-019 | Khách quét mã QR khi đã từng lấy vé trước đó | Nếu thiết bị đang có vé Active $\rightarrow$ Tự động chuyển hướng về trang Live Tracking của vé cũ (Hành vi A). Tuyệt đối không sinh vé mới. |
 | **BRL-010** | **Đặt lại Số Vé khi Mở Phiên Hàng chờ Mới** | Số thứ tự vé tự tăng của hàng chờ không tự động reset lúc nửa đêm mà được reset về `001` khi Quản lý hoặc Nhân viên bấm "Mở phiên làm việc mới / Mở ca mới" cho hàng chờ đó. | FR-010 | Người dùng bấm "Bắt đầu phiên mới (Reset số)" | Tạo bản ghi `QueueSession` mới, đặt `current_sequence = 0`, chuyển các vé chờ dở dang cũ sang `EXPIRED`. Lượt vé tiếp theo bắt đầu từ `[Prefix]-001`. |
+| **BRL-011** | **Đồng hồ 2 Phút Không khóa Thao tác khi Gọi khách** | Khi vé ở trạng thái `CALLED`, Staff Panel đếm thời gian chờ khách ra quầy với mốc cảnh báo 2 phút. Đồng hồ chỉ là chỉ báo trực quan, không khóa thao tác của nhân viên. | FR-025, FR-029 | Vé chuyển sang trạng thái `CALLED` | Chạy bộ đếm 2 phút trên Staff Panel (đổi đỏ nếu quá 2 phút). Nhân viên có quyền bấm Vắng mặt (bắt đầu 15p trên máy khách) và mời khách khác bất cứ lúc nào. |
 
 ---
 
@@ -2804,7 +2818,7 @@ stateDiagram-v2
 | **NFR-012** | **Độ trễ Phát Chuông Âm thanh trên TV** | Performance | Độ trễ kích hoạt chuông "Ding Dong" qua HTML5 Web Audio API trên Smart TV Display khi có lệnh gọi số. | Âm thanh phát ra trong vòng $\le 500$ms kể từ thời điểm nhận WebSocket payload. | Đo thời gian bằng công cụ phân tích sự kiện âm thanh AudioContext. | Should Have |
 | **NFR-013** | **Khôi phục Phiên qua LocalStorage** | Reliability | Khách hàng vô tình tắt tab hoặc đóng trình duyệt, khi mở lại liên kết hoặc quét lại QR vẫn giữ nguyên trạng thái vé. | Tỷ lệ phục hồi vé cũ đúng $100\%$ nếu vé chưa hoàn tất/hủy; Không bị mất vé khi reset trình duyệt. | Đóng ứng dụng Safari/Chrome trên điện thoại và mở lại liên kết. | Must Have |
 | **NFR-014** | **Tính Mô-đun & Kiến trúc RESTful** | Maintainability | Mã nguồn Backend Java Spring Boot tuân thủ nguyên tắc Clean Architecture, phân tách rõ Controller, Service, Repository, DTO. | Đạt chuẩn RESTful Level 2/3; Swagger API Documentation tự động sinh đầy đủ 100% endpoints. | Rà soát kiến trúc mã nguồn và kiểm tra tài liệu Swagger UI. | Must Have |
-| **NFR-015** | **Độ Tin cậy Bắn Sự kiện Webhooks** | Reliability | Cơ chế gửi sự kiện Webhooks đến bên thứ ba đảm bảo không thất thoát dữ liệu sự kiện khi có trục trặc mạng tạm thời. | Tự động thử lại (Retry) tối đa 3 lần theo thuật toán Exponential Backoff (30s, 5m, 15m) khi lỗi mạng. | Mô phỏng webhook endpoint lỗi 500 và kiểm tra log lịch sử gửi lại. | Could Have |
+| **NFR-015** | **Độ Tin cậy Bắn Sự kiện Webhooks *(Tạm dừng)*** | Reliability | *(Tạm dừng theo quyết định PO 26/11/2026)* Cơ chế retry Webhooks (3 lần Exponential Backoff). | Tự động thử lại tối đa 3 lần khi lỗi mạng. | Mô phỏng webhook endpoint lỗi 500. | Deferred |
 
 
 
@@ -2835,7 +2849,8 @@ stateDiagram-v2
 | **403** | `ERR_OUT_OF_GPS_RADIUS` | *"Bạn đang ở cách cửa hàng [X]m, ngoài phạm vi lấy số ([Y]m). Vui lòng đến gần hơn."* | Khách quét mã check-in ngoài bán kính GPS cho phép. |
 | **403** | `ERR_GPS_PERMISSION_DENIED`| *"Cửa hàng yêu cầu chia sẻ vị trí để lấy số. Vui lòng bật GPS trên trình duyệt."* | Khách bấm chặn quyền truy cập vị trí trên trình duyệt di động. |
 | **409** | `ERR_ACTIVE_TICKET_EXISTS` | *"Bạn đang có lượt vé đang chờ phục vụ. Đang chuyển hướng..."* | Thiết bị gửi lệnh tạo vé mới khi đang có vé Active (Hệ thống tự redirect về vé cũ). |
-| **410** | `ERR_QR_CODE_EXPIRED` | *"Mã QR này đã hết hạn. Vui lòng quét mã QR mới đang hiển thị trên màn hình."* | Khách quét ảnh chụp màn hình mã QR động cũ đã qua chu kỳ làm mới. |
+| **410** | `ERR_QR_CODE_REVOKED` | *"Mã QR này đã được đổi mới hoặc hết hiệu lực. Vui lòng quét mã QR hiện tại."* | Khách quét ảnh chụp hoặc giấy in mã QR cũ sau khi quản lý đã bấm Đổi mã QR mới. |
+| **409** | `ERR_CONCURRENT_CONFLICT` | *"Thao tác đã được xử lý trước đó. Đang đồng bộ lại trạng thái..."* | Nhân viên bấm đúp 2 lần hoặc xung đột Optimistic Lock `@Version`. |
 | **423** | `ERR_QUEUE_PAUSED_CLOSED` | *"Hàng chờ hiện đang tạm đóng nhận khách. Vui lòng liên hệ nhân viên."* | Khách bấm lấy số khi hàng chờ ở trạng thái `PAUSED` hoặc `CLOSED`. |
 | **429** | `ERR_RECALL_RATE_LIMITED` | *"Vui lòng đợi ít nhất 15 giây trước khi thực hiện gọi lại."* | Nhân viên bấm "GỌI LẠI" liên tục dưới 15 giây. |
 | **400** | `ERR_RECALL_LIMIT_EXCEEDED`| *"Đã gọi lại tối đa 3 lần. Vui lòng đánh dấu Vắng mặt."* | Nhân viên cố tình gọi lại lần thứ 4. |
@@ -2891,16 +2906,16 @@ Bảng ma trận truy vết yêu cầu đảm bảo 100% các yêu cầu nghiệ
 | **BR-004** | Thiết lập Đa Hàng chờ & Prefix | FR-008, FR-009, FR-010, FR-012 | UC-003, UC-004 | SCR-04, SCR-09 | NFR-004, NFR-011 | BRL-001, BRL-005, BRL-010 |
 | **BR-005** | Thiết lập Quầy phục vụ (Counters) | FR-011, FR-024 | UC-003, UC-008 | SCR-04, SCR-05, SCR-11 | NFR-001, NFR-008 | BRL-008 |
 | **BR-006** | Khách Lấy số Tự phục vụ (Bắt buộc Tên) | FR-016, FR-017, FR-018, FR-019 | UC-005 | SCR-06 | NFR-002, NFR-006, NFR-008, NFR-013 | BRL-001, BRL-005, BRL-009 |
-| **BR-007** | Mã QR Động xoay vòng TOTP | FR-013, FR-015 | UC-004 | SCR-08, SCR-09 | NFR-009, NFR-011 | BRL-003 |
+| **BR-007** | Mã QR theo Ca & Đổi thủ công | FR-013, FR-015 | UC-004 | SCR-08, SCR-09 | NFR-009, NFR-011 | BRL-003 |
 | **BR-008** | Xác thực Vị trí Địa lý (GPS Radius) | FR-007, FR-014 | UC-002, UC-005 | SCR-06, SCR-09 | NFR-007, NFR-008 | BRL-002 |
 | **BR-009** | Nhập vé Khách Vãng lai (Walk-in) | FR-037, FR-038 | UC-013 | SCR-05 | NFR-008, NFR-014 | BRL-001 |
 | **BR-010** | Màn hình Live Tracking Thời gian thực | FR-020, FR-023 | UC-006, UC-014 | SCR-07 | NFR-001, NFR-005, NFR-008, NFR-013 | BRL-004 |
-| **BR-011** | Chuông báo Gọi lượt & Xác nhận Đang đến| FR-021, FR-022 | UC-006, UC-007 | SCR-05, SCR-07 | NFR-001, NFR-005, NFR-007 | – |
+| **BR-011** | Chuông báo & Đồng bộ 2 chiều Đã tới | FR-021, FR-022 | UC-006, UC-007 | SCR-05, SCR-07 | NFR-001, NFR-005, NFR-007 | – |
 | **BR-012** | Hỗ trợ Lock Screen & Live Activities | (Phase 3 Spec) | – | SCR-07 | NFR-007 | – |
-| **BR-013** | Staff Panel 1 Chạm & Điều phối Vé | FR-025, FR-026, FR-027, FR-028, FR-029, FR-030 | UC-008, UC-009, UC-012 | SCR-05 | NFR-001, NFR-003, NFR-008 | BRL-001, BRL-006, BRL-008 |
-| **BR-014** | Màn hình TV Display & Chuông Ding Dong | FR-034, FR-035, FR-036 | UC-008, UC-013 | SCR-08 | NFR-001, NFR-009, NFR-012 | BRL-003 |
+| **BR-013** | Staff Panel 1 Chạm & Đồng hồ 2 Phút | FR-025, FR-026, FR-027, FR-028, FR-029, FR-030 | UC-008, UC-009, UC-012 | SCR-05 | NFR-001, NFR-003, NFR-008 | BRL-001, BRL-006, BRL-008, BRL-011 |
+| **BR-014** | TV Display, Ding Dong & TTS (Bật/Tắt) | FR-034, FR-035, FR-036 | UC-008, UC-013 | SCR-08, SCR-11 | NFR-001, NFR-009, NFR-012 | BRL-003 |
 | **BR-015** | Thống kê Vận hành & Xuất file CSV | FR-039, FR-040 | UC-015 | SCR-03, SCR-010 | NFR-003, NFR-010 | – |
-| **BR-016** | Cổng Tích hợp Mở REST API & Webhooks | FR-041, FR-042 | (Integration) | SCR-11 | NFR-014, NFR-015 | – |
+| **BR-016** | Open API & Webhooks *(Tạm dừng)* | FR-041, FR-042 *(Deferred)* | – | – | – | – |
 | **Q&A-01** | Xử lý Vắng mặt Đếm ngược 15 Phút & Tự Hủy| FR-031, FR-032, FR-033 | UC-010, UC-011 | SCR-05, SCR-07 | NFR-001, NFR-005 | BRL-007 |
 | **Q&A-02** | Reset Số vé khi Mở Phiên làm việc mới | FR-010 | UC-003 | SCR-04, SCR-05 | NFR-014 | BRL-001, BRL-010 |
 
@@ -2940,25 +2955,25 @@ Dưới đây là 20 kịch bản kiểm thử then chốt được viết theo 
 - **When:** Khách hàng quét mã QR, chia sẻ vị trí và bấm lấy số.
 - **Then:** Hệ thống từ chối tạo vé và hiển thị thông báo lỗi màu vàng: *"Bạn đang ở cách cửa hàng 250 mét, vượt quá phạm vi cho phép (100 mét). Vui lòng đến gần cửa hàng hơn để lấy số."*
 
-### AC-07: Từ chối Quét Ảnh Chụp Mã QR Động Đã Hết hạn
-- **Given:** Hàng chờ bật Dynamic QR Code chu kỳ 30 giây. Khách hàng sử dụng ảnh chụp màn hình mã QR của 2 phút trước.
-- **When:** Khách hàng gửi yêu cầu check-in với mã QR cũ đó.
-- **Then:** Hệ thống từ chối xử lý, trả về mã lỗi `QR_CODE_EXPIRED` và màn hình hiển thị: *"Mã QR này đã hết hạn. Vui lòng quét mã QR mới đang hiển thị trực tiếp trên màn hình."*
+### AC-07: Từ chối Quét Mã QR Cũ Sau Khi Đổi Mã Mới
+- **Given:** Quản lý vừa bấm nút "Đổi mã QR mới" trên QR Studio (SCR-09). Khách hàng quét ảnh chụp màn hình hoặc giấy in mã QR cũ trước đó.
+- **When:** Khách hàng gửi yêu cầu check-in với `qr_token` cũ.
+- **Then:** Hệ thống từ chối xử lý, trả về mã lỗi `QR_CODE_REVOKED` và màn hình hiển thị: *"Mã QR này đã được đổi mới hoặc hết hiệu lực. Vui lòng quét mã QR hiện tại."*
 
-### AC-08: Nhân viên Thao tác 1 Chạm Gọi Vé Tiếp theo (FIFO)
-- **Given:** Hàng chờ có các vé WAITING theo thứ tự: A-001 (tạo lúc 08:00), A-002 (tạo lúc 08:02). Nhân viên đang trực tại Quầy 1.
-- **When:** Nhân viên nhấn nút lớn "GỌI TIẾP THEO" trên Staff Panel.
-- **Then:** Vé A-001 chuyển sang `CALLED`, điện thoại của khách A-001 rung chuông cảnh báo và TV Display chớp sáng hiển thị *"Quầy 1: A-001"*.
+### AC-08: Nhân viên Gọi Vé Tiếp theo (FIFO) & Đồng hồ 2 Phút (Không Khóa Thao tác)
+- **Given:** Hàng chờ có vé WAITING A-001, A-002. Nhân viên đang trực tại Quầy 1.
+- **When:** Nhân viên nhấn "GỌI TIẾP THEO" trên Staff Panel.
+- **Then:** Vé A-001 chuyển sang `CALLED`, Staff Panel bắt đầu chạy đồng hồ 2 phút; nhưng ở giây thứ 20 nhân viên vẫn có thể bấm "VẮNG MẶT" (bắt đầu 15p trên máy khách) và gọi ngay vé A-002 nếu muốn.
 
-### AC-09: Khóa Mutex Chống Gọi Trùng Vé Giữa Hai Quầy Đồng thời
+### AC-09: Khóa Chống Xung đột Đa tầng (Multi-Counter & Double-Click)
 - **Given:** Hàng chờ có vé A-010 và A-011 đang chờ.
-- **When:** Nhân viên Quầy 1 và Nhân viên Quầy 2 cùng nhấn "GỌI TIẾP THEO" tại cùng một mili-giây.
-- **Then:** Cơ chế khóa Mutex phân xử Quầy 1 nhận vé A-010 và Quầy 2 nhận vé A-011. Tuyệt đối không có trường hợp hai quầy gọi trùng một số vé.
+- **When:** Nhân viên Quầy 1 và Quầy 2 cùng nhấn "GỌI TIẾP THEO" tại cùng một mili-giây (hoặc 1 nhân viên bấm đúp 2 lần liên tiếp).
+- **Then:** Khóa `SKIP LOCKED` phân xử Quầy 1 nhận vé A-010 và Quầy 2 nhận vé A-011; khóa `@Version` chặn thao tác bấm đúp trùng lặp.
 
-### AC-10: Khách hàng Xác nhận "Tôi đang đến"
-- **Given:** Khách hàng nhận được thông báo vé của mình được gọi đến Quầy 2.
-- **When:** Khách hàng nhấn nút "TÔI ĐANG ĐẾN" trên màn hình Live Tracking.
-- **Then:** Staff Panel của nhân viên Quầy 2 lập tức hiển thị huy hiệu xanh phát sáng "Khách đang tới" trên thẻ vé của khách trong vòng $\le 1$ giây.
+### AC-10: Đồng bộ 2 Chiều Xác nhận Đã tới giữa Khách & Nhân viên
+- **Given:** Khách hàng nhận được thông báo vé được gọi đến Quầy 2 (`CALLED`).
+- **When:** Khách bấm "TÔI ĐANG ĐẾN / ĐÃ TỚI" trên điện thoại; sau đó khi tới quầy, nhân viên bấm "BẮT ĐẦU PHỤC VỤ".
+- **Then:** Khi khách bấm, Staff Panel hiện ngay badge xanh "Khách báo đã tới" (vẫn giữ `CALLED`); khi nhân viên bấm "Bắt đầu phục vụ", màn hình khách tự động đồng bộ chuyển sang trạng thái `SERVING` và tắt đồng hồ 2 phút.
 
 ### AC-11: Giới hạn Gọi lại Tối đa 3 Lần và Giãn cách 15 Giây
 - **Given:** Vé đang ở trạng thái `CALLED`. Nhân viên vừa bấm "GỌI LẠI" lần 1.
@@ -3000,10 +3015,10 @@ Dưới đây là 20 kịch bản kiểm thử then chốt được viết theo 
 - **When:** Nhân viên Quầy 1 bấm "Chuyển vé", chọn "Quầy 02" và xác nhận.
 - **Then:** Vé A-020 được gán sang Quầy 2, TV Display cập nhật A-020 hiển thị tại Quầy 2 và màn hình khách nhận thông báo di chuyển sang Quầy 2.
 
-### AC-19: Màn hình TV Display Chớp sáng và Phát Chuông "Ding Dong"
-- **Given:** TV Display đang mở qua Secret URL tại sảnh chờ.
-- **When:** Bất kỳ nhân viên nào bấm gọi vé mới (ví dụ A-025 đến Quầy 3).
-- **Then:** Màn hình TV kích hoạt hiệu ứng chớp sáng thẻ vé A-025 và phát âm thanh chuông "Ding Dong" rõ ràng trong vòng $\le 500$ms mà không có bất kỳ giọng đọc TTS nào phát ra.
+### AC-19: Màn hình TV Display Chớp sáng, Phát Chuông "Ding Dong" & Đọc TTS (Bật/Tắt)
+- **Given:** TV Display đang mở qua Secret URL tại sảnh chờ và đã kích hoạt âm thanh lần đầu.
+- **When:** Nhân viên Quầy 3 bấm gọi vé A-025 (Anh Nam) và Quầy 1 gọi vé A-026 ngay sau đó 1 giây (khi công tắc TTS đang BẬT).
+- **Then:** TV chớp sáng thẻ vé, phát chuông "Ding Dong" trong $\le 500$ms rồi đưa vào Audio Queue đọc lần lượt *"Xin mời khách hàng số A-025, Anh Nam, đến Quầy 3"* xong mới đọc tiếp vé A-026 (không chồng tiếng). Khi gạt công tắc TTS sang TẮT, TV chỉ chớp sáng và phát chuông "Ding Dong".
 
 ### AC-20: Mở Phiên Hàng chờ Mới Đặt lại Số Vé về 001
 - **Given:** Hàng chờ A đang có số vé cao nhất hôm nay là A-150.
@@ -3038,6 +3053,11 @@ Tài liệu Đặc tả Yêu cầu Hệ thống (SRS) này đã được xây d�
   - Đặc tả chi tiết thao tác chọn quầy trực ca (FR-024).
   - Bổ sung chức năng điều phối chuyển quầy / chuyển hàng chờ (FR-030, UC-012).
   - Hoàn thiện 15 Use Cases, 11 Màn hình UI/UX, Mô hình dữ liệu ERD, 10 Business Rules, Sơ đồ chuyển trạng thái State Diagram, 15 NFRs, Ma trận truy vết RTM và 20 Tiêu chí nghiệm thu Given-When-Then.
+- **Phiên bản 1.2 (26/11/2026):** Đồng bộ với BRD v1.3 theo chốt nghiệp vụ mới của Product Owner:
+  - Tạm dừng Module M11 (Open API & Webhooks: FR-041, FR-042) và bỏ Tab 3 trên SCR-11.
+  - Thay Dynamic QR xoay 30s bằng QR cố định theo Queue + Nút "Đổi mã QR mới" (thủ công hoặc tự đổi theo Ca, `BRL-003`, `FR-013`, `FR-015`).
+  - Bổ sung đồng hồ theo dõi 2 phút không khóa thao tác khi ở trạng thái `CALLED` (`BRL-011`, `FR-025`), khóa `@Version` chống bấm đúp (`BRL-008`), và đồng bộ 2 chiều xác nhận đến nơi (`FR-022`, `FR-027`).
+  - Khôi phục Text-to-Speech (TTS) trên TV Display kèm công tắc Bật/Tắt và Audio Queue tuần tự (`FR-035`, `FR-036`, `SCR-08`, `SCR-11`).
 
 ---
 *Tài liệu được hoàn thiện và bảo chứng kỹ thuật bởi Senior Business Analyst / System Analyst.*
