@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_dashboard" name="shell-type"/>
+<title>QR-Wait • POS Staff Calling Panel</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400..600,0..1,0" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#EEF2FF',
+              100: '#E0E7FF',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E5E7EB;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D1D5DB;
+    }
+  </style>
+</head>
+<body class="bg-[#F9FAFB] text-gray-900 font-sans min-h-screen flex flex-col antialiased selection:bg-brand-100 selection:text-brand-700">
+<!-- 1. Sleek Linear/Stripe Inspired Header -->
+<header class="sticky top-0 z-50 h-14 bg-white border-b border-gray-200 px-4 sm:px-6 flex items-center justify-between">
+<!-- Brand & Top Nav -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center text-white font-mono font-bold text-sm shadow-sm">
+          Q
+        </div>
+<div class="flex items-baseline gap-2">
+<span class="font-bold text-sm tracking-tight text-gray-900">QR-Wait</span>
+<span class="text-xs text-gray-400 font-medium">/</span>
+<span class="text-xs text-gray-500 font-medium">Quầy gọi số</span>
+</div>
+</div>
+<div class="h-4 w-px bg-gray-200 hidden sm:block"></div>
+<nav class="hidden md:flex items-center gap-1 text-xs font-medium">
+<a aria-current="page" class="px-3 py-1.5 rounded-md bg-gray-100 text-gray-900 font-semibold" href="#">Bàn Gọi Số</a>
+<a class="px-3 py-1.5 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors" href="#">Danh Sách Chờ</a>
+<a class="px-3 py-1.5 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors" href="#">Quầy &amp; Phục Vụ</a>
+<a class="px-3 py-1.5 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors" href="#">Luồng Dịch Vụ</a>
+</nav>
+</div>
+<!-- Right Controls: Counter Badge + Dark/Light toggle + Avatar -->
+<div class="flex items-center gap-3">
+<!-- Counter Status Selector -->
+<div class="flex items-center gap-2 bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Quầy 01 • Bàn chính</span>
+<span class="material-symbols-outlined text-[16px] text-gray-400">expand_more</span>
+</div>
+<!-- Sun/Moon Theme Toggle -->
+<button class="w-8 h-8 rounded-md border border-gray-200 bg-white hover:bg-gray-50 text-gray-600 flex items-center justify-center transition-colors focus:outline-none" id="theme-toggle" title="Chuyển chế độ sáng/tối" type="button">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+</button>
+<!-- Profile Icon -->
+<div class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-semibold">
+        PV
+      </div>
+</div>
+</header>
+<!-- Main Container -->
+<main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 flex flex-col gap-6">
+<!-- Sub-header Toolbar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg border border-gray-200 bg-white flex items-center justify-center text-gray-700 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">table_restaurant</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-base font-semibold text-gray-900 tracking-tight">Hàng chờ bàn 1–4 người</h1>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Đang hoạt động
+            </span>
+</div>
+<p class="text-xs text-gray-500">Quầy 01 phụ trách • 12 khách đang đợi</p>
+</div>
+</div>
+<div class="flex items-center gap-2.5">
+<button class="h-9 px-3.5 rounded-lg bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-semibold flex items-center gap-2 shadow-sm transition-colors" id="btn-walkin" type="button">
+<span class="material-symbols-outlined text-[18px] text-gray-500">person_add</span>
+<span>+ Thêm khách (Walk-in)</span>
+</button>
+</div>
+</div>
+<!-- 2. Active Serving Hero Card (#A-025) -->
+<section class="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 shadow-sm">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-5 border-b border-gray-100">
+<!-- Left: Ticket & Customer Info -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-6">
+<!-- Ticket Number (Crucial fix: whitespace-nowrap, ample width, font-mono) -->
+<div class="flex flex-col min-w-[140px]">
+<span class="text-[11px] font-semibold tracking-wider uppercase text-brand-600">Đang phục vụ</span>
+<div class="whitespace-nowrap font-mono font-bold text-4xl sm:text-5xl tracking-tight text-gray-900 mt-1">
+              #A-025
+            </div>
+</div>
+<div class="hidden sm:block h-14 w-px bg-gray-200"></div>
+<!-- Customer details stack -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2">
+<span class="text-lg font-bold text-gray-900">Nguyễn Văn A</span>
+<span class="text-xs text-gray-400">•</span>
+<span class="text-xs font-medium text-gray-600">Nhóm 4 người</span>
+</div>
+<div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+<span class="inline-flex items-center gap-1 text-gray-600">
+<span class="material-symbols-outlined text-[16px] text-gray-400">schedule</span>
+                Đã chờ: <strong class="text-gray-800 font-semibold">14 phút</strong>
+</span>
+<span class="text-gray-300">•</span>
+<span class="inline-flex items-center gap-1 text-amber-700 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded text-[11px] font-medium">
+<span class="material-symbols-outlined text-[14px]">child_care</span>
+                Có ghế trẻ em
+              </span>
+</div>
+</div>
+</div>
+<!-- Right: Arrival Timer & Status Badge -->
+<div class="flex sm:flex-col items-start sm:items-end justify-between sm:justify-center gap-2 border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-100">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Khách báo đã tới</span>
+</div>
+<div class="text-xs text-gray-500 font-medium">
+            Đang chờ ra quầy: <span class="font-mono font-semibold text-gray-800" id="arrival-timer">01:42</span> <span class="text-gray-400">/ 02:00</span>
+</div>
+</div>
+</div>
+<!-- Hero Actions Bar -->
+<div class="pt-4 flex flex-wrap items-center gap-2.5">
+<!-- Primary Action -->
+<button class="flex-1 sm:flex-initial h-10 px-5 rounded-lg bg-brand-600 hover:bg-brand-700 active:bg-brand-700 text-white font-semibold text-xs tracking-wide transition-colors flex items-center justify-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>BẮT ĐẦU PHỤC VỤ</span>
+</button>
+<!-- Secondary Actions -->
+<button class="h-10 px-4 rounded-lg bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 text-gray-700 font-medium text-xs transition-colors flex items-center justify-center gap-2" id="btn-recall" type="button">
+<span class="material-symbols-outlined text-[18px] text-gray-500">notifications_active</span>
+<span id="recall-text">Gọi lại (1/3 • 9s)</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-white border border-rose-200 hover:bg-rose-50/60 active:bg-rose-100 text-rose-700 font-medium text-xs transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-rose-500">person_off</span>
+<span>Vắng mặt</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 text-gray-700 font-medium text-xs transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">check_circle</span>
+<span>Hoàn tất</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 text-gray-500 flex items-center justify-center transition-colors ml-auto" title="Chuyển sang quầy khác" type="button">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+</button>
+</div>
+</section>
+<!-- 3. Queue List Card -->
+<section class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+<!-- Tabs Bar -->
+<div class="px-5 pt-3.5 border-b border-gray-200 flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-6" role="tablist">
+<button class="pb-3 text-xs font-semibold text-brand-600 border-b-2 border-brand-600 flex items-center gap-2 transition-colors" id="tab-btn-waiting" onclick="switchQueueTab('waiting')" type="button">
+<span>Đang chờ</span>
+<span class="px-1.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-[11px] font-bold">12</span>
+</button>
+<button class="pb-3 text-xs font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent flex items-center gap-2 transition-colors" id="tab-btn-noshow" onclick="switchQueueTab('noshow')" type="button">
+<span>Vắng mặt 15p</span>
+<span class="px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[11px] font-medium">2</span>
+</button>
+</div>
+<div class="pb-3 flex items-center gap-1.5 text-xs text-gray-400">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Đồng bộ thời gian thực</span>
+</div>
+</div>
+<!-- Tab Content: Đang Chờ -->
+<div class="divide-y divide-gray-100" id="tab-content-waiting">
+<!-- Row 1 -->
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<!-- Strict single line mono badge with ample width -->
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-900 bg-gray-100 border border-gray-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-026
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Trần B</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">2 người</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Online QR</span>
+</div>
+<div class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-gray-400">schedule</span>
+                Chờ 11 phút
+              </div>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center">
+<button class="h-8 px-3 rounded-md border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">bolt</span>
+<span>Ưu tiên</span>
+</button>
+<button class="h-8 px-3.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">notifications</span>
+<span>Gọi ngay</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-900 bg-gray-100 border border-gray-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-027
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Lê Văn C</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">4 người</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Walk-in</span>
+</div>
+<div class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-gray-400">schedule</span>
+                Chờ 9 phút
+              </div>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center">
+<button class="h-8 px-3 rounded-md border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">bolt</span>
+<span>Ưu tiên</span>
+</button>
+<button class="h-8 px-3.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">notifications</span>
+<span>Gọi ngay</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-900 bg-gray-100 border border-gray-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-028
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Hoàng D</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">3 người</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Bàn cạnh cửa sổ</span>
+</div>
+<div class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-gray-400">schedule</span>
+                Chờ 7 phút
+              </div>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center">
+<button class="h-8 px-3 rounded-md border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">bolt</span>
+<span>Ưu tiên</span>
+</button>
+<button class="h-8 px-3.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">notifications</span>
+<span>Gọi ngay</span>
+</button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-900 bg-gray-100 border border-gray-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-029
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Phạm E</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">1 người</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200/60">Walk-in</span>
+</div>
+<div class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-gray-400">schedule</span>
+                Chờ 4 phút
+              </div>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center">
+<button class="h-8 px-3 rounded-md border border-gray-200 hover:bg-gray-100 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">bolt</span>
+<span>Ưu tiên</span>
+</button>
+<button class="h-8 px-3.5 rounded-md bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">notifications</span>
+<span>Gọi ngay</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tab Content: Vắng mặt 15p (Grace Period List) -->
+<div class="hidden divide-y divide-gray-100" id="tab-content-noshow">
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-700 bg-rose-50 border border-rose-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-023
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Chị Mai</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">2 người</span>
+</div>
+<div class="text-[11px] text-rose-600 font-medium mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                Ân hạn còn: <strong class="font-mono ml-0.5">08:45</strong>
+</div>
+</div>
+</div>
+<button class="h-8 px-3.5 rounded-md border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1 self-end sm:self-center" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">restart_alt</span>
+<span>Phục hồi vé</span>
+</button>
+</div>
+<div class="px-5 py-3 hover:bg-gray-50/70 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-4">
+<div class="w-24 min-w-[96px] whitespace-nowrap font-mono font-bold text-sm text-gray-700 bg-rose-50 border border-rose-200/80 px-2.5 py-1.5 rounded-md text-center">
+              #A-024
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-gray-900">Anh Tuấn</span>
+<span class="text-[11px] text-gray-400">•</span>
+<span class="text-xs text-gray-600">3 người</span>
+</div>
+<div class="text-[11px] text-rose-600 font-medium mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                Ân hạn còn: <strong class="font-mono ml-0.5">03:12</strong>
+</div>
+</div>
+</div>
+<button class="h-8 px-3.5 rounded-md border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-medium transition-colors flex items-center gap-1 self-end sm:self-center" type="button">
+<span class="material-symbols-outlined text-[16px] text-gray-500">restart_alt</span>
+<span>Phục hồi vé</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- 4. Floating/Sticky Bottom Calling Bar -->
+<aside class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-gray-200 px-4 sm:px-6 py-2.5 shadow-[0_-4px_16px_rgba(0,0,0,0.03)]">
+<div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+<!-- Next in queue preview -->
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-600">
+<span class="material-symbols-outlined text-[18px]">skip_next</span>
+</div>
+<div>
+<span class="text-[10px] uppercase font-semibold text-gray-400 tracking-wider block">Kế tiếp trong hàng</span>
+<div class="text-xs font-semibold text-gray-900 flex items-center gap-1.5">
+<span class="font-mono text-brand-700 font-bold">#A-026</span>
+<span>•</span>
+<span>Trần B</span>
+<span class="text-gray-400 font-normal">(2 người)</span>
+</div>
+</div>
+</div>
+<!-- Prominent Solid Indigo Call Next Button -->
+<button class="h-11 px-6 rounded-lg bg-brand-600 hover:bg-brand-700 active:bg-brand-700 text-white font-semibold text-xs tracking-wide uppercase transition-all shadow-sm flex items-center justify-center gap-2" id="btn-call-next" type="button">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+<span>GỌI TIẾP THEO (#A-026)</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</aside>
+<!-- Walk-in Modal Simulation -->
+<dialog class="rounded-xl p-5 bg-white border border-gray-200 shadow-xl backdrop:bg-gray-900/40 max-w-sm w-full m-auto" id="walkin-modal">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-brand-600 text-[20px]">person_add</span>
+<h2 class="text-sm font-semibold text-gray-900">Thêm khách Walk-in</h2>
+</div>
+<button class="w-7 h-7 rounded-md hover:bg-gray-100 flex items-center justify-center text-gray-400 hover:text-gray-600" onclick="document.getElementById('walkin-modal').close()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-3.5" method="dialog">
+<div>
+<label class="block text-xs font-medium text-gray-700 mb-1">Tên khách hàng <span class="text-rose-500">*</span></label>
+<input class="w-full h-9 px-3 rounded-md bg-white border border-gray-200 text-gray-900 text-xs focus:outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600" placeholder="Ví dụ: Anh Nam..." required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-gray-700 mb-1">Số lượng khách</label>
+<div class="grid grid-cols-4 gap-1.5">
+<button class="h-8 rounded border border-gray-200 text-xs font-medium hover:bg-gray-50" type="button">1</button>
+<button class="h-8 rounded bg-brand-600 text-white text-xs font-semibold" type="button">2</button>
+<button class="h-8 rounded border border-gray-200 text-xs font-medium hover:bg-gray-50" type="button">3-4</button>
+<button class="h-8 rounded border border-gray-200 text-xs font-medium hover:bg-gray-50" type="button">5+</button>
+</div>
+</div>
+<div class="pt-2 flex items-center gap-2">
+<button class="flex-1 h-9 rounded-md border border-gray-200 text-gray-700 font-medium text-xs hover:bg-gray-50" onclick="document.getElementById('walkin-modal').close()" type="button">Hủy</button>
+<button class="flex-1 h-9 rounded-md bg-brand-600 text-white font-semibold text-xs hover:bg-brand-700 shadow-sm" type="submit">Lấy vé ngay</button>
+</div>
+</form>
+</dialog>
+<!-- Interactive Scripts -->
+<script>
+    // Tab Switcher Interaction
+    function switchQueueTab(tabName) {
+      const btnWaiting = document.getElementById('tab-btn-waiting');
+      const btnNoShow = document.getElementById('tab-btn-noshow');
+      const contentWaiting = document.getElementById('tab-content-waiting');
+      const contentNoShow = document.getElementById('tab-content-noshow');
+
+      if (tabName === 'waiting') {
+        btnWaiting.className = "pb-3 text-xs font-semibold text-brand-600 border-b-2 border-brand-600 flex items-center gap-2 transition-colors";
+        btnNoShow.className = "pb-3 text-xs font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent flex items-center gap-2 transition-colors";
+        contentWaiting.classList.remove('hidden');
+        contentNoShow.classList.add('hidden');
+      } else {
+        btnNoShow.className = "pb-3 text-xs font-semibold text-brand-600 border-b-2 border-brand-600 flex items-center gap-2 transition-colors";
+        btnWaiting.className = "pb-3 text-xs font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent flex items-center gap-2 transition-colors";
+        contentNoShow.classList.remove('hidden');
+        contentWaiting.classList.add('hidden');
+      }
+    }
+
+    // Modal Trigger
+    const walkinBtn = document.getElementById('btn-walkin');
+    const walkinModal = document.getElementById('walkin-modal');
+    if (walkinBtn && walkinModal) {
+      walkinBtn.addEventListener('click', () => {
+        walkinModal.showModal();
+      });
+    }
+
+    // Recall countdown micro-interaction
+    let recallSeconds = 9;
+    const recallText = document.getElementById('recall-text');
+    setInterval(() => {
+      if (recallSeconds > 0) {
+        recallSeconds--;
+        if (recallText) {
+          recallText.textContent = `Gọi lại (1/3 • ${recallSeconds}s)`;
+        }
+      }
+    }, 1000);
+
+    // Theme Toggle micro-state
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const icon = themeToggle.querySelector('.material-symbols-outlined');
+        if (icon.textContent === 'light_mode') {
+          icon.textContent = 'dark_mode';
+        } else {
+          icon.textContent = 'light_mode';
+        }
+      });
+    }
+  </script>
+</body></html>

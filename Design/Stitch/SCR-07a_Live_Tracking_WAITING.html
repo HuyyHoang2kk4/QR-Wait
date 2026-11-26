@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><title>Màn Hình Chờ Gọi Số - QR Wait</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@600;700;800;900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "outline-variant": "#c7c4d8", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#3323cc", "primary-fixed": "#e2dfff", "surface-dim": "#dcd8e5", "secondary": "#58579b", "on-primary-fixed": "#0f0069", "on-background": "#1b1b24", "error": "#ba1a1a", "on-secondary-container": "#454386", "on-tertiary-fixed-variant": "#7b2f00", "surface-container-highest": "#e4e1ee", "surface-bright": "#fcf8ff", "inverse-surface": "#302f39", "surface-container-high": "#eae6f4", "on-secondary-fixed-variant": "#413f82", "on-primary-container": "#dad7ff", "surface-tint": "#4d44e3", "secondary-fixed": "#e2dfff", "on-secondary": "#ffffff", "tertiary-fixed": "#ffdbcc", "on-error-container": "#93000a", "inverse-on-surface": "#f3effc", "tertiary": "#7e3000", "on-tertiary-container": "#ffd2be", "on-tertiary-fixed": "#351000", "outline": "#777587", "primary-container": "#4f46e5", "primary": "#3525cd", "secondary-fixed-dim": "#c3c0ff", "tertiary-fixed-dim": "#ffb695", "on-tertiary": "#ffffff", "inverse-primary": "#c3c0ff", "secondary-container": "#b6b4ff", "surface": "#fcf8ff", "on-surface": "#1b1b24", "background": "#fcf8ff", "tertiary-container": "#a44100", "surface-variant": "#e4e1ee", "surface-container-low": "#f5f2ff", "surface-container": "#f0ecf9", "on-surface-variant": "#464555", "on-error": "#ffffff", "on-primary": "#ffffff", "primary-fixed-dim": "#c3c0ff", "error-container": "#ffdad6", "on-secondary-fixed": "#140f54" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": {}, "fontFamily": { "headline": ["Inter"], "display": ["Inter"], "body": ["Be Vietnam Pro"], "label": ["Be Vietnam Pro"] }, "fontSize": {} } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body antialiased flex flex-col min-h-screen pt-safe pb-safe"><main class="flex-1 flex flex-col w-full bg-surface relative"><div class="flex flex-col w-full max-w-md mx-auto px-4 pb-8 space-y-4 font-body antialiased">
+<!-- Top Branch & Queue Identifiers -->
+<header class="pt-2 flex flex-col items-center text-center">
+<div class="inline-flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full shadow-sm">
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+</div>
+<span class="text-xs font-semibold text-on-surface tracking-tight">QR-Wait Queue</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-xs font-medium text-on-surface-variant">Chi nhánh Quận 1</span>
+</div>
+<p class="mt-2 text-[11px] font-semibold tracking-wider text-outline uppercase">Hàng chờ bàn 1–4 người</p>
+</header>
+<!-- Ticket Hero Card -->
+<section class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<!-- Pulsing Live Banner -->
+<div class="inline-flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-full mb-3">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-[11px] font-medium text-on-surface-variant">Trực tiếp • Cập nhật tự động</span>
+</div>
+<!-- Ticket Label & Number -->
+<span class="text-xs font-medium uppercase tracking-wider text-outline">Số thứ tự của bạn</span>
+<h1 class="text-6xl font-extrabold font-headline tracking-tight text-on-surface my-1">
+      #A-025
+    </h1>
+<!-- Customer Details -->
+<div class="flex items-center justify-center gap-1.5 text-sm font-medium text-on-surface-variant mt-1 mb-3">
+<span class="material-symbols-outlined text-base text-primary">person</span>
+<span>Chào bạn, <strong class="text-on-surface font-semibold">Anh Nam</strong></span>
+<span>•</span>
+<span>Nhóm 2 người</span>
+</div>
+<!-- Amber Waiting Status Badge -->
+<div class="inline-flex items-center gap-1.5 bg-tertiary-fixed px-3 py-1.5 rounded-full text-on-tertiary-fixed text-xs font-semibold">
+<span class="material-symbols-outlined text-sm">hourglass_top</span>
+<span>Đang chờ phục vụ</span>
+</div>
+</section>
+<!-- 2-Column Grid Metrics -->
+<section class="grid grid-cols-2 gap-3">
+<!-- Queue Ahead Metric -->
+<div class="bg-surface-container-low rounded-xl p-4 flex flex-col items-center text-center shadow-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-xl">groups</span>
+</div>
+<div class="text-2xl font-bold font-headline text-on-surface">2 nhóm</div>
+<p class="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">Đang chờ phía trước bạn</p>
+</div>
+<!-- Estimated Time Metric -->
+<div class="bg-surface-container-low rounded-xl p-4 flex flex-col items-center text-center shadow-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-xl">schedule</span>
+</div>
+<div class="text-2xl font-bold font-headline text-on-surface">~10 phút</div>
+<p class="text-[11px] font-medium text-on-surface-variant mt-0.5 leading-snug">Thời gian chờ ước tính</p>
+</div>
+</section>
+<!-- 4-Step Stepper Tracker -->
+<section class="bg-surface-container-lowest rounded-xl p-4 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold uppercase tracking-wider text-outline">Tiến trình lượt chờ</span>
+<span class="text-xs font-medium text-primary bg-primary-fixed px-2 py-0.5 rounded-full">Bước 2 / 4</span>
+</div>
+<div class="relative flex items-center justify-between px-2">
+<!-- Continuous Background Track -->
+<div class="absolute top-4 left-6 right-6 h-0.5 bg-surface-container-highest -z-0"></div>
+<!-- Completed Progress Highlight -->
+<div class="absolute top-4 left-6 w-1/3 h-0.5 bg-primary-container -z-0"></div>
+<!-- Step 1: Đã lấy số (Completed) -->
+<div class="flex flex-col items-center z-10 w-16">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="text-[11px] font-medium text-on-surface mt-1.5 text-center leading-tight">Đã lấy số</span>
+</div>
+<!-- Step 2: Đang chờ (Active) -->
+<div class="flex flex-col items-center z-10 w-16">
+<div class="relative w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-sm">
+<span class="absolute inset-0 rounded-full bg-primary-container opacity-20 animate-ping"></span>
+<span class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-xs font-bold font-headline">2</span>
+</div>
+<span class="text-[11px] font-bold text-primary mt-1.5 text-center leading-tight">Đang chờ</span>
+</div>
+<!-- Step 3: Tới lượt (Upcoming) -->
+<div class="flex flex-col items-center z-10 w-16">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-outline flex items-center justify-center text-xs font-semibold font-headline">
+          3
+        </div>
+<span class="text-[11px] font-medium text-outline mt-1.5 text-center leading-tight">Tới lượt</span>
+</div>
+<!-- Step 4: Đang phục vụ (Upcoming) -->
+<div class="flex flex-col items-center z-10 w-16">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-outline flex items-center justify-center text-xs font-semibold font-headline">
+          4
+        </div>
+<span class="text-[11px] font-medium text-outline mt-1.5 text-center leading-tight">Phục vụ</span>
+</div>
+</div>
+</section>
+<!-- Helpful Notice Box -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex items-start gap-2.5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5 shrink-0">info</span>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+      Vui lòng chú ý thông báo trên màn hình hoặc khi nhân viên gọi số của bạn. Bạn không cần tải ứng dụng, trang web sẽ tự động cập nhật.
+    </p>
+</div>
+<!-- Cancel Queue Action & Footer -->
+<div class="flex flex-col items-center pt-2 space-y-3">
+<button class="w-full py-2.5 px-4 rounded-xl bg-surface-container text-error text-xs font-medium flex items-center justify-center gap-1.5 transition active:scale-95" id="cancelQueueBtn" type="button">
+<span class="material-symbols-outlined text-base">cancel</span>
+<span>Hủy lượt chờ này</span>
+</button>
+<!-- Confirmation Modal (Hidden by Default) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden" id="cancelConfirmModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-xs w-full p-5 shadow-lg text-center flex flex-col items-center">
+<div class="w-11 h-11 rounded-full bg-error-container text-error flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-2xl">warning</span>
+</div>
+<h2 class="text-base font-bold text-on-surface font-headline mb-1">Xác nhận hủy vé?</h2>
+<p class="text-xs text-on-surface-variant mb-4">Bạn sẽ mất số thứ tự <strong class="text-on-surface">#A-025</strong> và cần quét mã lấy lại vé mới nếu muốn xếp hàng lại.</p>
+<div class="grid grid-cols-2 gap-2 w-full">
+<button class="py-2.5 px-3 rounded-lg bg-surface-container text-on-surface text-xs font-semibold" id="closeModalBtn" type="button">
+            Giữ vé lại
+          </button>
+<button class="py-2.5 px-3 rounded-lg bg-error text-on-error text-xs font-semibold" id="confirmCancelBtn" type="button">
+            Đồng ý hủy
+          </button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-[11px] text-outline">
+<span class="material-symbols-outlined text-[13px]">shield</span>
+<span>Hệ thống xếp hàng tự động QR-Wait</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const cancelBtn = document.getElementById('cancelQueueBtn');
+    const modal = document.getElementById('cancelConfirmModal');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const confirmBtn = document.getElementById('confirmCancelBtn');
+
+    if (cancelBtn && modal && closeBtn && confirmBtn) {
+      cancelBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      confirmBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        cancelBtn.disabled = true;
+        cancelBtn.classList.replace('text-error', 'text-outline');
+        cancelBtn.innerHTML = '<span class="material-symbols-outlined text-base">check</span><span>Đã yêu cầu hủy vé</span>';
+      });
+    }
+  })();
+</script></main></body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><title>Lấy Số Chờ - QR Wait</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#4F46E5",
+        "primary-hover": "#4338CA"
+      },
+      fontFamily: {
+        body: ["Be Vietnam Pro", "sans-serif"],
+        headline: ["Inter", "sans-serif"]
+      }
+    }
+  }
+};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style></head><body class="bg-white text-gray-900 font-body antialiased flex flex-col min-h-screen pt-safe pb-safe selection:bg-indigo-100 selection:text-indigo-900"><main class="flex-1 flex flex-col w-full bg-white relative"><div class="flex flex-col w-full max-w-md mx-auto px-5 py-5 sm:py-7 flex-1 justify-between font-body">
+<!-- Top Brand Header Bar -->
+<div>
+<header class="flex items-center justify-between pb-4 border-b border-gray-100">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-200">
+<span class="material-symbols-outlined text-[20px]">qr_code_2</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-gray-900 tracking-tight font-headline">QR-Wait</span>
+<span class="text-[11px] font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+            Chi nhánh Quận 1
+          </span>
+</div>
+</div>
+<!-- Dark/Light Mode Toggle Button -->
+<button aria-label="Toggle Theme" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:border-gray-300 transition-colors" type="button">
+<span class="material-symbols-outlined text-base">light_mode</span>
+</button>
+</header>
+<!-- Queue Info Section -->
+<div class="flex flex-col items-center mt-5 mb-6 text-center">
+<p class="text-xs font-semibold tracking-wider text-gray-500 uppercase">
+        HÀNG CHỜ BÀN 1–4 NGƯỜI
+      </p>
+<!-- Wait Status Pill -->
+<div class="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/60 text-amber-800 text-[13px] font-medium">
+<span class="material-symbols-outlined text-sm text-amber-600">hourglass_top</span>
+<span>3 nhóm đang chờ • ~10 phút</span>
+</div>
+</div>
+<!-- Interactive Check-in Form -->
+<form class="space-y-4" id="checkinForm" onsubmit="event.preventDefault(); handleCheckinSubmit();">
+<!-- Field 1: Customer Name -->
+<div>
+<label class="block text-xs font-medium text-gray-700 mb-1.5" for="customerName">
+          Tên của bạn <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<input autocomplete="off" class="w-full h-11 pl-9 pr-3.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 transition-colors" id="customerName" placeholder="Ví dụ: Anh Nam, Chị Linh..." required="" type="text"/>
+</div>
+</div>
+<!-- Field 2: Party Size Selection -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="text-xs font-medium text-gray-700">
+          Số lượng người <span class="text-red-500">*</span>
+</label>
+<span class="text-xs font-medium text-indigo-600" id="partySizeSummary">2 người</span>
+</div>
+<!-- Quick Chips: 1, 2, 3, 4, 5+ -->
+<div class="grid grid-cols-5 gap-2" id="partySizeContainer">
+<button class="party-chip h-10 rounded-lg text-sm font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 flex items-center justify-center transition-all duration-150 active:scale-95" data-size="1" onclick="selectPartySize(this)" type="button">
+            1
+          </button>
+<button class="party-chip h-10 rounded-lg text-sm font-semibold bg-indigo-600 text-white border border-indigo-600 shadow-sm flex items-center justify-center transition-all duration-150 active:scale-95" data-size="2" onclick="selectPartySize(this)" type="button">
+            2
+          </button>
+<button class="party-chip h-10 rounded-lg text-sm font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 flex items-center justify-center transition-all duration-150 active:scale-95" data-size="3" onclick="selectPartySize(this)" type="button">
+            3
+          </button>
+<button class="party-chip h-10 rounded-lg text-sm font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 flex items-center justify-center transition-all duration-150 active:scale-95" data-size="4" onclick="selectPartySize(this)" type="button">
+            4
+          </button>
+<button class="party-chip h-10 rounded-lg text-sm font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 flex items-center justify-center transition-all duration-150 active:scale-95" data-size="5+" onclick="selectPartySize(this)" type="button">
+            5+
+          </button>
+</div>
+<input id="selectedPartySize" type="hidden" value="2"/>
+</div>
+<!-- Field 3: Special Notes (Optional) -->
+<div>
+<label class="block text-xs font-medium text-gray-700 mb-1.5" for="customerNote">
+          Ghi chú <span class="text-xs text-gray-400 font-normal">(Không bắt buộc)</span>
+</label>
+<div class="relative">
+<textarea class="w-full p-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 transition-colors resize-none" id="customerNote" placeholder="Ví dụ: Cần ghế trẻ em, ngồi cạnh cửa sổ..." rows="2"></textarea>
+</div>
+</div>
+<!-- Primary Action Button -->
+<div class="pt-2">
+<button class="w-full h-11 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-headline font-semibold text-sm tracking-wide flex items-center justify-center gap-2 shadow-sm transition-all duration-150 active:scale-[0.99]" id="submitBtn" type="submit">
+<span>LẤY SỐ NGAY</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Subtle Security & Privacy Reassurance Footer -->
+<footer class="mt-8 pt-4 pb-2 flex items-center justify-center gap-1.5 text-center text-xs text-gray-400 border-t border-gray-50">
+<span class="material-symbols-outlined text-[16px] text-gray-400">verified_user</span>
+<span>Không cần cài app • Tuyệt đối không lưu số điện thoại hay thông tin cá nhân</span>
+</footer>
+</div>
+<script>
+  function selectPartySize(selectedBtn) {
+    const chips = document.querySelectorAll('.party-chip');
+    chips.forEach(chip => {
+      chip.className = 'party-chip h-10 rounded-lg text-sm font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 flex items-center justify-center transition-all duration-150 active:scale-95';
+    });
+
+    selectedBtn.className = 'party-chip h-10 rounded-lg text-sm font-semibold bg-indigo-600 text-white border border-indigo-600 shadow-sm flex items-center justify-center transition-all duration-150 active:scale-95';
+    
+    const size = selectedBtn.getAttribute('data-size');
+    document.getElementById('selectedPartySize').value = size;
+    document.getElementById('partySizeSummary').innerText = size + ' người';
+  }
+
+  function handleCheckinSubmit() {
+    const nameInput = document.getElementById('customerName');
+    const name = nameInput.value.trim();
+    if (!name) {
+      nameInput.focus();
+      return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="material-symbols-outlined animate-spin text-lg">sync</span>
+      <span>Đang tạo vé...</span>
+    `;
+
+    setTimeout(() => {
+      submitBtn.innerHTML = `
+        <span class="material-symbols-outlined text-lg">check_circle</span>
+        <span>Lấy số thành công!</span>
+      `;
+      submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+      submitBtn.classList.add('bg-emerald-600');
+    }, 700);
+  }
+</script></main></body></html>

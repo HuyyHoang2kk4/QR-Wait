@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-background":"#1b1b24","on-secondary-fixed-variant":"#413f82","outline":"#777587","on-secondary-fixed":"#140f54","on-primary-fixed":"#0f0069","on-surface-variant":"#464555","on-primary-fixed-variant":"#3323cc","tertiary-fixed-dim":"#ffb695","on-surface":"#1b1b24","inverse-surface":"#302f39","secondary-fixed-dim":"#c3c0ff","surface-container-high":"#eae6f4","secondary-container":"#b6b4ff","on-primary":"#ffffff","on-tertiary-container":"#ffd2be","surface-tint":"#4d44e3","inverse-primary":"#c3c0ff","tertiary-container":"#a44100","surface-container-highest":"#e4e1ee","on-error":"#ffffff","surface-container-low":"#f5f2ff","surface-container":"#f0ecf9","secondary-fixed":"#e2dfff","surface":"#fcf8ff","primary-container":"#4f46e5","tertiary-fixed":"#ffdbcc","on-error-container":"#93000a","surface-dim":"#dcd8e5","outline-variant":"#c7c4d8","error":"#ba1a1a","inverse-on-surface":"#f3effc","surface-container-lowest":"#ffffff","primary-fixed":"#e2dfff","on-primary-container":"#dad7ff","on-tertiary-fixed":"#351000","surface-bright":"#fcf8ff","primary-fixed-dim":"#c3c0ff","tertiary":"#7e3000","secondary":"#58579b","error-container":"#ffdad6","on-tertiary-fixed-variant":"#7b2f00","on-secondary-container":"#454386","background":"#fcf8ff","on-secondary":"#ffffff","on-tertiary":"#ffffff","surface-variant":"#e4e1ee","primary":"#3525cd"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{},"fontFamily":{"headline":["Inter"],"display":["Inter"],"body":["Be Vietnam Pro"],"label":["Be Vietnam Pro"]},"fontSize":{}}}}</script></head><body class="bg-surface font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col justify-between py-6 px-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-6"><div class="flex items-center justify-between px-2"><div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary font-headline font-bold text-lg tracking-wider">QR</div><div class="flex flex-col"><span class="font-headline font-bold text-lg text-on-surface tracking-tight leading-none">QR-Wait</span><span class="text-[11px] font-label font-medium text-on-surface-variant tracking-wider uppercase mt-1">Hệ thống vé số</span></div></div><button aria-label="Thu gọn thanh điều hướng" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><nav class="flex flex-col gap-1.5" data-active-classes="bg-primary-container text-on-primary font-semibold shadow-sm"><a class="px-3.5 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="tong-quan" href="#">Tổng quan</a><a class="px-3.5 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hang-cho" href="#">Hàng chờ</a><a class="px-3.5 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="qr-studio" href="#">QR Studio</a><a class="px-3.5 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="scr-10-analytics-export" href="#">Báo cáo &amp; Phân tích</a><a class="px-3.5 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="scr-11-cai-dat-doi-ngu" href="#">Cài đặt &amp; Đội ngũ</a></nav></div><div class="flex flex-col gap-3 px-2"><div class="bg-surface-container-low p-3.5 rounded-xl flex items-center gap-3"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div><div class="flex flex-col"><span class="text-xs font-semibold text-on-surface">Màn hình TV Display</span><span class="text-[11px] text-on-surface-variant">Đang kết nối: TV-01</span></div></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 px-8 flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-4"><div class="flex items-center gap-2 bg-surface-container-lowest px-3.5 py-2 rounded-xl shadow-sm"><span class="material-symbols-outlined text-primary text-[20px]">store</span><span class="text-xs text-on-surface-variant font-medium">Chi nhánh:</span><span class="text-sm font-semibold text-on-surface">Chi nhánh Quận 1</span><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div><div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-xs font-medium text-on-surface-variant">Đồng bộ trực tiếp</span></div></div><div class="flex items-center gap-5"><button aria-label="Thông báo hệ thống" class="w-10 h-10 rounded-xl bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors relative shadow-sm" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-3 pl-3"><div class="flex flex-col text-right"><span class="text-sm font-semibold text-on-surface leading-tight">Quản trị viên</span><span class="text-xs text-on-surface-variant">QR-Wait Trung Tâm</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full min-h-screen bg-surface px-8 py-6 max-w-[1440px] mx-auto"><div class="flex flex-col w-full pb-16">
+<!-- BREADCRUMB & PAGE HEADER -->
+<div class="flex flex-col gap-6 mb-8">
+<div class="flex items-center gap-2 text-xs font-label font-medium text-on-surface-variant">
+<span class="hover:text-primary transition-colors cursor-pointer">Cấu hình hệ thống</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Cài đặt &amp; Đội ngũ</span>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<div>
+<h1 class="text-2xl lg:text-3xl font-headline font-extrabold text-on-surface tracking-tight">Cài đặt &amp; Quản lý Đội ngũ</h1>
+<p class="text-sm font-body text-on-surface-variant mt-1.5 max-w-3xl">
+          Quản lý quyền hạn nhân viên điểm trực, thiết lập màn hình TV sảnh chờ, và tích hợp API / Webhook thời gian thực.
+        </p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-surface-container-low shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-xs font-label font-semibold text-on-surface">Đội ngũ Vận hành</span>
+</div>
+<div class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-primary-container/10 text-primary font-label text-xs font-bold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">groups</span>
+<span>12/20 Thành viên đang kích hoạt</span>
+</div>
+</div>
+</div>
+<!-- 3 NAVIGATION TABS -->
+<div class="flex items-center gap-2 bg-surface-container-lowest p-1.5 rounded-2xl shadow-sm overflow-x-auto">
+<button class="tab-btn flex items-center gap-2.5 px-5 py-3 rounded-xl font-label text-sm font-semibold transition-all bg-primary-container text-on-primary shadow-sm" id="tab-btn-team" onclick="switchSettingsTab('team')" type="button">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+<span>Thành viên &amp; Phân quyền</span>
+<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-white/20 text-on-primary">12</span>
+</button>
+<button class="tab-btn flex items-center gap-2.5 px-5 py-3 rounded-xl font-label text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" id="tab-btn-display" onclick="switchSettingsTab('display')" type="button">
+<span class="material-symbols-outlined text-[20px]">tv</span>
+<span>Chi nhánh &amp; TV Display</span>
+<span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant">3 TV sảnh</span>
+</button>
+<button class="tab-btn flex items-center gap-2.5 px-5 py-3 rounded-xl font-label text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" id="tab-btn-api" onclick="switchSettingsTab('api')" type="button">
+<span class="material-symbols-outlined text-[20px]">integration_instructions</span>
+<span>API Keys &amp; Webhooks</span>
+<span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant">4 sự kiện</span>
+</button>
+</div>
+</div>
+<!-- ======================== TAB 1 CONTENT: THÀNH VIÊN & PHÂN QUYỀN ======================== -->
+<div class="flex flex-col gap-6" id="tab-content-team">
+<!-- FILTER BAR & QUICK STATS ROW -->
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-2xl shadow-sm">
+<div class="flex flex-wrap items-center gap-3 flex-1 min-w-0">
+<!-- Search Input -->
+<div class="relative flex-1 min-w-[260px] max-w-md">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-container-low text-on-surface text-sm font-body placeholder:text-on-surface-variant/60 focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" id="memberSearch" placeholder="Tìm theo tên hoặc email nhân viên..." type="text"/>
+</div>
+<!-- Role Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-on-surface text-sm font-label font-medium pl-3.5 pr-9 py-2.5 rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container transition-all">
+<option value="all">Tất cả vai trò</option>
+<option value="owner">Chủ sở hữu (Owner)</option>
+<option value="manager">Quản lý (Manager)</option>
+<option value="staff">Nhân viên trực (Staff)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">expand_more</span>
+</div>
+<!-- Branch Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface-container-low text-on-surface text-sm font-label font-medium pl-3.5 pr-9 py-2.5 rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container transition-all">
+<option value="all">Tất cả chi nhánh</option>
+<option value="q1">Chi nhánh Quận 1</option>
+<option value="q3">Chi nhánh Quận 3</option>
+<option value="badinh">Chi nhánh Ba Đình</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Main Action Button: Add Member -->
+<button class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary-container text-on-primary font-label text-sm font-semibold hover:opacity-95 shadow-sm active:scale-95 transition-all" onclick="toggleAddMemberModal(true)" type="button">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+<span>+ Thêm thành viên mới</span>
+</button>
+</div>
+<!-- MAIN MEMBER TABLE -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/70 text-on-surface-variant text-xs font-label uppercase tracking-wider">
+<th class="py-4 px-5" scope="col">Nhân sự</th>
+<th class="py-4 px-4" scope="col">Vai trò &amp; Quyền hạn</th>
+<th class="py-4 px-4" scope="col">Chi nhánh phụ trách</th>
+<th class="py-4 px-4" scope="col">Đăng nhập gần nhất</th>
+<th class="py-4 px-4" scope="col">Trạng thái</th>
+<th class="py-4 px-5 text-right" scope="col">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-sm font-body">
+<!-- Row 1: Owner -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold text-sm shadow-sm">
+                    NK
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-semibold text-on-surface group-hover:text-primary transition-colors">Nguyễn Trung Kiên</span>
+<span class="text-xs text-on-surface-variant">kien.nguyen@qrwait.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-primary/10 text-primary text-xs font-label font-bold">
+<span class="material-symbols-outlined text-[14px]">shield_person</span>
+                  Chủ sở hữu (Owner)
+                </span>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">hub</span>
+<span class="text-xs font-label font-semibold px-2.5 py-0.5 rounded-lg bg-surface-container text-on-surface">Toàn hệ thống (3 CN)</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-on-surface">5 phút trước</span>
+<span class="text-[11px] text-on-surface-variant">03/03/2025 • Chrome Mac</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-700 font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Đang hoạt động
+                </span>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đổi vai trò" type="button">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-amber-100 hover:text-amber-800 transition-colors" title="Khóa tài khoản" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đặt lại mật khẩu" type="button">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Manager -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-headline font-bold text-sm shadow-sm">
+                    TM
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-semibold text-on-surface group-hover:text-primary transition-colors">Trần Thị Mai</span>
+<span class="text-xs text-on-surface-variant">mai.tran@qrwait.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50 text-blue-700 font-label text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">supervisor_account</span>
+                  Quản lý (Manager)
+                </span>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">storefront</span>
+<span class="text-xs font-label font-medium px-2.5 py-0.5 rounded-lg bg-surface-container-low text-on-surface">Chi nhánh Quận 1</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-on-surface">12 phút trước</span>
+<span class="text-[11px] text-on-surface-variant">03/03/2025 • Safari iPad</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-700 font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Đang hoạt động
+                </span>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đổi vai trò" type="button">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-amber-100 hover:text-amber-800 transition-colors" title="Khóa tài khoản" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đặt lại mật khẩu" type="button">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Staff 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center font-headline font-bold text-sm">
+                    HN
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-semibold text-on-surface group-hover:text-primary transition-colors">Lê Hoàng Nam</span>
+<span class="text-xs text-on-surface-variant">nam.le@qrwait.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-surface-container text-on-surface-variant font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+                  Nhân viên trực (Staff)
+                </span>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-0.5">
+<span class="text-xs font-label font-semibold text-on-surface">Quầy 02</span>
+<span class="text-[11px] text-on-surface-variant">CN Quận 1</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-on-surface">1 giờ trước</span>
+<span class="text-[11px] text-on-surface-variant">03/03/2025 • Android PWA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-700 font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Đang hoạt động
+                </span>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đổi vai trò" type="button">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-amber-100 hover:text-amber-800 transition-colors" title="Khóa tài khoản" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đặt lại mật khẩu" type="button">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Staff 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center font-headline font-bold text-sm">
+                    QH
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline font-semibold text-on-surface group-hover:text-primary transition-colors">Phạm Quốc Huy</span>
+<span class="text-xs text-on-surface-variant">huy.pham@qrwait.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-surface-container text-on-surface-variant font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+                  Nhân viên trực (Staff)
+                </span>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-0.5">
+<span class="text-xs font-label font-semibold text-on-surface">Quầy Express</span>
+<span class="text-[11px] text-on-surface-variant">CN Quận 1</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-on-surface">25 phút trước</span>
+<span class="text-[11px] text-on-surface-variant">03/03/2025 • Chrome Windows</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-700 font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Đang hoạt động
+                </span>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đổi vai trò" type="button">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-amber-100 hover:text-amber-800 transition-colors" title="Khóa tài khoản" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Đặt lại mật khẩu" type="button">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Locked Staff -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group opacity-85">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center font-headline font-bold text-sm">
+                    BT
+                  </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline font-semibold text-on-surface line-through decoration-on-surface-variant/40">Đỗ Bảo Trâm</span>
+<span class="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">Đã khóa</span>
+</div>
+<span class="text-xs text-on-surface-variant">tram.do@qrwait.com</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-surface-container text-on-surface-variant font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">support_agent</span>
+                  Nhân viên trực (Staff)
+                </span>
+</td>
+<td class="py-4 px-4">
+<span class="text-xs font-label font-medium px-2.5 py-0.5 rounded-lg bg-surface-container-low text-on-surface">Chi nhánh Quận 3</span>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col">
+<span class="text-xs font-semibold text-on-surface">3 ngày trước</span>
+<span class="text-[11px] text-on-surface-variant">28/02/2025 • Đã ngắt phiên</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span>
+                  Đã tạm khóa
+                </span>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-primary-container/10 text-primary hover:bg-primary-container hover:text-on-primary transition-colors text-xs font-label font-semibold flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">lock_reset</span>
+<span>Mở khóa</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Đặt lại mật khẩu" type="button">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Info -->
+<div class="p-4 bg-surface-container-low/40 flex items-center justify-between text-xs font-label text-on-surface-variant">
+<span>Hiển thị 5 trên 12 tài khoản nhân sự</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container opacity-50 cursor-not-allowed" disabled="" type="button">Trước</button>
+<span class="font-semibold text-on-surface px-2">Trang 1 / 3</span>
+<button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors" type="button">Sau</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ======================== TAB 2 CONTENT: CHI NHÁNH & TV DISPLAY ======================== -->
+<div class="flex flex-col gap-6 hidden" id="tab-content-display">
+<!-- Grid 2 Cột -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Public TV URL Card (7 Cột) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary font-label text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">tv</span>
+<span>Màn hình Public TV Display sảnh</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 text-xs font-semibold">Bảo mật Token cao</span>
+</div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Liên kết hiển thị TV sảnh chờ (Không cần tài khoản đăng nhập)</h2>
+<p class="text-xs font-body text-on-surface-variant leading-relaxed">
+            Sử dụng đường dẫn mã hóa an toàn (Secret URL) để mở toàn màn hình trên Smart TV hoặc trình duyệt sảnh đón tiếp. Màn hình tự động cập nhật số vé thời gian thực và phát chuông Ding Dong chuẩn phòng chờ.
+          </p>
+</div>
+<!-- Secret URL Box -->
+<div class="flex flex-col gap-2.5">
+<label class="text-xs font-label font-semibold text-on-surface">Đường dẫn hiển thị công khai (Public Kiosk URL):</label>
+<div class="flex items-center gap-2 p-2 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] ml-1">link</span>
+<input class="flex-1 bg-transparent text-xs font-mono text-on-surface select-all focus:outline-none" readonly="" type="text" value="https://app.qrwait.com/display/sec_9f8a4e17b82cd65e902a77fbc20e14d"/>
+<button class="px-3.5 py-2 rounded-lg bg-primary-container text-on-primary text-xs font-label font-semibold hover:opacity-95 transition-all flex items-center gap-1.5 shrink-0" onclick="copyToClipboard('https://app.qrwait.com/display/sec_9f8a4e17b82cd65e902a77fbc20e14d', this)" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Sao chép liên kết</span>
+</button>
+</div>
+</div>
+<!-- TV Settings & Reset Key -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-amber-500/10">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-amber-600 text-[20px] mt-0.5">warning</span>
+<div class="flex flex-col">
+<span class="text-xs font-headline font-bold text-on-surface">Cần tạo lại mã bảo mật sảnh?</span>
+<span class="text-[11px] font-body text-on-surface-variant">Mã cũ sẽ ngừng hoạt động ngay lập tức trên các TV đang kết nối.</span>
+</div>
+</div>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest hover:bg-error-container text-error text-xs font-label font-semibold transition-colors shrink-0 shadow-sm flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Tạo lại mã (Reset Key)</span>
+</button>
+</div>
+</div>
+<!-- TV Branding & Logo Card (5 Cột) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between gap-5">
+<div class="flex flex-col gap-1.5">
+<span class="text-primary font-label text-xs font-bold uppercase tracking-wider">Bộ nhận diện TV &amp; Poster</span>
+<h2 class="text-base font-headline font-bold text-on-surface">Logo tổ chức hiển thị trên TV &amp; Giấy in</h2>
+<p class="text-xs font-body text-on-surface-variant">Logo xuất hiện ở góc trên màn hình TV Display và tiêu đề mã QR cấp số.</p>
+</div>
+<div class="flex items-center gap-5 p-4 rounded-xl bg-surface-container-low">
+<div class="w-20 h-20 rounded-xl bg-primary-container text-on-primary flex flex-col items-center justify-center font-headline font-extrabold text-2xl shadow-sm shrink-0">
+            QR
+            <span class="text-[9px] font-normal tracking-wider opacity-80 uppercase">Brand</span>
+</div>
+<div class="flex flex-col gap-1.5 min-w-0">
+<span class="text-xs font-semibold text-on-surface truncate">logo_chinh_thuc_vector.svg</span>
+<span class="text-[11px] text-on-surface-variant">Kích thước khuyên dùng: 512x512px (PNG, SVG). Tối đa 2MB.</span>
+<div class="flex items-center gap-2 mt-1">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface text-xs font-label font-semibold hover:bg-surface-container-high transition-colors shadow-sm" type="button">
+                Thay đổi ảnh
+              </button>
+<button class="px-2.5 py-1.5 rounded-lg text-error hover:bg-error-container text-xs font-label font-semibold transition-colors" type="button">
+                Xóa
+              </button>
+</div>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-low flex items-center justify-between text-xs">
+<span class="text-on-surface-variant">Âm báo gọi số trên TV:</span>
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">notifications_active</span>
+            Chuông Ding Dong (Mặc định)
+          </span>
+</div>
+</div>
+</div>
+</div>
+<!-- ======================== TAB 3 CONTENT: API KEYS & WEBHOOKS ======================== -->
+<div class="flex flex-col gap-6 hidden" id="tab-content-api">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Production API Key Card (5 Cột) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-primary font-label text-xs font-bold uppercase tracking-wider">REST API V1</span>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-700 text-xs font-semibold">Production</span>
+</div>
+<h2 class="text-lg font-headline font-bold text-on-surface">API Key Doanh nghiệp</h2>
+<p class="text-xs font-body text-on-surface-variant leading-relaxed">
+            Dùng để gọi số, tạo số vé từ xa qua ứng dụng CRM, Zalo Mini App hoặc hệ thống Kiosk tự phục vụ của cửa hàng.
+          </p>
+</div>
+<div class="flex flex-col gap-2.5">
+<label class="text-xs font-label font-semibold text-on-surface">Live Secret API Key:</label>
+<div class="flex items-center gap-2 p-2.5 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] ml-1">vpn_key</span>
+<input class="flex-1 bg-transparent text-xs font-mono text-on-surface focus:outline-none" id="apiKeyInput" readonly="" type="password" value="qrw_live_89f02c4819d9b401e82ab117"/>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" onclick="toggleApiKeyVisibility()" title="Hiện/Ẩn mã" type="button">
+<span class="material-symbols-outlined text-[18px]" id="apiKeyEyeIcon">visibility</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface text-xs font-label font-semibold hover:bg-surface-container-high transition-colors shadow-sm" onclick="copyToClipboard('qrw_live_89f02c4819d9b401e82ab117', this)" type="button">
+              Sao chép
+            </button>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col gap-2 text-xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Hạn mức gọi API tháng này:</span>
+<span class="font-semibold text-on-surface">14,280 / 100,000 reqs</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 14.28%"></div>
+</div>
+<span class="text-[11px] text-on-surface-variant">Tốc độ tối đa: 60 requests/phút mỗi IP</span>
+</div>
+</div>
+<!-- Realtime Webhook Settings (7 Cột) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-primary font-label text-xs font-bold uppercase tracking-wider">Webhooks Thời Gian Thực</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 text-xs font-semibold">Đang kích hoạt</span>
+</div>
+<h2 class="text-lg font-headline font-bold text-on-surface">Cấu hình Webhook nhận sự kiện</h2>
+<p class="text-xs font-body text-on-surface-variant leading-relaxed">
+            Hệ thống sẽ gửi HTTP POST request (JSON payload) tới server của bạn ngay khi có thay đổi trạng thái của vé số.
+          </p>
+</div>
+<!-- Endpoint URL -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-label font-semibold text-on-surface">Endpoint URL (HTTPS bắt buộc):</label>
+<div class="flex items-center gap-2">
+<input class="flex-1 px-4 py-2.5 rounded-xl bg-surface-container-low text-xs font-mono text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container" type="url" value="https://api.yourbrand.vn/v1/qrwait-events"/>
+<button class="px-4 py-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container-high text-on-surface text-xs font-label font-semibold transition-colors shrink-0 flex items-center gap-1.5" onclick="testWebhookPing(this)" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">send</span>
+<span>Gửi Webhook thử nghiệm</span>
+</button>
+</div>
+</div>
+<!-- Triggers List -->
+<div class="flex flex-col gap-2.5">
+<span class="text-xs font-label font-semibold text-on-surface">Sự kiện lắng nghe (Event triggers):</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<code class="text-xs font-mono font-bold text-primary">ticket.created</code>
+<span class="text-[11px] text-on-surface-variant">Khách quét QR lấy số</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary cursor-pointer" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<code class="text-xs font-mono font-bold text-primary">ticket.called</code>
+<span class="text-[11px] text-on-surface-variant">Nhân viên gọi số lên TV</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary cursor-pointer" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<code class="text-xs font-mono font-bold text-primary">ticket.completed</code>
+<span class="text-[11px] text-on-surface-variant">Phục vụ xong &amp; hoàn tất</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary cursor-pointer" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<code class="text-xs font-mono font-bold text-primary">ticket.no_show</code>
+<span class="text-[11px] text-on-surface-variant">Khách vắng mặt quá hạn</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary cursor-pointer" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="flex justify-end pt-2">
+<button class="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary text-xs font-label font-semibold hover:opacity-95 shadow-sm transition-all" type="button">
+            Lưu cấu hình Webhook
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- ======================== MODAL: THÊM THÀNH VIÊN MỚI ======================== -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-on-background/40 backdrop-blur-sm hidden" id="addMemberModal">
+<div class="bg-surface-container-lowest w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="p-6 bg-surface-container-low/70 flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<h3 class="text-lg font-headline font-bold text-on-surface">Thêm thành viên mới vào hệ thống</h3>
+</div>
+<span class="text-xs font-label text-primary font-medium">Tạo tài khoản trực tiếp • Sử dụng ngay mà không cần xác thực email</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" onclick="toggleAddMemberModal(false)" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-6 flex flex-col gap-4" id="addMemberForm" onsubmit="handleCreateMember(event)">
+<!-- Tên nhân viên -->
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-label font-semibold text-on-surface">Họ và tên nhân viên <span class="text-error">*</span></label>
+<input class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low text-sm font-body text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" placeholder="Ví dụ: Nguyễn Văn A" required="" type="text"/>
+</div>
+<!-- Email làm việc -->
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-label font-semibold text-on-surface">Email đăng nhập công việc <span class="text-error">*</span></label>
+<input class="w-full px-4 py-2.5 rounded-xl bg-surface-container-low text-sm font-body text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" placeholder="staff.name@cuahang.com" required="" type="email"/>
+</div>
+<!-- Mật khẩu ban đầu -->
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-label font-semibold text-on-surface">Mật khẩu khởi tạo ban đầu <span class="text-error">*</span></label>
+<div class="relative">
+<input class="w-full pl-4 pr-10 py-2.5 rounded-xl bg-surface-container-low text-sm font-body text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container transition-all" id="newStaffPassword" required="" type="password" value="QrWait@2025*"/>
+<button class="absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface p-1" onclick="toggleNewPassVisibility()" type="button">
+<span class="material-symbols-outlined text-[18px]" id="newPassEyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Chọn vai trò (Role Cards) -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-label font-semibold text-on-surface">Chọn vai trò &amp; mức độ phân quyền <span class="text-error">*</span></label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+<label class="flex flex-col p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:ring-2 has-[:checked]:ring-primary-container">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-headline font-bold text-on-surface">Staff</span>
+<input checked="" class="accent-primary" name="member_role" type="radio" value="staff"/>
+</div>
+<span class="text-[11px] text-on-surface-variant leading-tight">Chỉ gọi số &amp; đổi trạng thái quầy trực</span>
+</label>
+<label class="flex flex-col p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:ring-2 has-[:checked]:ring-primary-container">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-headline font-bold text-on-surface">Manager</span>
+<input class="accent-primary" name="member_role" type="radio" value="manager"/>
+</div>
+<span class="text-[11px] text-on-surface-variant leading-tight">Quản lý toàn diện 1 chi nhánh được gán</span>
+</label>
+<label class="flex flex-col p-3 rounded-xl bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:ring-2 has-[:checked]:ring-primary-container">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-headline font-bold text-on-surface">Owner</span>
+<input class="accent-primary" name="member_role" type="radio" value="owner"/>
+</div>
+<span class="text-[11px] text-on-surface-variant leading-tight">Toàn quyền hệ thống &amp; cấu hình API</span>
+</label>
+</div>
+</div>
+<!-- Chi nhánh gán -->
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-label font-semibold text-on-surface">Gán chi nhánh làm việc <span class="text-error">*</span></label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface text-sm font-body px-4 py-2.5 rounded-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container">
+<option value="q1">Chi nhánh Quận 1 (Trụ sở chính)</option>
+<option value="q3">Chi nhánh Quận 3</option>
+<option value="badinh">Chi nhánh Ba Đình - Hà Nội</option>
+<option value="all">Toàn bộ chi nhánh</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Checkbox: Yêu cầu đổi mật khẩu -->
+<label class="flex items-center gap-2.5 cursor-pointer mt-1">
+<input checked="" class="w-4 h-4 rounded text-primary-container accent-primary" type="checkbox"/>
+<span class="text-xs font-label text-on-surface">Yêu cầu nhân viên đổi mật khẩu ở lần đăng nhập đầu tiên</span>
+</label>
+<!-- Modal Actions -->
+<div class="flex items-center justify-end gap-3 mt-4 pt-3 border-t border-surface-container">
+<button class="px-4 py-2.5 rounded-xl font-label text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="toggleAddMemberModal(false)" type="button">
+            Hủy bỏ
+          </button>
+<button class="px-5 py-2.5 rounded-xl bg-primary-container text-on-primary font-label text-xs font-semibold hover:opacity-95 shadow-sm active:scale-95 transition-all" type="submit">
+            Lưu &amp; Cấp tài khoản ngay
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Quick Toast Notification -->
+<div class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-on-background text-inverse-on-surface font-label text-xs font-medium shadow-xl flex items-center gap-2 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" id="toastNotification">
+<span class="material-symbols-outlined text-[18px] text-emerald-400">check_circle</span>
+<span id="toastMessage">Đã thực hiện thành công</span>
+</div>
+</div>
+<script>
+  function switchSettingsTab(tabName) {
+    const tabs = ['team', 'display', 'api'];
+    tabs.forEach(tab => {
+      const content = document.getElementById(`tab-content-${tab}`);
+      const btn = document.getElementById(`tab-btn-${tab}`);
+      if (!content || !btn) return;
+
+      if (tab === tabName) {
+        content.classList.remove('hidden');
+        btn.classList.add('bg-primary-container', 'text-on-primary', 'font-semibold', 'shadow-sm');
+        btn.classList.remove('text-on-surface-variant', 'font-medium');
+        
+        // update inner badge style if exists
+        const badge = btn.querySelector('span:last-child');
+        if (badge) {
+          badge.className = 'px-2 py-0.5 rounded-full text-xs font-bold bg-white/20 text-on-primary';
+        }
+      } else {
+        content.classList.add('hidden');
+        btn.classList.remove('bg-primary-container', 'text-on-primary', 'font-semibold', 'shadow-sm');
+        btn.classList.add('text-on-surface-variant', 'font-medium');
+        
+        const badge = btn.querySelector('span:last-child');
+        if (badge) {
+          badge.className = 'px-2 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant';
+        }
+      }
+    });
+  }
+
+  function toggleAddMemberModal(isOpen) {
+    const modal = document.getElementById('addMemberModal');
+    if (isOpen) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
+  function toggleApiKeyVisibility() {
+    const input = document.getElementById('apiKeyInput');
+    const icon = document.getElementById('apiKeyEyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function toggleNewPassVisibility() {
+    const input = document.getElementById('newStaffPassword');
+    const icon = document.getElementById('newPassEyeIcon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function copyToClipboard(text, btnElement) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Đã sao chép vào bộ nhớ tạm!');
+      if (btnElement) {
+        const originalText = btnElement.innerHTML;
+        btnElement.classList.add('scale-95');
+        setTimeout(() => btnElement.classList.remove('scale-95'), 150);
+      }
+    });
+  }
+
+  function testWebhookPing(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Đang ping...</span>`;
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      showToast('200 OK: Đã kết nối Webhook thành công!');
+    }, 1000);
+  }
+
+  function handleCreateMember(e) {
+    e.preventDefault();
+    toggleAddMemberModal(false);
+    showToast('Đã cấp tài khoản thành viên thành công!');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    toastMsg.textContent = msg;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+  }
+</script></main></div></body></html>

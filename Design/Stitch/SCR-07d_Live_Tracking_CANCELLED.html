@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><title>Customer Live Tracking</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;background-color:#fcf8ff;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-high":"#eae6f4","tertiary":"#7e3000","surface-container-low":"#f5f2ff","error":"#ba1a1a","surface-tint":"#4d44e3","inverse-on-surface":"#f3effc","primary-container":"#4f46e5","on-tertiary-fixed":"#351000","surface-container":"#f0ecf9","inverse-primary":"#c3c0ff","on-primary-fixed-variant":"#3323cc","on-error-container":"#93000a","on-tertiary":"#ffffff","on-tertiary-container":"#ffd2be","on-primary-fixed":"#0f0069","on-surface-variant":"#464555","surface-dim":"#dcd8e5","on-background":"#1b1b24","on-primary-container":"#dad7ff","primary-fixed":"#e2dfff","primary-fixed-dim":"#c3c0ff","error-container":"#ffdad6","on-secondary-fixed":"#140f54","secondary-fixed-dim":"#c3c0ff","tertiary-container":"#a44100","tertiary-fixed":"#ffdbcc","on-tertiary-fixed-variant":"#7b2f00","on-secondary":"#ffffff","on-surface":"#1b1b24","on-error":"#ffffff","primary":"#3525cd","on-secondary-fixed-variant":"#413f82","surface-container-highest":"#e4e1ee","surface":"#fcf8ff","on-primary":"#ffffff","surface-container-lowest":"#ffffff","secondary":"#58579b","inverse-surface":"#302f39","background":"#fcf8ff","tertiary-fixed-dim":"#ffb695","secondary-container":"#b6b4ff","surface-variant":"#e4e1ee","outline":"#777587","outline-variant":"#c7c4d8","surface-bright":"#fcf8ff","secondary-fixed":"#e2dfff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{},"fontFamily":{"headline":["Inter"],"display":["Inter"],"body":["Be Vietnam Pro"],"label":["Be Vietnam Pro"]},"fontSize":{}}},}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body text-on-surface min-h-screen flex flex-col pt-safe pb-safe selection:bg-primary-container selection:text-on-primary-container"><main class="flex-1 flex flex-col relative w-full bg-surface min-h-screen"><div class="flex flex-col w-full max-w-md mx-auto px-4 pb-8 space-y-4 font-body antialiased">
+<!-- Location & Context Header -->
+<div class="flex flex-col items-center text-center pt-2 space-y-1.5">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-medium">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-error"></span>
+<span>QR-Wait Queue • Chi nhánh Quận 1</span>
+</div>
+<span class="text-xs font-bold uppercase tracking-wider text-outline font-headline">
+      HÀNG CHỜ BÀN 1-4 NGƯỜI
+    </span>
+</div>
+<!-- Hero Status Card (Cancelled State) -->
+<div class="relative overflow-hidden rounded-3xl bg-surface-container-low shadow-sm p-6 text-center space-y-4">
+<!-- Soft Decorative Gradient Bloom -->
+<div class="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-error-container/40 blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-12 -left-12 w-36 h-36 rounded-full bg-surface-container-high/60 blur-xl pointer-events-none"></div>
+<!-- Red Cancelled Icon Circle -->
+<div class="relative mx-auto flex items-center justify-center w-20 h-20 rounded-full bg-error-container">
+<div class="w-14 h-14 rounded-full bg-surface-container-lowest/80 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-error text-3xl font-bold" style="font-variation-settings: 'FILL' 1;">
+          close
+        </span>
+</div>
+</div>
+<!-- Status Message -->
+<div class="space-y-1 relative">
+<h1 class="text-xl sm:text-2xl font-black font-headline tracking-tight text-on-surface uppercase">
+        LƯỢT VÉ ĐÃ BỊ HỦY
+      </h1>
+<p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed px-2 font-normal">
+        Vé <span class="font-semibold text-error">#A-025</span> đã bị hủy tự động do quá 15 phút không có mặt tại quầy.
+      </p>
+</div>
+<!-- Ticket Snippet In Hero -->
+<div class="pt-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-surface-container-highest/80 text-on-surface-variant text-xs font-medium">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Hết hạn lúc 11:45</span>
+</span>
+</div>
+</div>
+<!-- Detailed Ticket Information Card (Disabled/Muted Look) -->
+<div class="rounded-2xl bg-surface-container-lowest shadow-sm p-5 space-y-3.5">
+<div class="flex items-center justify-between">
+<span class="text-[11px] font-bold uppercase tracking-wider text-outline">
+        SỐ VÉ ĐÃ HỦY
+      </span>
+<span class="inline-flex items-center gap-1 text-[11px] font-semibold text-error px-2 py-0.5 rounded bg-error-container/50">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+        Hết hiệu lực
+      </span>
+</div>
+<!-- Ticket Strikethrough Number & Meta -->
+<div class="flex items-baseline justify-between py-1">
+<div class="flex items-center gap-2">
+<span class="text-4xl font-black font-display tracking-tight text-outline line-through decoration-error/60 decoration-2">
+          #A-025
+        </span>
+</div>
+<div class="text-right">
+<div class="text-sm font-semibold text-on-surface">Anh Nam</div>
+<div class="text-xs text-on-surface-variant">Nhóm 2 người</div>
+</div>
+</div>
+<!-- Subtle divider without border class -->
+<div class="h-px w-full bg-surface-container-high"></div>
+<!-- Reasons & Audit Log -->
+<div class="space-y-2 text-xs">
+<div class="flex items-start justify-between gap-3">
+<span class="text-outline shrink-0">Thời gian hủy</span>
+<span class="text-right font-medium text-on-surface">Hủy lúc 11:45 • Quá hạn 15:00</span>
+</div>
+<div class="flex items-start justify-between gap-3">
+<span class="text-outline shrink-0">Lý do hủy</span>
+<span class="text-right font-medium text-on-surface-variant">Không có mặt khi gọi phục vụ và hết thời gian ân hạn</span>
+</div>
+</div>
+</div>
+<!-- Re-engagement / Guidance Box -->
+<div class="rounded-2xl bg-surface-container p-4 flex gap-3.5 items-start">
+<div class="w-8 h-8 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-primary text-xl">
+        support_agent
+      </span>
+</div>
+<div class="space-y-1">
+<h3 class="text-sm font-bold text-on-surface">Bạn vẫn muốn lấy số chờ?</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+        Vui lòng quét lại mã QR tại cửa ra vào để lấy số thứ tự mới hoặc liên hệ trực tiếp nhân viên tại Quầy tiếp tân để được hướng dẫn.
+      </p>
+</div>
+</div>
+<!-- Actions -->
+<div class="space-y-2.5 pt-2">
+<!-- Primary CTA: Take New Ticket -->
+<button class="w-full h-14 min-h-[52px] rounded-xl bg-primary-container text-on-primary font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 shadow-md active:scale-[0.99] transition-transform" type="button">
+<span class="material-symbols-outlined text-xl">
+        qr_code_scanner
+      </span>
+<span>QUÉT MÃ LẤY SỐ MỚI</span>
+</button>
+<!-- Secondary Text Actions -->
+<div class="flex items-center justify-center gap-4 pt-1">
+<button class="text-xs font-semibold text-primary hover:underline px-2 py-1.5 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-base">history</span>
+<span>Lịch sử vé của tôi</span>
+</button>
+<span class="text-outline text-xs">•</span>
+<button class="text-xs font-semibold text-on-surface-variant hover:underline px-2 py-1.5 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-base">help</span>
+<span>Cần hỗ trợ</span>
+</button>
+</div>
+</div>
+<!-- Footer Brand Assurance -->
+<div class="pt-6 pb-2 text-center">
+<div class="inline-flex items-center justify-center gap-1 text-[11px] text-outline">
+<span class="material-symbols-outlined text-xs">verified_user</span>
+<span>Hệ thống xếp hàng tự động QR-Wait</span>
+</div>
+</div>
+</div></main></body></html>

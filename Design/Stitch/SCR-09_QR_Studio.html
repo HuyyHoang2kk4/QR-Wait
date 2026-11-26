@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-high":"#eae6f4","primary-fixed-dim":"#c3c0ff","primary-fixed":"#e2dfff","on-secondary-fixed-variant":"#413f82","tertiary-container":"#a44100","surface-tint":"#4d44e3","surface":"#fcf8ff","on-secondary":"#ffffff","outline":"#777587","surface-container":"#f0ecf9","background":"#fcf8ff","primary":"#3525cd","secondary-container":"#b6b4ff","error-container":"#ffdad6","on-secondary-container":"#454386","surface-container-highest":"#e4e1ee","tertiary-fixed-dim":"#ffb695","surface-dim":"#dcd8e5","on-surface-variant":"#464555","surface-variant":"#e4e1ee","on-secondary-fixed":"#140f54","surface-container-lowest":"#ffffff","surface-bright":"#fcf8ff","on-primary-container":"#dad7ff","tertiary-fixed":"#ffdbcc","secondary-fixed-dim":"#c3c0ff","error":"#ba1a1a","secondary":"#58579b","on-error":"#ffffff","on-primary":"#ffffff","inverse-primary":"#c3c0ff","primary-container":"#4f46e5","on-background":"#1b1b24","on-primary-fixed-variant":"#3323cc","on-primary-fixed":"#0f0069","surface-container-low":"#f5f2ff","tertiary":"#7e3000","on-tertiary-container":"#ffd2be","secondary-fixed":"#e2dfff","on-surface":"#1b1b24","on-tertiary":"#ffffff","on-tertiary-fixed-variant":"#7b2f00","inverse-on-surface":"#f3effc","on-tertiary-fixed":"#351000","inverse-surface":"#302f39","on-error-container":"#93000a","outline-variant":"#c7c4d8"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{},"fontFamily":{"headline":["Inter"],"display":["Inter"],"body":["Be Vietnam Pro"],"label":["Be Vietnam Pro"]},"fontSize":{}}}}</script></head><body class="bg-surface font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col justify-between py-6 px-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-6"><div class="flex items-center justify-between px-2"><div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary font-headline font-bold text-lg tracking-wider">QR</div><div class="flex flex-col"><span class="font-headline font-bold text-lg text-on-surface tracking-tight leading-none">QR-Wait</span><span class="text-[11px] font-label font-medium text-on-surface-variant tracking-wider uppercase mt-1">Hệ thống vé số</span></div></div><button aria-label="Thu gọn thanh điều hướng" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><nav class="flex flex-col gap-1.5" data-active-classes="bg-primary-container text-on-primary font-semibold shadow-sm"><a class="flex items-center px-4 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="tong-quan" href="#">Tổng quan</a><a class="flex items-center px-4 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hang-cho" href="#">Hàng chờ</a><a aria-current="page" class="flex items-center px-4 py-3 rounded-xl transition-all bg-primary-container text-on-primary font-semibold shadow-sm" data-path="qr-studio" href="#">QR Studio</a><a class="flex items-center px-4 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="bao-cao-csv" href="#">Báo cáo &amp; CSV</a><a class="flex items-center px-4 py-3 rounded-xl text-sm font-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="cai-dat-doi-ngu" href="#">Cài đặt &amp; Đội ngũ</a></nav></div><div class="flex flex-col gap-3 px-2"><a class="bg-surface-container-low hover:bg-surface-container-high p-3.5 rounded-xl flex items-center gap-3 transition-colors text-left group" href="#" target="_blank"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></div><div class="flex flex-col flex-1"><span class="text-xs font-semibold text-on-surface group-hover:text-primary transition-colors">Màn hình TV Display</span><span class="text-[11px] text-on-surface-variant">Đang kết nối: TV-01</span></div><span class="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-primary transition-colors">open_in_new</span></a></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 px-8 flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-4"><div class="flex items-center gap-2 bg-surface-container-lowest px-3.5 py-2 rounded-xl shadow-sm"><span class="material-symbols-outlined text-primary text-[20px]">store</span><span class="text-xs text-on-surface-variant font-medium">Chi nhánh:</span><span class="text-sm font-semibold text-on-surface">Chi nhánh Quận 1</span><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div><div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="text-xs font-medium text-on-surface-variant">Đồng bộ trực tiếp</span></div></div><div class="flex items-center gap-5"><button aria-label="Thông báo hệ thống" class="w-10 h-10 rounded-xl bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors relative shadow-sm" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-3 pl-3"><div class="flex flex-col text-right"><span class="text-sm font-semibold text-on-surface leading-tight">Quản trị viên</span><span class="text-xs text-on-surface-variant">QR-Wait Trung Tâm</span></div><div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-sm shadow-sm"><span class="material-symbols-outlined text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full min-h-screen bg-surface px-8 py-6 max-w-[1440px] mx-auto"><div class="flex flex-col w-full gap-8">
+<!-- Header Phần Trang -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2.5">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+</span>
+<h1 class="font-headline font-bold text-2xl lg:text-3xl text-on-surface tracking-tight">QR Studio &amp; Chống gian lận</h1>
+</div>
+<p class="text-sm font-label text-on-surface-variant max-w-2xl leading-relaxed">
+        Thiết kế ấn phẩm mã QR lấy số in ấn chuẩn phòng in (300 DPI) và cấu hình các lớp bảo mật chống chụp ảnh từ xa, gian lận vị trí GPS.
+      </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label text-sm font-medium transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">menu_book</span>
+        Xem tài liệu hướng dẫn in ấn
+      </button>
+</div>
+</div>
+<!-- Hệ thống Tabs Điều hướng Tính năng -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 bg-surface-container-low p-2 rounded-2xl">
+<!-- Tab 1: Active -->
+<button class="relative text-left p-4 rounded-xl bg-surface-container-lowest shadow-md transition-all flex flex-col gap-2 ring-0" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</div>
+<span class="font-headline font-semibold text-sm text-on-surface">Mã QR In ấn</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700">Phổ biến nhất</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1">Thiết kế Poster A4, A5, Mica để bàn chuẩn in ấn vector 300 DPI.</p>
+<div class="w-full h-1 bg-primary-container rounded-full mt-1"></div>
+</button>
+<!-- Tab 2: Dynamic QR -->
+<button class="text-left p-4 rounded-xl bg-transparent hover:bg-surface-container transition-all flex flex-col gap-2 group" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface-variant group-hover:text-primary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">motion_photos_on</span>
+</div>
+<span class="font-headline font-semibold text-sm text-on-surface">Mã QR Động</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700">Bảo mật cao</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1">Xoay mã liên tục 15s - 75s chống chụp hình từ xa và chia sẻ liên kết lậu.</p>
+<div class="w-full h-1 bg-transparent rounded-full mt-1"></div>
+</button>
+<!-- Tab 3: GPS Protection -->
+<button class="text-left p-4 rounded-xl bg-transparent hover:bg-surface-container transition-all flex flex-col gap-2 group" type="button">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high text-on-surface-variant group-hover:text-primary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+</div>
+<span class="font-headline font-semibold text-sm text-on-surface">Bảo vệ Vị trí (GPS)</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-primary-fixed text-primary">Chống lấy số ảo</span>
+</div>
+<p class="text-xs text-on-surface-variant line-clamp-1">Giới hạn quét mã trong bán kính 30m - 500m quanh tọa độ thực tế.</p>
+<div class="w-full h-1 bg-transparent rounded-full mt-1"></div>
+</button>
+</div>
+<!-- Nội Dung Chính: Bố Cục 2 Cột Chuyên Nghiệp -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- CỘT TRÁI: Panel Cấu hình & Tùy biến (lg:col-span-5) -->
+<div class="lg:col-span-5 flex flex-col gap-5">
+<!-- Khối 1: Chọn Hàng chờ áp dụng -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">view_timeline</span>
+<label class="font-headline font-semibold text-sm text-on-surface" for="queue-select">1. Hàng chờ áp dụng</label>
+</div>
+<span class="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">Đang kích hoạt</span>
+</div>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface text-sm font-medium rounded-xl px-4 py-3 appearance-none focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer" id="queue-select">
+<option selected="" value="all">Tất cả hàng chờ (Khách quét tự chọn)</option>
+<option value="table_1_4">Bàn 1-4 người (Tầng 1) - [Tiền tố A]</option>
+<option value="table_5_plus">Bàn nhóm đông 5+ người (Tầng 2) - [Tiền tố B]</option>
+<option value="takeaway">Mang đi &amp; Đặt trước (Takeaway) - [Tiền tố T]</option>
+</select>
+<span class="material-symbols-outlined absolute right-3.5 top-3.5 text-on-surface-variant pointer-events-none text-[20px]">unfold_more</span>
+</div>
+<div class="flex items-center gap-2.5 p-3 rounded-xl bg-surface-container-low text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[18px]">info</span>
+<span>Khách quét sẽ thấy trang chọn hàng chờ phù hợp với nhu cầu trước khi nhận số.</span>
+</div>
+</div>
+<!-- Khối 2: Chọn Định dạng & Khổ in -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">aspect_ratio</span>
+<span class="font-headline font-semibold text-sm text-on-surface">2. Định dạng &amp; Khổ in ấn</span>
+</div>
+<span class="text-xs text-on-surface-variant">Chuẩn 300 DPI</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5" id="size-selector">
+<!-- A4 Option (Active) -->
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<input checked="" class="w-4 h-4 text-primary focus:ring-0 accent-primary" name="print-format" type="radio" value="a4"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Khổ A4 đứng (210 x 297 mm)</span>
+<span class="text-xs text-on-surface-variant">Khuyên dùng dán cửa ra vào hoặc quầy lễ tân đón tiếp</span>
+</div>
+</div>
+<span class="text-xs font-semibold px-2 py-1 rounded bg-surface-container-highest text-primary">Chuẩn</span>
+</label>
+<!-- A5 Option -->
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary focus:ring-0 accent-primary" name="print-format" type="radio" value="a5"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Khổ A5 đứng (148 x 210 mm)</span>
+<span class="text-xs text-on-surface-variant">Phù hợp khung kính nhỏ hoặc bảng kẹp mica đứng</span>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant">Trung bình</span>
+</label>
+<!-- Mica Option -->
+<label class="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary focus:ring-0 accent-primary" name="print-format" type="radio" value="mica"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Thẻ mica để bàn (100 x 150 mm)</span>
+<span class="text-xs text-on-surface-variant">Thích hợp đặt trực tiếp trên từng bàn ăn hoặc quầy order</span>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant">Nhỏ gọn</span>
+</label>
+</div>
+</div>
+<!-- Khối 3: Tùy biến Nhận diện & Màu sắc thương hiệu -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col gap-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">palette</span>
+<span class="font-headline font-semibold text-sm text-on-surface">3. Nhận diện &amp; Màu sắc</span>
+</div>
+<!-- Color Swatches -->
+<div class="flex flex-col gap-2.5">
+<span class="text-xs font-medium text-on-surface-variant">Màu nhấn chủ đạo (Brand Color)</span>
+<div class="flex items-center gap-3">
+<button aria-label="Màu Indigo mặc định" class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm hover:scale-105 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<button aria-label="Màu Xanh biển" class="w-8 h-8 rounded-xl bg-blue-600 shadow-sm hover:scale-105 transition-transform" type="button"></button>
+<button aria-label="Màu Đen tối giản" class="w-8 h-8 rounded-xl bg-slate-900 shadow-sm hover:scale-105 transition-transform" type="button"></button>
+<button aria-label="Màu Xanh ngọc" class="w-8 h-8 rounded-xl bg-teal-600 shadow-sm hover:scale-105 transition-transform" type="button"></button>
+<button aria-label="Màu Tím hoa cà" class="w-8 h-8 rounded-xl bg-purple-600 shadow-sm hover:scale-105 transition-transform" type="button"></button>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-low text-xs font-mono ml-auto">
+<span class="w-3.5 h-3.5 rounded-full bg-primary flex-shrink-0"></span>
+<span class="text-on-surface font-semibold">#4F46E5</span>
+</div>
+</div>
+</div>
+<!-- Toggles -->
+<div class="flex flex-col gap-3.5 pt-2">
+<label class="flex items-center justify-between cursor-pointer">
+<div class="flex flex-col pr-4">
+<span class="text-xs font-semibold text-on-surface">Hiển thị logo QR-Wait ở tâm mã QR</span>
+<span class="text-[11px] text-on-surface-variant">Tăng độ nhận diện và độ tin cậy khi khách quét</span>
+</div>
+<div class="relative inline-flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between cursor-pointer">
+<div class="flex flex-col pr-4">
+<span class="text-xs font-semibold text-on-surface">Hiển thị hướng dẫn camera</span>
+<span class="text-[11px] text-on-surface-variant">Chỉ dẫn quét trực tiếp bằng camera không cần cài ứng dụng</span>
+</div>
+<div class="relative inline-flex items-center">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+<!-- Khối 4: Tùy chọn nội dung thông điệp -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">edit_note</span>
+<span class="font-headline font-semibold text-sm text-on-surface">4. Nội dung hiển thị trên Poster</span>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-medium text-on-surface-variant" for="headline-input">Tiêu đề chính Poster</label>
+<input class="w-full bg-surface-container-low text-on-surface text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all font-medium" id="headline-input" type="text" value="Quét mã để lấy số thứ tự"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-medium text-on-surface-variant" for="subline-input">Thông điệp phụ / Lợi ích</label>
+<input class="w-full bg-surface-container-low text-on-surface text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all text-xs" id="subline-input" type="text" value="Không cần cài đặt ứng dụng • Bảo mật thông tin"/>
+</div>
+<label class="flex items-center justify-between cursor-pointer pt-2">
+<div class="flex flex-col pr-4">
+<span class="text-xs font-semibold text-on-surface">Kèm thông tin Wi-Fi cửa hàng</span>
+<span class="text-[11px] text-on-surface-variant">In thêm tên Wi-Fi và mật khẩu ở góc chân poster</span>
+</div>
+<div class="relative inline-flex items-center">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- CỘT PHẢI: Live Preview Poster A4 Chân Thực & Tải File (lg:col-span-7) -->
+<div class="lg:col-span-7 flex flex-col gap-5 sticky top-24">
+<!-- Toolbar Xem Trước -->
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">preview</span>
+<span class="font-headline font-semibold text-sm text-on-surface">Xem trước Poster in ấn thực tế (Tỉ lệ chuẩn A4)</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container p-1 rounded-xl">
+<button aria-label="Xem thử trên nền sáng" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-surface-container-lowest shadow-sm text-on-surface" type="button">Sáng</button>
+<button aria-label="Xem thử trên nền gỗ" class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface" type="button">Khung gỗ</button>
+<button aria-label="Xem thử trên bảng mica" class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface" type="button">Mica trong</button>
+</div>
+</div>
+<!-- Mockup Khung Poster A4 Chân Thực -->
+<div class="w-full flex justify-center py-4 bg-surface-container-low/70 rounded-3xl p-6 lg:p-8">
+<div class="w-full max-w-[440px] aspect-[1/1.414] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-7 flex flex-col justify-between relative overflow-hidden select-none">
+<!-- Lớp trang trí nhẹ góc poster -->
+<div class="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 pointer-events-none"></div>
+<!-- Đỉnh Poster: Thương hiệu & Chi nhánh -->
+<div class="flex items-center justify-between w-full">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold text-sm tracking-wider">
+                QR
+              </div>
+<div class="flex flex-col">
+<span class="font-headline font-bold text-sm text-slate-900 tracking-tight leading-none">QR-Wait</span>
+<span class="text-[9px] font-medium text-slate-500 uppercase tracking-wider mt-0.5">Hệ thống xếp hàng</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-[11px] font-medium">
+<span class="material-symbols-outlined text-[14px] text-primary">store</span>
+<span>Chi nhánh Quận 1</span>
+</div>
+</div>
+<!-- Phần Tiêu Đề Poster Cực Nổi Bật -->
+<div class="flex flex-col items-center text-center gap-2 my-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-bold tracking-wide">
+<span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+              XẾP HÀNG TỰ ĐỘNG • KHÔNG CẦN CÀI APP
+            </div>
+<h2 class="font-headline font-extrabold text-2xl text-slate-900 tracking-tight leading-tight uppercase max-w-[320px]">
+              Quét mã để lấy số thứ tự
+            </h2>
+<p class="text-xs text-slate-500 max-w-[280px]">
+              Mở máy ảnh điện thoại, hướng vào mã QR bên dưới để nhận vé điện tử ngay tức thì.
+            </p>
+</div>
+<!-- Khung Mã QR Vector Siêu Nét -->
+<div class="flex flex-col items-center justify-center gap-2.5">
+<div class="p-3.5 bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-100 flex items-center justify-center relative">
+<!-- SVG QR Code Vector Tùy Biến Thẩm Mỹ -->
+<svg class="w-48 h-48 text-indigo-600" fill="currentColor" viewbox="0 0 200 200">
+<!-- Eye Top-Left -->
+<rect fill="#4F46E5" height="48" rx="12" width="48" x="15" y="15"></rect>
+<rect fill="#ffffff" height="32" rx="8" width="32" x="23" y="23"></rect>
+<rect fill="#4F46E5" height="16" rx="4" width="16" x="31" y="31"></rect>
+<!-- Eye Top-Right -->
+<rect fill="#4F46E5" height="48" rx="12" width="48" x="137" y="15"></rect>
+<rect fill="#ffffff" height="32" rx="8" width="32" x="145" y="23"></rect>
+<rect fill="#4F46E5" height="16" rx="4" width="16" x="153" y="31"></rect>
+<!-- Eye Bottom-Left -->
+<rect fill="#4F46E5" height="48" rx="12" width="48" x="15" y="137"></rect>
+<rect fill="#ffffff" height="32" rx="8" width="32" x="23" y="145"></rect>
+<rect fill="#4F46E5" height="16" rx="4" width="16" x="31" y="153"></rect>
+<!-- Decorative Matrix Pixels -->
+<rect height="12" rx="3" width="12" x="75" y="18"></rect>
+<rect height="12" rx="3" width="12" x="95" y="18"></rect>
+<rect height="12" rx="3" width="12" x="115" y="18"></rect>
+<rect height="12" rx="3" width="12" x="75" y="38"></rect>
+<rect height="12" rx="3" width="12" x="115" y="38"></rect>
+<rect height="12" rx="3" width="12" x="95" y="58"></rect>
+<rect height="12" rx="3" width="12" x="18" y="75"></rect>
+<rect height="12" rx="3" width="12" x="38" y="75"></rect>
+<rect height="12" rx="3" width="12" x="58" y="75"></rect>
+<rect height="12" rx="3" width="12" x="18" y="95"></rect>
+<rect height="12" rx="3" width="12" x="58" y="95"></rect>
+<rect height="12" rx="3" width="12" x="38" y="115"></rect>
+<rect height="12" rx="3" width="12" x="137" y="75"></rect>
+<rect height="12" rx="3" width="12" x="157" y="75"></rect>
+<rect height="12" rx="3" width="12" x="177" y="95"></rect>
+<rect height="12" rx="3" width="12" x="137" y="115"></rect>
+<rect height="12" rx="3" width="12" x="157" y="115"></rect>
+<rect height="12" rx="3" width="12" x="75" y="137"></rect>
+<rect height="12" rx="3" width="12" x="95" y="137"></rect>
+<rect height="12" rx="3" width="12" x="115" y="157"></rect>
+<rect height="12" rx="3" width="12" x="75" y="177"></rect>
+<rect height="12" rx="3" width="12" x="95" y="177"></rect>
+<rect height="12" rx="3" width="12" x="157" y="177"></rect>
+<rect height="12" rx="3" width="12" x="177" y="157"></rect>
+<rect height="12" rx="3" width="12" x="137" y="157"></rect>
+</svg>
+<!-- Logo Tâm Mã QR -->
+<div class="absolute inset-0 m-auto w-10 h-10 rounded-xl bg-white shadow-md p-1 flex items-center justify-center">
+<div class="w-full h-full rounded-lg bg-indigo-600 flex items-center justify-center text-white font-headline font-bold text-xs tracking-wider">
+                  QR
+                </div>
+</div>
+</div>
+<!-- Mã Check-in Dự Phòng Cho Khách Camera Hỏng -->
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs">
+<span class="text-[11px]">Mã dự phòng:</span>
+<span class="font-mono font-bold text-indigo-700 tracking-wider">QW-8829</span>
+</div>
+</div>
+<!-- Các Bước Hướng Dẫn Nhanh 3 Bước -->
+<div class="grid grid-cols-3 gap-2 w-full pt-1">
+<div class="flex flex-col items-center text-center gap-1">
+<span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold flex items-center justify-center">1</span>
+<span class="text-[10px] font-semibold text-slate-800 leading-tight">Mở Camera</span>
+<span class="text-[9px] text-slate-500 leading-none">Quét mã phía trên</span>
+</div>
+<div class="flex flex-col items-center text-center gap-1">
+<span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold flex items-center justify-center">2</span>
+<span class="text-[10px] font-semibold text-slate-800 leading-tight">Nhập Tên</span>
+<span class="text-[9px] text-slate-500 leading-none">Và số lượng người</span>
+</div>
+<div class="flex flex-col items-center text-center gap-1">
+<span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold flex items-center justify-center">3</span>
+<span class="text-[10px] font-semibold text-slate-800 leading-tight">Nhận Số</span>
+<span class="text-[9px] text-slate-500 leading-none">Theo dõi trên web</span>
+</div>
+</div>
+<!-- Chân Poster & Cam kết bảo mật -->
+<div class="w-full flex items-center justify-between pt-2 border-t border-slate-100">
+<div class="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
+<span class="material-symbols-outlined text-[13px] text-emerald-600">verified_user</span>
+<span>100% riêng tư • Không lưu SĐT</span>
+</div>
+<span class="text-[10px] font-semibold text-slate-400">qrwait.app/vi</span>
+</div>
+</div>
+</div>
+<!-- Cụm Nút Tải File & Hành Động -->
+<div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+<!-- Nút Tải PDF Vector 300 DPI -->
+<button class="w-full sm:flex-1 h-12 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-headline font-semibold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+          Tải file PDF in ấn (300 DPI Vector)
+        </button>
+<!-- Nút Tải Ảnh PNG Siêu Nét -->
+<button class="w-full sm:flex-1 h-12 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-headline font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px] text-primary">image</span>
+          Tải ảnh PNG (Ultra HD)
+        </button>
+<!-- Nút In Nhanh -->
+<button aria-label="In trực tiếp" class="w-full sm:w-12 h-12 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-colors shadow-sm flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Banner Tóm Tắt & Giới Thiệu Tính Năng Bảo Mật Nâng Cao (Chống Gian Lận) -->
+<div class="w-full p-6 rounded-2xl bg-gradient-to-r from-surface-container-lowest via-surface-container to-surface-container-lowest shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-start md:items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[26px]">security</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="font-headline font-bold text-base text-on-surface">Cần ngăn chặn hành vi lấy số từ xa hoặc chia sẻ ảnh QR?</h3>
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-primary text-on-primary">Nâng cao</span>
+</div>
+<p class="text-xs text-on-surface-variant max-w-3xl leading-relaxed">
+          Kích hoạt <strong>Mã QR Động</strong> (xoay chu kỳ 30s) trên màn hình TV hoặc áp dụng <strong>Khoanh vùng GPS</strong> (bán kính 100m) để đảm bảo chỉ khách có mặt trực tiếp tại cửa hàng mới có thể lấy số.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-3 flex-shrink-0">
+<button class="px-5 py-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-headline font-semibold text-xs transition-all shadow-sm flex items-center gap-2" type="button">
+        Kích hoạt bảo mật nâng cao
+        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Script hỗ trợ chuyển đổi tùy chọn nhanh cho Preview
+  document.addEventListener('DOMContentLoaded', () => {
+    const headlineInput = document.getElementById('headline-input');
+    const posterHeadline = document.querySelector('.aspect-\\[1\\/1\\.414\\] h2');
+    if (headlineInput && posterHeadline) {
+      headlineInput.addEventListener('input', (e) => {
+        posterHeadline.textContent = e.target.value || 'Quét mã để lấy số thứ tự';
+      });
+    }
+  });
+</script></main></div></body></html>
