@@ -1,4 +1,8 @@
 package com.qrwait.iam.entity;
 
-public class UserRole {
+public enum UserRole {
+    SUPER_ADMIN,
+    OWNER,
+    MANAGER,
+    STAFF
 }

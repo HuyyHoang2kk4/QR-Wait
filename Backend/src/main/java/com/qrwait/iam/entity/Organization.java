@@ -1,4 +1,0 @@
-package com.qrwait.iam.entity;
-
-public class Organizations {
-}
