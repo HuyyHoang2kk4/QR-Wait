@@ -1,4 +1,4 @@
-package com.qrwait.iam.entity;
+package com.qrwait.organization.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class Organization {
     private String logoUrl ;
 
     @Column(nullable = false , length = 50)
-    private String timezone = "Asia /Ho_Chi_Minh" ;
+    private String timezone = "Asia/Ho_Chi_Minh" ;
 
     @Column(name = "is_active" , nullable = false)
     private boolean active = true ;
