@@ -2194,8 +2194,9 @@ flowchart LR
 # 7. UI/UX Requirements
 
 ## 7.1 Nguyên tắc Thiết kế Trải nghiệm Tổng thể
-- **Phong cách thị giác (Design System):** Hiện đại, Tối giản, Độ tương phản cao. Sử dụng tông màu chủ đạo Indigo Blue (`#4F46E5`), kết hợp màu trạng thái chuẩn: Xanh lá (`#10B981` - Tới lượt/Sẵn sàng), Hổ phách (`#F59E0B` - Đang chờ), Xanh dương (`#3B82F6` - Đang phục vụ), Đỏ (`#EF4444` - Vắng mặt/Hủy).
-- **Typography:** Hệ font Sans-serif trung tính (Inter / Roboto). Các con số thứ tự (Ticket Numbers) luôn sử dụng kiểu chữ to bản (Display Bold), dễ đọc ở khoảng cách xa.
+- **Phong cách thị giác (Design System):** Hiện đại, Tối giản (kiểu Linear / Vercel / `qrwait.app/vi/`), nền trắng sạch (`#FFFFFF` / `#F9FAFB`) kết hợp đường viền mảnh (`1px solid #E5E7EB`), hạn chế lạm dụng nền tím hoặc nhiều huy hiệu màu mè gây rối mắt. Sử dụng tông màu nhấn Indigo Blue (`#4F46E5`) tiết chế cho nút hành động chính, kết hợp màu trạng thái chuẩn: Xanh lá (`#10B981`), Hổ phách (`#F59E0B`), Xanh dương (`#3B82F6`), Đỏ (`#EF4444`).
+- **Chế độ Giao diện Sáng / Tối (Light / Dark Mode Switcher):** Toàn bộ hệ thống mặc định sử dụng **Giao diện Sáng (Light Mode)** đồng nhất (kể cả TV Display `SCR-08`), đồng thời cung cấp **công tắc chuyển đổi Sáng / Tối (Theme Toggle)** trên Header của Staff Panel (`SCR-05`), TV Display (`SCR-08`), Dashboard (`SCR-03`) và Cài đặt (`SCR-11`) để người dùng tùy chỉnh theo ánh sáng thực tế tại cơ sở.
+- **Typography & Hiển thị Số vé:** Hệ font Sans-serif trung tính (Inter / Be Vietnam Pro). Các con số thứ tự (`#A-025`) **bắt buộc hiển thị trên một dòng duy nhất (`whitespace-nowrap`)**, tuyệt đối không ngắt xuống dòng giữa tiền tố và số. Các nhãn phụ sử dụng cỡ chữ nhỏ gọn, tinh tế, tránh chữ thừa.
 - **Touch-First Accessibility:** Kích thước vùng chạm tương tác (Tap Target) trên thiết bị di động tối thiểu $48 \times 48$px. Nút bấm trên Staff Panel to bản để bấm nhanh không trượt.
 - **Cross-Device Adaptability:** 100% màn hình hoạt động mượt mà trên cả trình duyệt máy tính để bàn (Desktop) và trình duyệt di động (Mobile PWA).
 
@@ -2346,14 +2347,14 @@ flowchart LR
 - **Mã màn hình:** SCR-08
 - **Tên màn hình:** Fullscreen TV Display
 - **Đối tượng:** Khách tại sảnh chờ, Nhân viên điều phối
-- **Mục đích:** Hiển thị số đang phục vụ tại từng quầy, chớp sáng, phát chuông Ding Dong và giọng đọc TTS mời khách khi có lượt gọi mới.
+- **Mục đích:** Hiển thị số đang phục vụ tại từng quầy, chớp sáng, phát chuông Ding Dong và giọng đọc TTS mời khách khi có lượt gọi mới; hỗ trợ chuyển đổi giao diện Sáng / Tối.
 - **Bố cục & Giao diện:**
-  - Thiết kế tối ưu cho tỷ lệ màn hình 16:9 (Độ phân giải Full HD / 4K).
-  - Nền tối tương phản cao (Dark Mode nền đen/xanh đậm, chữ trắng và vàng kim) chống mỏi mắt và nhìn rõ từ cự ly 10–15m.
-  - Header: Logo doanh nghiệp, Tên chi nhánh, Đồng hồ kỹ thuật số góc phải, **công tắc Bật/Tắt giọng đọc TTS** (riêng với chuông Ding Dong) và banner nhỏ lần đầu chạm kích hoạt âm thanh trình duyệt.
+  - Thiết kế tối ưu cho tỷ lệ màn hình 16:9 (Độ phân giải Full HD / 4K), bố cục thoáng gọn, cỡ chữ phân cấp hợp lý không nhồi nhét.
+  - **Giao diện Sáng / Tối:** Mặc định sử dụng **Light Mode** đồng nhất với toàn hệ thống (nền `#F8FAFC`, thẻ trắng `#FFFFFF`, viền mảnh `#E2E8F0`), kèm **công tắc chuyển đổi Sáng / Tối (Dark Mode `#0F172A`)** ngay trên Header.
+  - Header: Logo doanh nghiệp, Tên chi nhánh, **nút chuyển Giao diện Sáng/Tối**, công tắc Bật/Tắt giọng đọc TTS, nút kích hoạt âm thanh lần đầu, và Đồng hồ kỹ thuật số góc phải.
   - Khu vực chính (Bên trái, chiếm 65% diện tích): Bảng **"ĐANG PHỤC VỤ"**:
-    - Chia thành các ô thẻ lớn cho từng Quầy: Ví dụ `Quầy 01: #A-024`, `Quầy 02: #B-008`.
-    - Số vé hiển thị cực lớn bằng font chữ Display Bold.
+    - Chia thành các ô thẻ gọn gàng cho từng Quầy: Ví dụ `Quầy 01` | `#A-025` | `Nguyễn Văn A`.
+    - Số vé (`#A-025`) hiển thị **1 dòng duy nhất (`whitespace-nowrap`)**, sắc nét dễ đọc từ xa.
   - Khu vực phụ (Bên phải trên, chiếm 35% diện tích): Bảng **"VỪA GỌI GẦN ĐÂY"**:
     - Danh sách 4 lượt vé vừa gọi trước đó kèm tên quầy.
   - Khu vực Mã QR sảnh (Bên phải dưới):

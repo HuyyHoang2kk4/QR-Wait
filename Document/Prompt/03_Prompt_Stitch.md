@@ -7,14 +7,12 @@
 
 ## PHẦN 1: QUY CHUẨN DESIGN SYSTEM CHUNG (DESIGN.md / THEME)
 
-* **Phong cách thị giác:** Tối giản (Minimalist), hiện đại, tập trung tác vụ (Task-oriented), độ tương phản cao theo đúng phong cách của `https://qrwait.app/vi/`.
+* **Phong cách thị giác:** Tối giản chuẩn SaaS cao cấp (giống Linear / Vercel / `https://qrwait.app/vi/`), dùng nền **trắng tinh `#FFFFFF` / xám rất nhạt `#F9FAFB`** với **viền mảnh `1px solid #E5E7EB`**, khoảng trắng thoáng rộng, tuyệt đối **không lạm dụng nền tím hoặc nhồi nhiều badge màu mè kiểu template AI**.
+* **Chế độ Sáng / Tối (Light & Dark Mode):** Mặc định dùng **Light Mode đồng nhất trên tất cả màn hình (kể cả TV Display `SCR-08`)**, đồng thời tích hợp **nút chuyển đổi giao diện Sáng / Tối (Sun/Moon Toggle)** trên Header của `SCR-05`, `SCR-08`, `SCR-03`, `SCR-11`.
 * **Bảng màu chuẩn:**
-  * Màu chủ đạo (Primary Accent): Indigo Blue `#4F46E5`
-  * Màu trạng thái Sẵn sàng / Tới lượt (`CALLED` / `COMPLETED`): Xanh lá `#10B981`
-  * Màu trạng thái Đang chờ / Cảnh báo (`WAITING` / `NO_SHOW`): Vàng hổ phách `#F59E0B`
-  * Màu trạng thái Đang phục vụ (`SERVING`): Xanh dương `#3B82F6`
-  * Màu lỗi / Hủy (`ERROR` / `CANCELLED`): Đỏ `#EF4444`
-* **Typography:** Font `Inter` hoặc `Be Vietnam Pro` hỗ trợ hoàn chỉnh tiếng Việt có dấu; các số thứ tự vé (`#A-025`) sử dụng cỡ chữ Display Bold cực lớn để đọc rõ từ xa.
+  * Màu chủ đạo (Primary Accent): Indigo Blue `#4F46E5` (chỉ dùng cho nút CTA chính và chi tiết thật sự cần nhấn)
+  * Màu trạng thái tiết chế: Xanh lá `#10B981`, Vàng hổ phách `#F59E0B`, Xanh dương `#3B82F6`, Đỏ `#EF4444`.
+* **Typography & Số vé:** Font `Inter` hoặc `Be Vietnam Pro` hỗ trợ hoàn chỉnh tiếng Việt. **Mọi số vé (`#A-025`) phải hiển thị trên 1 dòng duy nhất (`whitespace-nowrap`), không bao giờ ngắt xuống dòng.** Cỡ chữ mô tả nhỏ gọn, thanh thoát.
 * **Kích thước & Bo góc:** Bo tròn mềm mại (`12px` cho thẻ và nút chính). Kích thước vùng chạm trên Mobile/Tablet tối thiểu `48x48px` (nút chính `>= 52px`).
 * **Ngôn ngữ hiển thị:** Tiếng Việt hoàn toàn (trừ các từ khóa kỹ thuật quen thuộc nếu cần như `Walk-in`, `Session QR`, `CSV`, `TTS`).
 * **Ràng buộc loại trừ & Âm thanh (Constraints):**
@@ -32,16 +30,16 @@
 
 #### 1. `SCR-06`: Màn hình Khách hàng Lấy số (Customer Check-in Form)
 ```text
-Thiết kế màn hình Mobile Web PWA (375px) cho khách hàng lấy số thứ tự tự phục vụ (SCR-06) của hệ thống QR Wait, phong cách tối giản giống qrwait.app/vi/, màu chủ đạo Indigo #4F46E5, tiếng Việt hoàn toàn.
-Bố cục dọc từ trên xuống gồm:
-- Header căn giữa: Logo cửa hàng sắc nét, tên chi nhánh ("Chi nhánh Quận 1") và tên hàng chờ ("Hàng chờ Bàn 1–4 người").
-- Hộp thông tin nhẹ nền xanh nhạt: "Hiện có 3 nhóm đang chờ phía trước".
-- Ô nhập "Tên của bạn *" (có dấu sao đỏ bắt buộc, placeholder: "Nhập tên để nhân viên gọi số (ví dụ: Anh Nam)").
-- Ô nhập "Ghi chú (Không bắt buộc)" (placeholder: "Ghi chú thêm (ví dụ: Có ghế trẻ em)").
-- Bộ chọn "Số lượng người (Party Size)" dạng các nút bo tròn bấm nhanh: 1, 2, 3, 4, 5+ (mặc định chọn 2).
-- Nút CTA cực lớn toàn chiều rộng màu #4F46E5: "LẤY SỐ NGAY".
-- Dòng cam kết bảo mật nhỏ ở chân trang: "Không cần cài đặt ứng dụng. Chúng tôi không lưu số điện thoại của bạn."
-Tuyệt đối không có ô nhập số điện thoại hay email.
+Thiết kế màn hình Mobile Web PWA (375px) tối giản chuẩn SaaS cao cấp (giống qrwait.app/vi/, Linear) cho khách hàng lấy số thứ tự (SCR-06), nền trắng tinh #FFFFFF (KHÔNG dùng nền tím hay viền dày màu tím), đường viền mảnh #E5E7EB, màu nhấn Indigo #4F46E5 tiết chế, tiếng Việt hoàn toàn.
+Bố cục dọc gọn gàng, chữ tinh tế nhỏ gọn:
+- Góc trên phải có nút nhỏ chuyển Sáng/Tối (Sun/Moon icon).
+- Header căn giữa thanh thoát: Logo nhỏ gọn, tên quán ("QR-Wait Queue") và nhãn phụ nhỏ "Chi nhánh Quận 1 • Bàn 1–4 người".
+- Thanh trạng thái gọn 1 dòng viền mảnh #E5E7EB nền #F9FAFB: "Hiện có 3 nhóm đang chờ • Dự kiến ~10 phút".
+- Ô nhập "Tên của bạn *" (viền mảnh #D1D5DB, chữ gọn, placeholder: "Nhập tên để gọi số (VD: Anh Nam)").
+- Ô nhập "Ghi chú (Không bắt buộc)" (gọn nhẹ).
+- Bộ chọn "Số lượng người" dạng segmented pill sạch sẽ: 1, 2, 3, 4, 5+ (chọn sẵn 2).
+- Nút CTA sắc nét màu #4F46E5 (bo góc 8px, cao 48px): "Lấy số ngay".
+- Dòng nhỏ màu xám nhạt ở chân trang: "Không cần cài app • Không lưu số điện thoại".
 ```
 
 #### 2. `SCR-07` (Biến thể 1 — `WAITING`): Màn hình Vé chờ Trực tiếp (Đang chờ)
@@ -92,16 +90,17 @@ Tông màu xám trung tính tối giản:
 
 #### 6. `SCR-05`: Bảng điều khiển Nhân viên 1 Chạm (Staff Calling Panel)
 ```text
-Thiết kế màn hình Bảng điều khiển Nhân viên thao tác 1 chạm (SCR-05 - Staff Panel) tối ưu cảm ứng (nút bấm >= 52px) cho Tablet/Mobile của hệ thống QR Wait, phong cách tối giản giống qrwait.app/vi/, màu chủ đạo #4F46E5, tiếng Việt.
+Thiết kế màn hình Bảng điều khiển Nhân viên (SCR-05 - Staff Panel) theo phong cách tối giản chuyên nghiệp kiểu Linear / Stripe / qrwait.app/vi/, nền trắng #FFFFFF & xám nhạt #F9FAFB với viền mảnh #E5E7EB (KHÔNG dùng nhiều pill màu cầu vồng kiểu AI), hỗ trợ chuyển Sáng/Tối, tiếng Việt gọn gàng.
 Bố cục gồm:
-- Header: Tên hàng chờ ("Bàn 1–4 người"), Dropdown chọn quầy đang trực ("Quầy 01"), và nút "+ Thêm khách (Walk-in)" ở góc phải.
-- Khu vực trung tâm (Thẻ khách đang xử lý):
-  - Số vé cực lớn "#A-025", Tên khách "Nguyễn Văn A", Quy mô "Nhóm 4 người", Ghi chú "Có ghế trẻ em".
-  - **Đồng hồ đếm thời gian chờ khách (2 phút):** Hiển thị rõ ràng bộ đếm `01:42 / 02:00` (chỉ báo trực quan giúp nhân viên dễ theo dõi, **không khóa nút thao tác** — nhân viên có thể bấm Vắng mặt / Gọi tiếp bất cứ lúc nào).
-  - Huy hiệu phát sáng màu xanh lá (#10B981): "Khách báo đã tới / đang tới" (khi khách đã bấm trên điện thoại).
-  - Hàng nút bấm cảm ứng cỡ lớn: "BẮT ĐẦU PHỤC VỤ" (xanh dương #3B82F6), "GỌI LẠI (1/3 • 12s)" (vàng #F59E0B), "VẮNG MẶT" (đỏ nhạt #EF4444), "HOÀN TẤT" (xanh lá #10B981), và nút icon "Chuyển vé" (mở modal chuyển Quầy hoặc chuyển Hàng chờ).
-- Thanh tab chuyển đổi ở phần dưới: Tab "Đang chờ (12)" hiển thị danh sách khách xếp hàng FIFO (vé Walk-in có icon người đi bộ) và Tab "Vắng mặt 15p (2)" hiển thị các vé No-Show kèm đồng hồ đếm ngược ("Còn 08:45") và nút "Phục hồi vé".
-- Nút cố định cực lớn chiếm trọn đáy màn hình màu Indigo #4F46E5: "GỌI TIẾP THEO".
+- Top bar mỏng gọn: Tên quán + Dropdown chọn quầy ("Quầy 01"), nút chuyển Sáng/Tối (Sun/Moon), và nút "+ Khách Walk-in" viền mảnh.
+- Thẻ khách đang xử lý (trung tâm, sạch sẽ):
+  - Số vé `#A-025` (HIỂN THỊ TRÊN 1 DÒNG DUY NHẤT `whitespace-nowrap`, tuyệt đối không xuống dòng), bên cạnh là tên "Nguyễn Văn A • 4 người", ghi chú nhỏ "Có ghế trẻ em".
+  - Chấm xanh nhỏ tinh tế "Khách báo đã tới" và đồng hồ đếm 2 phút nhỏ gọn "Chờ ra quầy: 01:42 / 02:00".
+  - Cụm nút thao tác sạch sẽ, tiết chế màu: Nút chính "Bắt đầu phục vụ" (#4F46E5), các nút phụ viền mảnh gọn gàng: "Gọi lại (1/3 • 12s)", "Vắng mặt", "Hoàn tất", "Chuyển vé".
+- Danh sách chờ bên dưới dạng bảng/dòng mảnh gọn (cỡ chữ 13px):
+  - Tab "Đang chờ (12)" | "Vắng mặt 15p (2)".
+  - Mỗi dòng hiển thị số vé trên 1 dòng duy nhất (`#A-026`, `#A-027` tuyệt đối không rớt 2 dòng), Tên khách, số người, thời gian chờ và 1 nút "Gọi".
+- Thanh đáy cố định tối giản với nút chính màu #4F46E5: "Gọi tiếp theo (#A-026)".
 ```
 
 ---
@@ -110,15 +109,12 @@ Bố cục gồm:
 
 #### 7. `SCR-08`: Màn hình TV Hiển thị Công cộng (Public TV Display)
 ```text
-Thiết kế màn hình TV Display toàn màn hình 16:9 (1920x1080) chế độ Dark Mode tương phản cao (nền xanh đen đậm #0F172A, chữ trắng và vàng kim #FBBF24) nhìn rõ từ khoảng cách 10-15m cho sảnh chờ (SCR-08) của hệ thống QR Wait, tiếng Việt.
-Bố cục gồm:
-- Header: Logo doanh nghiệp, Tên chi nhánh ("Chi nhánh Quận 1"), đồng hồ kỹ thuật số thời gian thực ở góc phải, trạng thái chuông "Ding Dong" và **công tắc Bật/Tắt giọng đọc TTS** (cùng nút nhỏ "Chạm để kích hoạt âm thanh & giọng đọc").
-- Khu vực bên trái (65% chiều rộng): Tiêu đề lớn "ĐANG PHỤC VỤ" với các ô thẻ to bản cho từng quầy:
-  - Thẻ 1 (đang chớp sáng viền vàng/xanh nổi bật vì vừa gọi): "Quầy 01" -> Số vé cực lớn "#A-025" (Nguyễn Văn A).
-  - Thẻ 2: "Quầy 02" -> "#B-008".
-  - Thẻ 3: "Quầy 03" -> "#A-024".
-- Khu vực bên phải trên (35% chiều rộng): Bảng "VỪA GỌI GẦN ĐÂY" liệt kê 4 số vé vừa gọi trước đó kèm tên quầy.
-- Khu vực bên phải dưới: Hộp nền trắng nổi bật chứa mã QR sảnh sắc nét, nhãn "Mã QR hiện hành (Cập nhật theo phiên / khi đổi mã)" và dòng chữ "Quét mã lấy số thứ tự tại sảnh".
+Thiết kế màn hình TV Display toàn màn hình 16:9 (1920x1080) chế độ **Giao diện Sáng (Light Mode)** đồng nhất với toàn hệ thống (nền #F8FAFC, thẻ trắng #FFFFFF viền mảnh #E2E8F0, chữ đen xám #0F172A, điểm nhấn #4F46E5), kèm **nút chuyển đổi Giao diện Sáng / Tối** ngay trên Header để quán tự chọn Dark Mode nếu muốn.
+Bố cục thoáng rộng, cỡ chữ nhỏ gọn sắc nét (KHÔNG thô, KHÔNG chật):
+- Header gọn: Logo, "Chi nhánh Quận 1", nút chuyển **Sáng / Tối (Sun/Moon)**, công tắc **Giọng đọc TTS (Bật/Tắt)**, chuông Ding Dong, đồng hồ `11:42:35`.
+- Bên trái (65%): Bảng "Đang phục vụ" gồm các hàng/thẻ thoáng: Quầy 01 -> số vé **`#A-025` (BẮT BUỘC 1 DÒNG DUY NHẤT `whitespace-nowrap`, tuyệt đối không rớt `#A-` xuống `025`)** -> Nguyễn Văn A; Quầy 02 -> `#B-008` -> Trần Thị Lan; Quầy 03 -> `#A-024`. Thẻ vừa gọi có viền Indigo #4F46E5 nổi bật nhẹ.
+- Bên phải trên (35%): Bảng "Vừa gọi gần đây" 4 dòng gọn gàng (`#A-023` - Quầy 01...).
+- Bên phải dưới: Khung mã QR sảnh nền trắng sạch sẽ, nhãn gọn "Quét mã lấy số • Cập nhật theo phiên".
 ```
 
 ---
