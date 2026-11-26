@@ -14,7 +14,7 @@
 | **Ngày tạo** | 23/11/2026 |
 | **Tác giả** | Senior Business Analyst / System Analyst |
 | **Trạng thái** | Chuẩn hóa hoàn thiện (Approved for Implementation) |
-| **Ngôn ngữ triển khai** | Java Spring Boot (Backend); Mobile Web PWA + Desktop Browser (Frontend) |
+| **Ngôn ngữ & Công nghệ** | Backend: Java Spring Boot 3; Frontend: React (PWA); Database: PostgreSQL (pgAdmin 4 / Flyway) |
 | **Đối tượng độc giả** | Solution Architect, Tech Lead, Frontend/Backend Developer, UI/UX Designer, QA/Tester |
 
 ### Lịch sử thay đổi
@@ -158,12 +158,13 @@ Platform Super Admin
             └── Session (Phiên hàng chờ - Reset số vé)
 ```
 
-**Đặc tả kiến trúc công nghệ:**
-- **Backend:** Java 17+, Spring Boot 3.x (Spring Web, Spring Security, Spring Data JPA, Spring WebSocket với STOMP/SockJS broker).
-- **Database:** PostgreSQL (Lưu trữ quan hệ, Transaction isolation level READ COMMITTED với Pessimistic `SKIP LOCKED` & Optimistic `@Version` Locking chống xung đột).
-- **Caching & Scheduled Tasks:** Redis (Cache hàng chờ nóng, cache audio TTS) và Spring TaskScheduler (@Scheduled).
+**Đặc tả kiến trúc công nghệ & Triển khai:**
+- **Backend:** Java 17+, Spring Boot 3.x (Spring Web, Spring Security, Spring Data JPA, Spring WebSocket với STOMP/SockJS broker; hỗ trợ cờ `-Xmx350m -Xms256m` để chạy mượt trên container RAM 512MB).
+- **Database & Migration:** PostgreSQL 15+ (quản trị trực quan bằng **pgAdmin 4** cho cả Local và Cloud; đồng bộ schema tự động qua **Flyway** SQL migrations; áp dụng `READ COMMITTED` kết hợp Pessimistic `SKIP LOCKED` và Optimistic `@Version` Locking chống xung đột).
+- **Caching & Scheduled Tasks:** Sử dụng **In-Memory Cache (`Caffeine`)** tích hợp sẵn trong Spring Boot để cache hàng chờ nóng, audio TTS và token blacklist nhằm tối giản hạ tầng deploy 0đ/<100k (có thể nâng cấp sang Redis khi mở rộng đa node) kết hợp Spring TaskScheduler (`@Scheduled`).
 - **Real-time Engine:** WebSocket STOMP qua SockJS với fallback SSE cho các trình duyệt mạng yếu.
-- **Frontend Client:** Vue.js / React (Single Page Application đóng gói PWA), Responsive hoàn hảo cho Desktop (Chrome/Edge) và Mobile (iOS Safari / Android Chrome).
+- **Frontend Client:** **React** (Vite + TailwindCSS, Single Page Application đóng gói PWA), Responsive hoàn hảo cho Desktop (Chrome/Edge) và Mobile (iOS Safari / Android Chrome).
+- **Lưu trữ File (Logo Storage):** Lưu trữ ảnh Logo trên Cloud Object Storage (**Supabase Storage** hoặc **Cloudinary**) thay vì lưu cục bộ trên server Backend để tránh mất file khi container khởi động lại.
 - **TV Display Engine:** HTML5 Web Audio API + Audio Queue (phát chuông "Ding Dong" tuần tự trước giọng đọc TTS tiếng Việt, có nút kích hoạt autoplay lần đầu).
 
 ## 2.2 Product Functions (Tóm tắt chức năng sản phẩm)
@@ -198,7 +199,11 @@ Platform Super Admin
 - **Trình duyệt di động của khách hàng:** iOS Safari 14+, Google Chrome 90+, Samsung Internet 14+, Firefox Mobile.
 - **Trình duyệt bảng điều khiển quản trị & nhân viên:** Google Chrome 90+, Microsoft Edge 90+, Apple Safari 14+.
 - **Màn hình TV Display:** Smart TV tích hợp trình duyệt (LG webOS 5.0+, Samsung Tizen 5.0+, Android TV 9.0+) hoặc TV Box chạy Chrome/Edge.
-- **Môi trường máy chủ:** Linux (Ubuntu 22.04 LTS / Alpine), Java Runtime Environment 17+, PostgreSQL 15+, Redis 7+.
+- **Môi trường phát triển (Local Dev):** PostgreSQL Local kết hợp **pgAdmin 4** để kiểm tra dữ liệu; Spring Boot tự chạy Flyway migration tạo bảng.
+- **Môi trường Production & Triển khai (Tối ưu chi phí Free – dưới 100.000đ/tháng):**
+  - **Frontend (React):** Triển khai miễn phí trên **Vercel** hoặc **Cloudflare Pages** (tự động CI/CD qua GitHub, hỗ trợ HTTPS sẵn).
+  - **Database & Object Storage:** Sử dụng **Supabase** (500 MB PostgreSQL miễn phí + 1 GB Storage lưu ảnh Logo, hỗ trợ kết nối trực tiếp từ **pgAdmin 4**) hoặc **Neon.tech** + **Cloudinary** *(Tránh dùng PostgreSQL gói Free của Render do bị xóa dữ liệu sau 30 ngày)*.
+  - **Backend (Spring Boot + WebSocket):** Đóng gói Docker container; chạy miễn phí trên **Koyeb / Render** (cấu hình giới hạn RAM JVM) hoặc chạy 24/7 không ngủ đông trên **Railway** (<100k/tháng) / **VPS Linux mini tại Việt Nam**.
 - **Điều kiện mạng:** Băng thông tối thiểu 1 Mbps ổn định tại quầy phục vụ; thiết bị khách hoạt động tốt trên sóng 3G/4G/5G/WiFi.
 
 ## 2.5 Design and Implementation Constraints (Ràng buộc thiết kế & hiện thực)
@@ -206,7 +211,7 @@ Platform Super Admin
 1. **Ràng buộc Quyền riêng tư (Zero-PII & Mandatory Display Name):** Không được phép lưu trữ số điện thoại, email hay giấy tờ tùy thân của khách hàng. Chỉ bắt buộc nhập Tên gọi hiển thị (Display Name) để xưng hô.
 2. **Ràng buộc Phân hệ Doanh thu (Zero-Billing Overhead):** Không xây dựng tính năng mua bán lượt vé, quản lý gói cước hay cổng thanh toán trực tuyến.
 3. **Ràng buộc Âm thanh TV Display (Chime + Toggleable TTS + Audio Queue):** TV Display phát chuông "Ding Dong" trước, sau đó phát giọng đọc TTS tiếng Việt mời số vé tới quầy qua hàng đợi tuần tự (Audio Queue) để không bị đọc đè khi nhiều quầy gọi cùng lúc. Hệ thống phải có công tắc Bật/Tắt tính năng đọc TTS.
-4. **Ràng buộc Công nghệ Backend:** Nền tảng Backend bắt buộc phát triển bằng **Java Spring Boot**.
+4. **Ràng buộc Công nghệ & Triển khai:** Backend phát triển bằng **Java Spring Boot 3**; Frontend phát triển bằng **React**; Cơ sở dữ liệu **PostgreSQL** (quản trị qua **pgAdmin 4**, migration bằng **Flyway**); ảnh Logo lưu trên Cloud Storage (**Supabase Storage / Cloudinary**) không lưu cục bộ trong container Backend.
 5. **Ràng buộc Giao diện Khách hàng (Zero-Install PWA):** 100% chức năng của khách hàng chạy trực tiếp trên Mobile Browser mà không yêu cầu cài ứng dụng từ App Store / Google Play.
 6. **Ràng buộc Truy cập TV Display:** TV kết nối qua Secret Screen URL dạng token tĩnh; không yêu cầu nhập username/password trên TV.
 7. **Ràng buộc Thời gian thực (Real-time SLA):** Thời gian từ khi nhân viên nhấn "Gọi tiếp theo" đến khi điện thoại khách rung/chuông và TV phát âm thanh phải $\le 1.5$ giây trong điều kiện mạng tiêu chuẩn.
@@ -420,7 +425,7 @@ Platform Super Admin
 2. Hệ thống hiển thị hộp thoại xác nhận cảnh báo.  
 3. Quản lý xác nhận.  
 4. Hệ thống cập nhật trường `is_active = false` trong cơ sở dữ liệu.  
-5. Hệ thống đưa token của nhân viên vào Blacklist trên Redis hoặc xóa Refresh Token tương ứng.  
+5. Hệ thống đưa token của nhân viên vào Blacklist trên Cache (`Caffeine` / In-Memory) hoặc xóa Refresh Token tương ứng trong Database.  
 6. Nếu nhân viên đang mở Staff Panel, hệ thống lập tức ngắt kết nối WebSocket và đẩy người dùng về trang đăng nhập với thông báo tài khoản bị khóa.  
 **Business Rules:** BRD BR-003  
 **Input:** User ID cần khóa  
@@ -2439,9 +2444,10 @@ flowchart LR
 - Cung cấp kiến trúc RESTful API chuẩn mực với định dạng trao đổi dữ liệu duy nhất là JSON (Content-Type: `application/json; charset=UTF-8`).
 - Quản lý phiên làm việc không trạng thái (Stateless) thông qua JSON Web Token (JWT).
 
-### 2. Hệ Cơ sở Dữ liệu & Caching
-- **PostgreSQL 15+:** Hệ quản trị cơ sở dữ liệu quan hệ chính. Sử dụng transaction isolation level `READ COMMITTED` kết hợp `SELECT ... FOR UPDATE SKIP LOCKED` và Optimistic Locking (`@Version`) cho cơ chế chống xung đột đa quầy / double-click.
-- **Redis 7+:** Lưu trữ bộ đệm (Cache) danh sách hàng chờ nóng, cache file âm thanh TTS và quản lý Blacklist JWT Token khi nhân viên bị thu hồi quyền.
+### 2. Hệ Cơ sở Dữ liệu, Migration, Caching & Lưu trữ File
+- **PostgreSQL 15+ (pgAdmin 4 & Flyway):** Hệ quản trị cơ sở dữ liệu quan hệ chính (Local PostgreSQL khi phát triển; **Supabase** hoặc **Neon.tech** trên Production, kết nối quản trị trực tiếp từ pgAdmin 4 qua SSL). Tự động khởi tạo và cập nhật 9 bảng bằng **Flyway** (`V1__init.sql`). Sử dụng transaction isolation level `READ COMMITTED` kết hợp `SELECT ... FOR UPDATE SKIP LOCKED` và Optimistic Locking (`@Version`).
+- **In-Memory Caching (`Caffeine Cache`):** Cache dữ liệu hàng chờ nóng, file audio TTS và JWT Blacklist ngay trong RAM của Spring Boot (đơn giản hóa kiến trúc deploy miễn phí/chi phí thấp; sẵn sàng chuyển sang Redis khi scale nhiều server).
+- **Cloud Object Storage:** Lưu trữ file Logo doanh nghiệp trên **Supabase Storage** (hoặc **Cloudinary**) để đảm bảo bền vững dữ liệu ảnh khi re-deploy Backend container.
 
 ### 3. Google Identity Services (OAuth2 SSO)
 - Tích hợp Google OAuth2 API cho luồng đăng ký/đăng nhập nhanh của chủ doanh nghiệp.
@@ -3058,6 +3064,7 @@ Tài liệu Đặc tả Yêu cầu Hệ thống (SRS) này đã được xây d�
   - Thay Dynamic QR xoay 30s bằng QR cố định theo Queue + Nút "Đổi mã QR mới" (thủ công hoặc tự đổi theo Ca, `BRL-003`, `FR-013`, `FR-015`).
   - Bổ sung đồng hồ theo dõi 2 phút không khóa thao tác khi ở trạng thái `CALLED` (`BRL-011`, `FR-025`), khóa `@Version` chống bấm đúp (`BRL-008`), và đồng bộ 2 chiều xác nhận đến nơi (`FR-022`, `FR-027`).
   - Khôi phục Text-to-Speech (TTS) trên TV Display kèm công tắc Bật/Tắt và Audio Queue tuần tự (`FR-035`, `FR-036`, `SCR-08`, `SCR-11`).
+  - Bổ sung đặc tả Tech Stack & Kiến trúc Triển khai (BE: Java Spring Boot, FE: React, DB: PostgreSQL + pgAdmin 4 + Flyway, Cache: Caffeine, Lưu trữ & Deploy tối ưu 0đ–<100k trên Vercel + Supabase/Neon + Koyeb/Railway).
 
 ---
 *Tài liệu được hoàn thiện và bảo chứng kỹ thuật bởi Senior Business Analyst / System Analyst.*
