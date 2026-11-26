@@ -1,0 +1,20 @@
+# Dung file nay neu ban muon chay PostgreSQL bang Docker (Local hoac VPS).
+# Neu ban da cai san PostgreSQL 18 + pgAdmin 4 tren Windows thi KHONG can chay file nay.
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: qrwait-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: qr_wait
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "5432:5432"
+    volumes:
+      - qrwait_pg_data:/var/lib/postgresql/data
+
+volumes:
+  qrwait_pg_data:

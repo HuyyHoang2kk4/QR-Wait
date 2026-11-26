@@ -1,0 +1,22 @@
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+
+# Backend (Java / Maven / IntelliJ)
+Backend/target/
+*.jar
+*.war
+.idea/
+*.iml
+out/
+
+# Frontend (Node / Vite)
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.vite/
+
+# OS & Logs
+.DS_Store
+Thumbs.db
+*.log
